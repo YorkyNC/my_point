@@ -13,7 +13,6 @@ class RouteNames {
   static const String changeLanguage = 'change-language';
   static const String introduction = 'introduction';
   static const String authorization = 'authorization';
-  static const String numberSearch = 'number-search';
   static const String otp = 'otp';
   static const String personalIdentification = 'personal-identification';
   static const String documentSelection = 'document-selection';

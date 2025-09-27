@@ -23,7 +23,9 @@ dependencies:
   dio: ^5.1.1
   equatable: ^2.0.7
   file_picker: 10.2.0
+  firebase_analytics: ^11.6.0
   firebase_core: 3.15.2
+  firebase_crashlytics: ^4.3.10
   firebase_messaging: 15.2.10
   flutter:
     sdk: flutter
@@ -33,6 +35,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   flutter_localizations:
     sdk: flutter
+  flutter_multi_formatter: ^2.13.10
   flutter_svg: ^2.0.7
   flutter_switch: ^0.3.2
   fpdart: ^1.1.0
@@ -76,8 +79,6 @@ dependencies:
   video_player: ^2.9.5
   video_thumbnail: 0.5.6
   web_socket_channel: ^3.0.2
-  firebase_crashlytics: ^4.3.10
-  firebase_analytics: ^11.6.0
 
 # * Packages that will not be in the release version of app
 dev_dependencies:
@@ -88,7 +89,6 @@ dev_dependencies:
   build_runner: ^2.4.6
 
   # * UI Testing
-
   # Generate Fake Data
   faker: ^2.0.0
   # Generating Asset Files
@@ -162,4 +162,3 @@ flutter_icons:
   # iOS Icon
   ios: true
   remove_alpha_ios: true
-

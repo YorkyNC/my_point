@@ -1,328 +1,195 @@
+import 'package:flutter/cupertino.dart';
+import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/services/injectable/injectable_service.dart';
+import 'package:my_point/src/core/widgets/popups/sheet_popup.dart';
+import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
+import 'package:my_point/src/features/login/presentation/components/authorization_text_field_widget.dart';
+import 'package:my_point/src/features/login/presentation/components/number_search_modal.dart';
+
 import '../../../app/imports.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    debugPrint('LoginPage build method called');
+  State<LoginPage> createState() => _LoginPageState();
+}
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Login Page',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<AuthorizationBloc>(),
+      child: Scaffold(
+        backgroundColor: context.colors.white,
+        appBar: AppBar(
+          backgroundColor: context.colors.white,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: IconButton(
+                onPressed: () {
+                  // context.pop();
+                },
+                icon: Icon(context.icons.delete_1__remove_add_button_buttons_delete_cross_x_mathematics_multiply_math,
+                    color: context.colors.black),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Welcome to My Point',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
+        body: BlocBuilder<AuthorizationBloc, AuthorizationState>(
+          builder: (context, state) {
+            final bloc = context.read<AuthorizationBloc>();
+            return BlocListener<AuthorizationBloc, AuthorizationState>(
+              listener: (context, state) {},
+              child: state.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: context.colors.textprimary,
+                      backgroundColor: context.colors.lightBorder,
+                    ))
+                  : SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Вход',
+                              style: context.typography.title.copyWith(
+                                color: context.colors.textprimary,
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      final result = await showSheetPopup(context, title: Text('Выберите страну'),
+                                          builder: (context) {
+                                        return NumberSearchModal();
+                                      });
+
+                                      if (result != null && result is CountrySelection) {
+                                        final bloc = context.read<AuthorizationBloc>();
+                                        bloc.add(PhoneCodeChanged(
+                                          result.dialCode,
+                                          result.flag,
+                                        ));
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: context.colors.lightSecondaryText,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        spacing: 8,
+                                        children: [
+                                          state.flag != null
+                                              ? Text(
+                                                  state.flag!,
+                                                  style: context.typography.smallParagraph
+                                                      .copyWith(color: context.colors.black, fontSize: 24),
+                                                )
+                                              : Text(
+                                                  '🇰🇿',
+                                                  style: context.typography.smallParagraph
+                                                      .copyWith(color: context.colors.black, fontSize: 24),
+                                                ),
+                                          Text(
+                                            state.phoneCode ?? '+7',
+                                            style: context.typography.smallParagraph.copyWith(
+                                              color: context.colors.textprimary,
+                                            ),
+                                          ),
+                                          Icon(
+                                            CupertinoIcons.chevron_down,
+                                            size: 16,
+                                            color: context.colors.textprimary,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                Expanded(
+                                  flex: 3,
+                                  child: AuthorizationTextFieldWidget(
+                                    bloc: bloc,
+                                    phoneController: _phoneController,
+                                    onChanged: (String value) {
+                                      bloc.add(PhoneNumberChanged(value));
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: context.colors.textprimary,
+                                      foregroundColor: context.colors.white,
+                                    ),
+                                    onPressed: _phoneController.text.isEmpty
+                                        ? null
+                                        : () {
+                                            bloc.add(SignIn(state.phoneCode ?? '+7', _phoneController.text, ''));
+                                          },
+                                    child: Text('Войти'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Продолжая авторизацию, вы соглашаетесь со \nвсеми пунктами документов',
+                                    style: context.typography.extraSmallParagraph.copyWith(
+                                      color: context.colors.lightSecondaryText,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '«Условия пользования» и «Политика конфиденциальности»',
+                                    style: context.typography.extraSmallParagraph.copyWith(
+                                      color: context.colors.textprimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+            );
+          },
         ),
       ),
     );
   }
 }
-//       bloc: authBloc,
-//       listenWhen: (previous, current) {
-//         return current.maybeMap(
-//           error: (_) => true,
-//           loaded: (_) => true,
-//           orElse: () => false,
-//         );
-//       },
-//       listener: (context, state) {
-//         state.whenOrNull(
-//           error: (passwordErrorText) {
-//             _passwordController.clear();
-//             _emailController.clear();
-//             _formKey.currentState!.validate();
-//             ScaffoldMessenger.of(context).removeCurrentSnackBar();
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               CustomSnackBar.show(
-//                 color: context.colors.error500,
-//                 title: passwordErrorText,
-//                 seconds: 3,
-//                 context: context,
-//               ),
-//             );
-//           },
-//           loaded: (viewModel) {
-//             ScaffoldMessenger.of(context).removeCurrentSnackBar();
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               CustomSnackBar.show(
-//                 color: context.colors.success500,
-//                 title: context.loc.loggedInSuccessfully,
-//                 seconds: 3,
-//                 context: context,
-//               ),
-//             );
-
-//             // Tokens are already set in AuthBloc, no need to set them again here
-//             log.d(viewModel.hasTempPassword.toString());
-
-//             if (viewModel.hasTempPassword) {
-//               log.d(
-//                 'Temporary password detected, navigating to set new password page',
-//               );
-//               context.go(RoutePaths.setNewPassword);
-//             } else {
-//               log.i('Regular user logged in, redirecting to review page');
-//               context.go(RoutePaths.review);
-//             }
-//           },
-//         );
-//       },
-//       builder: (context, state, bloc) {
-//         return Scaffold(
-//           backgroundColor: context.colors.gray100,
-//           floatingActionButtonLocation:
-//               FloatingActionButtonLocation.centerFloat,
-//           floatingActionButton: kIsWeb
-//               ? SizedBox(
-//                   height: 90,
-//                   child: Center(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: InkWell(
-//                         key: const Key('install_app_inkwell'),
-//                         onTap: () {
-//                           final jsService = JsInteropService();
-//                           jsService.initialize();
-
-//                           jsService.manuallyShowInstallPrompt();
-//                         },
-//                         borderRadius: BorderRadius.circular(8),
-//                         child: Container(
-//                           decoration: BoxDecoration(
-//                             color: context.colors.brand400,
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           child: Padding(
-//                             padding: const EdgeInsets.symmetric(
-//                                 vertical: 12, horizontal: 16),
-//                             child: Row(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               children: [
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: Icon(
-//                                     Icons.add_to_home_screen,
-//                                     size: 32,
-//                                     color: context.colors.white,
-//                                   ),
-//                                 ),
-//                                 const SizedBox(width: 12),
-//                                 Expanded(
-//                                   child: Column(
-//                                     mainAxisAlignment: MainAxisAlignment.center,
-//                                     crossAxisAlignment:
-//                                         CrossAxisAlignment.start,
-//                                     children: [
-//                                       Text(
-//                                         'Установить приложение',
-//                                         style: context.typography.textmdSemibold
-//                                             .copyWith(
-//                                           color: context.colors.white,
-//                                         ),
-//                                       ),
-//                                       Text(
-//                                         'Добавить на главный экран',
-//                                         style: context.typography.textsmRegular
-//                                             .copyWith(
-//                                           color: context.colors.white,
-//                                         ),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 )
-//               : null,
-//           body: SafeArea(
-//             top: true,
-//             child: SingleChildScrollView(
-//               child: Padding(
-//                 padding: const EdgeInsets.symmetric(
-//                   vertical: 8,
-//                 ),
-//                 child: Container(
-//                   padding:
-//                       const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-//                   decoration: BoxDecoration(
-//                     color: context.colors.white,
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   child: Form(
-//                     key: _formKey,
-//                     child: Column(
-//                       mainAxisSize: MainAxisSize.max,
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         Column(
-//                           children: [
-//                             Text(
-//                               context.loc.loginToAccount,
-//                               style: context.typography.textxlBold.copyWith(
-//                                 color: context.colors.black,
-//                               ),
-//                             ),
-//                             const SizedBox(height: 4),
-//                             Text(
-//                               context.loc.theAccountIsIssuedByTheSchool,
-//                               style: context.typography.textmdRegular.copyWith(
-//                                 color: context.colors.gray500,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         const SizedBox(height: 20),
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               context.loc.mail,
-//                               style: context.typography.textsmMedium.copyWith(
-//                                 color: context.colors.gray700,
-//                               ),
-//                             ),
-//                             const SizedBox(height: 6),
-//                             EmailTextFormField(
-//                               emailController: _emailController,
-//                             ),
-//                           ],
-//                         ),
-//                         const SizedBox(height: 12),
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               context.loc.password,
-//                               style: context.typography.textsmMedium.copyWith(
-//                                 color: context.colors.gray700,
-//                               ),
-//                             ),
-//                             const SizedBox(height: 6),
-//                             PasswordTextFormField(
-//                               passwordController: _passwordController,
-//                               isPasswordVisible: _isPasswordVisible,
-//                               errorText: context.loc.pleaseEnterYourPassword,
-//                               onPasswordVisibilityChanged: () {
-//                                 setState(() {
-//                                   _isPasswordVisible = !_isPasswordVisible;
-//                                 });
-//                               },
-//                             ),
-//                           ],
-//                         ),
-//                         const SizedBox(height: 20),
-//                         Row(
-//                           children: [
-//                             Expanded(
-//                               child: GestureDetector(
-//                                 key: const Key('login_button'),
-//                                 onTap: () {
-//                                   if (_formKey.currentState!.validate()) {
-//                                     setState(() {
-//                                       passwordErrorText =
-//                                           context.loc.incorrectLoginOrPassword;
-//                                     });
-//                                     authBloc.add(
-//                                       AuthEvent.login(
-//                                         username: _emailController.text,
-//                                         password: _passwordController.text,
-//                                       ),
-//                                     );
-//                                     ScaffoldMessenger.of(context).showSnackBar(
-//                                         CustomSnackBar.show(
-//                                             color: context.colors.gray500,
-//                                             title: context.loc.pleaseWait,
-//                                             seconds: 1,
-//                                             context: context));
-//                                   } else {
-//                                     setState(() {
-//                                       passwordErrorText =
-//                                           context.loc.pleaseEnterYourPassword;
-//                                     });
-//                                   }
-//                                 },
-//                                 child: Container(
-//                                   width: double.infinity,
-//                                   padding: const EdgeInsets.symmetric(
-//                                       vertical: 12, horizontal: 24),
-//                                   decoration: BoxDecoration(
-//                                     color: context.colors.brand500,
-//                                     borderRadius: BorderRadius.circular(8),
-//                                     boxShadow: [
-//                                       BoxShadow(
-//                                         color:
-//                                             Colors.black.withValues(alpha: 0.1),
-//                                         blurRadius: 4,
-//                                         offset: const Offset(0, 2),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   child: Center(
-//                                     child: Text(
-//                                       context.loc.login,
-//                                       style: const TextStyle(
-//                                         fontSize: 16,
-//                                         fontWeight: FontWeight.w600,
-//                                         color: Colors.white,
-//                                         inherit: true,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         const SizedBox(height: 8),
-//                         Padding(
-//                           padding: const EdgeInsets.symmetric(vertical: 10.0),
-//                           child: GestureDetector(
-//                             onTap: () {
-//                               context.pushNamed(RouteNames.forgotPassword);
-//                             },
-//                             child: Text(
-//                               context.loc.forgotYourPassword,
-//                               style: context.typography.textsmSemibold.copyWith(
-//                                 color: context.colors.gray600,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

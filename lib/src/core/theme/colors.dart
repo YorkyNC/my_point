@@ -4,6 +4,10 @@ class AppColors {
   const AppColors();
   //paint style
 
+  Color get lightBorder => const Color(0xffE4E4E8);
+
+  Color get lightSecondaryText => const Color(0xff9B9B9B);
+
   Color get blue => const Color(0xff1fb6ff);
 
   Color get lightGray => const Color(0xff6D6D6D);

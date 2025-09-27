@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/widgets/animated_overlay_cards.dart';
 import 'package:my_point/src/features/introduction/presentation/components/build_action_icon.dart';
 import 'package:my_point/src/features/introduction/presentation/components/build_metric_box.dart';
@@ -148,7 +149,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.go(RoutePaths.login);
+                              st.setHasSeenIntroduction(true);
+                            },
                             child: Row(
                               spacing: 8,
                               mainAxisAlignment: MainAxisAlignment.center,

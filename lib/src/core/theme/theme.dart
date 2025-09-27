@@ -36,12 +36,12 @@ class AppTheme {
             ),
           ),
           foregroundColor: WidgetStatePropertyAll(
-            colors.blue,
+            colors.mainAccent,
           ),
           padding: const WidgetStatePropertyAll(buttonPadding),
           visualDensity: VisualDensity.compact,
-          overlayColor: WidgetStatePropertyAll(colors.blue.withValues(alpha: 0.1)),
-          iconColor: WidgetStatePropertyAll(colors.blue),
+          overlayColor: WidgetStatePropertyAll(colors.mainAccent.withValues(alpha: 0.1)),
+          iconColor: WidgetStatePropertyAll(colors.mainAccent),
           iconSize: const WidgetStatePropertyAll(20),
           shape: const WidgetStatePropertyAll(
             RoundedRectangleBorder(
@@ -50,13 +50,13 @@ class AppTheme {
           ),
           side: WidgetStatePropertyAll(
             BorderSide(
-              color: colors.blue,
+              color: colors.mainAccent,
             ),
           ),
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: colors.blue,
+        color: colors.mainAccent,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -66,7 +66,7 @@ class AppTheme {
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) {
               if (states.contains(WidgetState.disabled)) {
-                return colors.mainAccent.withValues(alpha: 0.1);
+                return colors.dividerColor;
               }
               return colors.mainAccent;
             },
@@ -84,7 +84,7 @@ class AppTheme {
           foregroundColor: WidgetStateProperty.resolveWith(
             (states) {
               if (states.contains(WidgetState.disabled)) {
-                return colors.white;
+                return colors.lightSecondaryText;
               }
               return colors.white;
             },
@@ -93,7 +93,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(colors.blue),
+        foregroundColor: WidgetStatePropertyAll(colors.mainAccent),
       )),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
@@ -141,7 +141,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         border: defaultInputBorder,
         focusedBorder: defaultInputBorder.copyWith(
-          borderSide: BorderSide(color: colors.blue),
+          borderSide: BorderSide(color: colors.mainAccent),
         ),
         enabledBorder: defaultInputBorder,
         hintStyle: typography.interText16.copyWith(
@@ -151,9 +151,9 @@ class AppTheme {
         prefixIconColor: colors.black,
       ),
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: colors.blue,
-        selectionHandleColor: colors.blue,
-        selectionColor: colors.blue,
+        cursorColor: colors.mainAccent,
+        selectionHandleColor: colors.mainAccent,
+        selectionColor: colors.mainAccent,
       ),
       cupertinoOverrideTheme: NoDefaultCupertinoThemeData(
         primaryColor: colors.brand300,

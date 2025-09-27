@@ -23,7 +23,7 @@ Future<T?> showSheetPopup<T>(
     builder: (context) => DecoratedBox(
       decoration: BoxDecoration(
         color: backgroundColor ?? context.colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
       ),
       child: Material(
         type: MaterialType.transparency,
@@ -31,6 +31,14 @@ Future<T?> showSheetPopup<T>(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              SizedBox(height: 8),
+              Container(
+                width: 48,
+                height: 4,
+                decoration:
+                    BoxDecoration(color: context.colors.lightSecondaryText, borderRadius: BorderRadius.circular(100)),
+              ),
+              // SizedBox(height: 20),
               if (title != null)
                 Container(
                   decoration: BoxDecoration(
@@ -39,24 +47,28 @@ Future<T?> showSheetPopup<T>(
                   ),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(padding.left, 16, padding.right, 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: DefaultTextStyle(
-                            style: context.typography.inter16Bold.copyWith(color: context.colors.black),
-                            child: title,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: context.pop,
+                              child: Icon(
+                                  context.icons
+                                      .delete_1__remove_add_button_buttons_delete_cross_x_mathematics_multiply_math,
+                                  size: 24,
+                                  color: context.colors.black),
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: context.pop,
-                          icon: Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(color: context.colors.gray25, shape: BoxShape.circle),
-                            child: Icon(Icons.close_outlined, size: 16, color: context.colors.black),
-                          ),
+                        DefaultTextStyle(
+                          style: context.typography.title.copyWith(color: context.colors.black),
+                          child: title,
                         ),
                       ],
                     ),
