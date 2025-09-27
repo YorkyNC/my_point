@@ -143,16 +143,15 @@ final List<RouteBase> _routes = [
   //   pageBuilder: (context, state) => getPage(child: const AuthorizationPage(), state: state),
   // ),
 
-  // GoRoute(
-  //   path: RoutePaths.otp,
-  //   pageBuilder: (context, state) => getPage(
-  //     child: OtpPage(
-  //       phone: state.extra as String,
-  //       // callback: state.extra as Function(String),
-  //     ),
-  //     state: state,
-  //   ),
-  // ),
+  GoRoute(
+      path: RoutePaths.otp,
+      pageBuilder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
+        return getPage(
+          child: OtpPage(phone: data['phone']),
+          state: state,
+        );
+      }),
 
   GoRoute(
     path: RoutePaths.personalIdentification,

@@ -10,5 +10,9 @@ abstract class AuthorizationState with _$AuthorizationState {
     String? phoneNumber,
     @Default(false) bool isPhoneNumberFilled,
     @Default(false) bool isLoading,
+    @Default(false) bool success,
+    @Default(60) int remainingSeconds,
+    @Default(false) bool canRequestCode,
+    @Default(false) bool isTimerRunning,
   }) = _AuthorizationState;
 }

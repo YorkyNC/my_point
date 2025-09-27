@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
 import 'package:my_point/src/core/widgets/popups/sheet_popup.dart';
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
@@ -45,7 +46,16 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context, state) {
             final bloc = context.read<AuthorizationBloc>();
             return BlocListener<AuthorizationBloc, AuthorizationState>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state.success) {
+                  context.push(
+                    RoutePaths.otp,
+                    extra: {
+                      'phone': _phoneController.text,
+                    },
+                  );
+                }
+              },
               child: state.isLoading
                   ? Center(
                       child: CircularProgressIndicator(
@@ -78,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onTap: () async {
                                       final result = await showSheetPopup(context, title: Text('Выберите страну'),
                                           builder: (context) {
-                                        return NumberSearchModal();
+                                        return NumberSearchModal(state: state);
                                       });
 
                                       if (result != null && result is CountrySelection) {

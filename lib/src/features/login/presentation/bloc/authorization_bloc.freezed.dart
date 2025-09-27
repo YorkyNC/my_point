@@ -22,6 +22,10 @@ mixin _$AuthorizationState {
   String? get phoneNumber => throw _privateConstructorUsedError;
   bool get isPhoneNumberFilled => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get success => throw _privateConstructorUsedError;
+  int get remainingSeconds => throw _privateConstructorUsedError;
+  bool get canRequestCode => throw _privateConstructorUsedError;
+  bool get isTimerRunning => throw _privateConstructorUsedError;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +46,11 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       String? flag,
       String? phoneNumber,
       bool isPhoneNumberFilled,
-      bool isLoading});
+      bool isLoading,
+      bool success,
+      int remainingSeconds,
+      bool canRequestCode,
+      bool isTimerRunning});
 }
 
 /// @nodoc
@@ -66,6 +74,10 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
     Object? phoneNumber = freezed,
     Object? isPhoneNumberFilled = null,
     Object? isLoading = null,
+    Object? success = null,
+    Object? remainingSeconds = null,
+    Object? canRequestCode = null,
+    Object? isTimerRunning = null,
   }) {
     return _then(_value.copyWith(
       phoneCode: freezed == phoneCode
@@ -92,6 +104,22 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      remainingSeconds: null == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      canRequestCode: null == canRequestCode
+          ? _value.canRequestCode
+          : canRequestCode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTimerRunning: null == isTimerRunning
+          ? _value.isTimerRunning
+          : isTimerRunning // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -110,7 +138,11 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
       String? flag,
       String? phoneNumber,
       bool isPhoneNumberFilled,
-      bool isLoading});
+      bool isLoading,
+      bool success,
+      int remainingSeconds,
+      bool canRequestCode,
+      bool isTimerRunning});
 }
 
 /// @nodoc
@@ -132,6 +164,10 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
     Object? phoneNumber = freezed,
     Object? isPhoneNumberFilled = null,
     Object? isLoading = null,
+    Object? success = null,
+    Object? remainingSeconds = null,
+    Object? canRequestCode = null,
+    Object? isTimerRunning = null,
   }) {
     return _then(_$AuthorizationStateImpl(
       phoneCode: freezed == phoneCode
@@ -158,6 +194,22 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      remainingSeconds: null == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      canRequestCode: null == canRequestCode
+          ? _value.canRequestCode
+          : canRequestCode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTimerRunning: null == isTimerRunning
+          ? _value.isTimerRunning
+          : isTimerRunning // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -171,7 +223,11 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
       this.flag,
       this.phoneNumber,
       this.isPhoneNumberFilled = false,
-      this.isLoading = false})
+      this.isLoading = false,
+      this.success = false,
+      this.remainingSeconds = 60,
+      this.canRequestCode = false,
+      this.isTimerRunning = false})
       : super._();
 
   @override
@@ -189,10 +245,22 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool success;
+  @override
+  @JsonKey()
+  final int remainingSeconds;
+  @override
+  @JsonKey()
+  final bool canRequestCode;
+  @override
+  @JsonKey()
+  final bool isTimerRunning;
 
   @override
   String toString() {
-    return 'AuthorizationState(phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading)';
+    return 'AuthorizationState(phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning)';
   }
 
   @override
@@ -210,12 +278,29 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
             (identical(other.isPhoneNumberFilled, isPhoneNumberFilled) ||
                 other.isPhoneNumberFilled == isPhoneNumberFilled) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.remainingSeconds, remainingSeconds) ||
+                other.remainingSeconds == remainingSeconds) &&
+            (identical(other.canRequestCode, canRequestCode) ||
+                other.canRequestCode == canRequestCode) &&
+            (identical(other.isTimerRunning, isTimerRunning) ||
+                other.isTimerRunning == isTimerRunning));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phoneCode, isPhoneCodeFilled,
-      flag, phoneNumber, isPhoneNumberFilled, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      phoneCode,
+      isPhoneCodeFilled,
+      flag,
+      phoneNumber,
+      isPhoneNumberFilled,
+      isLoading,
+      success,
+      remainingSeconds,
+      canRequestCode,
+      isTimerRunning);
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.
@@ -234,7 +319,11 @@ abstract class _AuthorizationState extends AuthorizationState {
       final String? flag,
       final String? phoneNumber,
       final bool isPhoneNumberFilled,
-      final bool isLoading}) = _$AuthorizationStateImpl;
+      final bool isLoading,
+      final bool success,
+      final int remainingSeconds,
+      final bool canRequestCode,
+      final bool isTimerRunning}) = _$AuthorizationStateImpl;
   const _AuthorizationState._() : super._();
 
   @override
@@ -249,6 +338,14 @@ abstract class _AuthorizationState extends AuthorizationState {
   bool get isPhoneNumberFilled;
   @override
   bool get isLoading;
+  @override
+  bool get success;
+  @override
+  int get remainingSeconds;
+  @override
+  bool get canRequestCode;
+  @override
+  bool get isTimerRunning;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.

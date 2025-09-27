@@ -6,6 +6,7 @@ import 'package:my_point/src/features/login/data/datasources/remote/country_data
 import 'package:my_point/src/features/login/data/repositories/country_repository_impl.dart';
 import 'package:my_point/src/features/login/domain/entities/country.dart';
 import 'package:my_point/src/features/login/domain/repositories/country_repository.dart';
+import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
 
 class CountrySelection {
   final String dialCode;
@@ -18,7 +19,8 @@ class CountrySelection {
 }
 
 class NumberSearchModal extends StatefulWidget {
-  const NumberSearchModal({super.key});
+  final AuthorizationState state;
+  const NumberSearchModal({super.key, required this.state});
 
   @override
   State<NumberSearchModal> createState() => _NumberSearchPageState();
@@ -144,24 +146,28 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                           style: TextStyle(fontSize: 24),
                         ),
                         title: Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           '${country.name} (${country.dialCode})',
                           style: context.typography.inter16Medium.copyWith(
                             color: context.colors.black,
                           ),
                         ),
-                        trailing: Container(
-                          width: 21.5,
-                          height: 21.5,
-                          decoration: BoxDecoration(
-                            color: context.colors.mainAccent,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            size: 16,
-                            Icons.check_rounded,
-                            color: context.colors.white,
-                          ),
-                        ),
+                        trailing: widget.state.phoneCode == country.dialCode
+                            ? Container(
+                                width: 21.5,
+                                height: 21.5,
+                                decoration: BoxDecoration(
+                                  color: context.colors.mainAccent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Icon(
+                                  size: 16,
+                                  Icons.check_rounded,
+                                  color: context.colors.white,
+                                ),
+                              )
+                            : SizedBox.shrink(),
                         onTap: () {
                           context.pop(CountrySelection(
                             dialCode: country.dialCode,

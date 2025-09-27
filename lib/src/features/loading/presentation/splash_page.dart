@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     ));
 
     _progressController = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
 

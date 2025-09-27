@@ -72,4 +72,8 @@ class TimerTicked extends AuthorizationEvent {
   TimerTicked(this.remainingSeconds);
 }
 
+class StartTimer extends AuthorizationEvent {}
+
+class ResetTimer extends AuthorizationEvent {}
+
 class ClearOtpError extends AuthorizationEvent {}
