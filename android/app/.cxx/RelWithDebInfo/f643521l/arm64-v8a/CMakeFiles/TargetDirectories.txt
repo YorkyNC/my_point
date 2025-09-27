@@ -1,0 +1,2 @@
+/Users/qazaqninja/Developer/my_point/android/app/.cxx/RelWithDebInfo/f643521l/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/qazaqninja/Developer/my_point/android/app/.cxx/RelWithDebInfo/f643521l/arm64-v8a/CMakeFiles/rebuild_cache.dir

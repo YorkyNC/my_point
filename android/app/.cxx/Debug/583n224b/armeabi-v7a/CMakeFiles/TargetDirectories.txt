@@ -1,0 +1,2 @@
+/Users/qazaqninja/Developer/my_point/android/app/.cxx/Debug/583n224b/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/qazaqninja/Developer/my_point/android/app/.cxx/Debug/583n224b/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,13 @@
+{
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "client_email": "fastlane-supply@jet-join.iam.gserviceaccount.com",
+  "client_id": "105493527641102804664",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fastlane-supply%40jet-join.iam.gserviceaccount.com",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFuEi5HFgtzePo\nfoSqj0W+rX2iGxxLVrIL6f9AQwDFDvLLzpx4+tvkLEhCcJTESQ1/cgCY0plOtGOH\nTCKsc25NrNYll8GIrYYTl7Chj1gbXpB/5c1P63pTAs1mXlEUCu04thRYsNFXlfKF\nL2WAmSVfqQ85rr7yMFaHY9iUoUB6nloBJRhH1UQlN13d0l32nEGY46fB44mjgnYa\n30p3p/am+Lx7MQql5FLmg1tmO7ed62bmWGi3PClGVEtNFd8+tl2VlqIsg1hATw6h\nMJUTyxrYnAdwDk8Tym+S/7raVCuYfcYGUzMv+IkBiD81WBRludI1fliNMcyoh9Y1\nZgYdNQtRAgMBAAECggEABW1smaA8j21Sb0Rh0ejC6lwK0dNasHq9wnP27MWqFL63\nTX7rbqq8NIQ+q4w5mTXEKBZyC7/kM3PiM4mUfhVhFsLC0h9bUawpvQnx8E1mBsJO\nxyQAwcvd/L9b8g5uvVUbc+4Tmuenp3bXRG6ro58QlpKmd1fjp/RJu8ey30mZ4oO/\n6vVHRKCg9x3OrKdeEfgaAgvG9IEGkFrxXkPofAdPS0EH5xRMIHzpZMFD/QRPmnZ0\nN2GT/5EC5Ks1RSlx0nAUDzl8rnY8BXdPVHOuDxkUmOC1+ni8K11KAGlZ9pffRJAv\nJCvwKDdI8gCZ76auSp542XwtepHmdvA2FfVVEFU8fQKBgQDomI5mNoWDzXT9N/+8\ndsdmVl2hpFy3QBV5iBLhYgv1UyzwKJe4v+RzFjHvu++u41GLv+0Wf0n+/psF3RRN\nD65AXj7mgAJwqCRj4Acp9wJYKClAARWRCmBo/4kE6qV+X0+24SlnajPTfdQbpke+\n9sCrvIORc5Db/NYx34zbwiZUjwKBgQDZnVrBKjqbPQn8Hg+3poNSM+WmcukAA0zd\nqhi4NoKhMZj5ap6OQ8VDVGwRQ4NNENPRfz6VphX1rJnU0xaiR85pTeQON0JdmtLA\n/MjdjeTWVTB8swhN46ObCfNQMt84nd1qmCGjVkiZcLMmy70YfGIaGTT77gfRrAZO\nycOswFVSHwKBgFvdRQChsAHqd7Y7E8o/r2l/2uMoo2XM7a5eS/awXsC55RnFLodN\nYtEBhx+EPpn4NhDX8K/d/j+0F04tjwMQmmXZ00X+cPhFsHmx1aKBaG+hDQm2Y+ox\nCvrtUhSbCFntEvLL4ypxC58QJ2H0Ponxsw8hGWWtGx2HsqFoBZ4WBEWJAoGBAKNL\nesCciaHX6dgwTqcG4mAa5WdDryf9Uf68FxSUgu2mpB31LcmffTUK8pT5zltUFz6L\nd1EgcjYKMN0NEVzw+Sj38/ve54QKG8AJcEkgoulav6mzRrX77db3Xod9xRddDrtg\nMU25/3x0n1qrY9gt7gebhrDNazyhE5KnwJevM9cNAoGAH+rIqK++FDP3H4XTHIaP\nMgloX3N5n0pLUzb+b52giUiJdlFeaHg6E3C7vDIo7u09x/2NANrHupYqUXu7oJnX\nTmiFrPzQQ37uzog0qmIB7JxZ4qdf7tWa8kaa1gnqXAmunms81imziAUIBfVfakT4\nb/iXTY6gz0cUnOFTkpsiFHM=\n-----END PRIVATE KEY-----\n",
+  "private_key_id": "444ae90dad376fcda1e9e750fc774779365ef140",
+  "project_id": "jet-join",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "type": "service_account",
+  "universe_domain": "googleapis.com"
+}

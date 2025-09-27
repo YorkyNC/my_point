@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Debug configuration - allows user-added CAs for Charles Proxy -->
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust user added CAs for Charles Proxy -->
+            <certificates src="user"/>
+            <!-- Also trust system CAs -->
+            <certificates src="system"/>
+        </trust-anchors>
+    </debug-overrides>
+    
+    <!-- Allow cleartext traffic for localhost and debugging -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">192.168.0.1</domain>
+    </domain-config>
+</network-security-config> 

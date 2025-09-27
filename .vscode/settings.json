@@ -1,0 +1,84 @@
+{
+  "CodeGPT.apiKey": "Anthropic",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "animations.Install-Method": "Apc Customize UI++",
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.showDebuggerNumbersAsHex": true,
+  "dart.showInspectorNotificationsForWidgetErrors": false,
+  "debug.console.wordWrap": false,
+  "debug.toolBarLocation": "commandCenter",
+  "diffEditor.experimental.showMoves": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "dart.fixAll": "explicit",
+    "source.fixAll": "always",
+    "source.organizeImports": "explicit",
+    "source.sort.json": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.overviewRulerBorder": false,
+  "editor.tokenColorCustomizations": {
+    "comments": "#777777",
+    "textMateRules": [
+      {
+        "scope": [
+          "comment"
+        ],
+        "settings": {
+          "foreground": "#777777"
+        }
+      }
+    ]
+  },
+  "files.autoSave": "onFocusChange",
+  "footsteps.highlightColor": "rgb(153, 128, 250)",
+  "footsteps.highlightColorMaxOpacity": 0.05,
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.enable": {
+    "*": false,
+    "dart": false,
+    "markdown": false,
+    "plaintext": false,
+    "scminput": false,
+    "yaml": true
+  },
+  "kotlin.debugAdapter.enabled": false,
+  "kotlin.languageServer.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.fontFamily": "'MesloLGS NF'",
+  "todo-tree.highlights.defaultHighlight": {
+    "background": "#00000000",
+    "foreground": "#FF8C00",
+    "opacity": 0
+  },
+  "update.mode": "manual",
+  "window.zoomLevel": 1,
+  "workbench.colorCustomizations": {
+    "debugConsole.errorForeground": "#ff6b6b",
+    "debugConsole.infoForeground": "#74b9ff",
+    "debugConsole.sourceForeground": "#a29bfe",
+    "debugConsole.warningForeground": "#fdcb6e"
+  },
+  "workbench.editor.enablePreview": false
+}
