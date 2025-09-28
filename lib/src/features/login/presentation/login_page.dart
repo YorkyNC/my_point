@@ -6,6 +6,7 @@ import 'package:my_point/src/core/widgets/popups/sheet_popup.dart';
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
 import 'package:my_point/src/features/login/presentation/components/authorization_text_field_widget.dart';
 import 'package:my_point/src/features/login/presentation/components/number_search_modal.dart';
+import 'package:my_point/src/features/login/presentation/components/privacy_policy_widget.dart';
 
 import '../../../app/imports.dart';
 
@@ -57,12 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               child: state.isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: context.colors.textprimary,
-                      backgroundColor: context.colors.lightBorder,
-                    ))
+                  ? Center(child: CircularProgressIndicator())
                   : SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -158,10 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: context.colors.textprimary,
-                                      foregroundColor: context.colors.white,
-                                    ),
                                     onPressed: _phoneController.text.isEmpty
                                         ? null
                                         : () {
@@ -173,25 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                             Spacer(),
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Продолжая авторизацию, вы соглашаетесь со \nвсеми пунктами документов',
-                                    style: context.typography.extraSmallParagraph.copyWith(
-                                      color: context.colors.lightSecondaryText,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '«Условия пользования» и «Политика конфиденциальности»',
-                                    style: context.typography.extraSmallParagraph.copyWith(
-                                      color: context.colors.textprimary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                            PrivacyPolicyWidget()
                           ],
                         ),
                       ),

@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthorizationState {
+  bool get isValidate => throw _privateConstructorUsedError;
   String? get otp => throw _privateConstructorUsedError;
   bool get isOtpFilled => throw _privateConstructorUsedError;
   bool get isOtpError => throw _privateConstructorUsedError;
@@ -46,7 +47,8 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       _$AuthorizationStateCopyWithImpl<$Res, AuthorizationState>;
   @useResult
   $Res call(
-      {String? otp,
+      {bool isValidate,
+      String? otp,
       bool isOtpFilled,
       bool isOtpError,
       bool isOtpLoading,
@@ -78,6 +80,7 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isValidate = null,
     Object? otp = freezed,
     Object? isOtpFilled = null,
     Object? isOtpError = null,
@@ -95,6 +98,10 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
     Object? isTimerRunning = null,
   }) {
     return _then(_value.copyWith(
+      isValidate: null == isValidate
+          ? _value.isValidate
+          : isValidate // ignore: cast_nullable_to_non_nullable
+              as bool,
       otp: freezed == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -168,7 +175,8 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? otp,
+      {bool isValidate,
+      String? otp,
       bool isOtpFilled,
       bool isOtpError,
       bool isOtpLoading,
@@ -198,6 +206,7 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isValidate = null,
     Object? otp = freezed,
     Object? isOtpFilled = null,
     Object? isOtpError = null,
@@ -215,6 +224,10 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
     Object? isTimerRunning = null,
   }) {
     return _then(_$AuthorizationStateImpl(
+      isValidate: null == isValidate
+          ? _value.isValidate
+          : isValidate // ignore: cast_nullable_to_non_nullable
+              as bool,
       otp: freezed == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -283,7 +296,8 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
 
 class _$AuthorizationStateImpl extends _AuthorizationState {
   const _$AuthorizationStateImpl(
-      {this.otp,
+      {this.isValidate = false,
+      this.otp,
       this.isOtpFilled = false,
       this.isOtpError = false,
       this.isOtpLoading = false,
@@ -300,6 +314,9 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
       this.isTimerRunning = false})
       : super._();
 
+  @override
+  @JsonKey()
+  final bool isValidate;
   @override
   final String? otp;
   @override
@@ -344,7 +361,7 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
 
   @override
   String toString() {
-    return 'AuthorizationState(otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning)';
+    return 'AuthorizationState(isValidate: $isValidate, otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning)';
   }
 
   @override
@@ -352,6 +369,8 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthorizationStateImpl &&
+            (identical(other.isValidate, isValidate) ||
+                other.isValidate == isValidate) &&
             (identical(other.otp, otp) || other.otp == otp) &&
             (identical(other.isOtpFilled, isOtpFilled) ||
                 other.isOtpFilled == isOtpFilled) &&
@@ -384,6 +403,7 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      isValidate,
       otp,
       isOtpFilled,
       isOtpError,
@@ -412,7 +432,8 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
 
 abstract class _AuthorizationState extends AuthorizationState {
   const factory _AuthorizationState(
-      {final String? otp,
+      {final bool isValidate,
+      final String? otp,
       final bool isOtpFilled,
       final bool isOtpError,
       final bool isOtpLoading,
@@ -429,6 +450,8 @@ abstract class _AuthorizationState extends AuthorizationState {
       final bool isTimerRunning}) = _$AuthorizationStateImpl;
   const _AuthorizationState._() : super._();
 
+  @override
+  bool get isValidate;
   @override
   String? get otp;
   @override

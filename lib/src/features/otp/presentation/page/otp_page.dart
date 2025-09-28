@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:my_point/src/app/imports.dart';
+import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
-import 'package:my_point/src/features/login/presentation/custom_snack_bar.dart';
+import 'package:my_point/src/features/login/presentation/components/custom_snack_bar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-import '../../../app/imports.dart';
-import '../../../core/extensions/build_context_extension.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({
@@ -27,8 +26,8 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _otpController.dispose();
+    super.dispose();
   }
 
   @override
@@ -224,14 +223,5 @@ class _OtpPageState extends State<OtpPage> {
         ),
       ),
     );
-  }
-}
-
-class UnregisteredUserView extends StatelessWidget {
-  const UnregisteredUserView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

@@ -26,6 +26,8 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     on<ResetTimer>(_onResetTimer);
     on<ResendOtp>(_onResendOtp);
     on<OtpChanged>(_onOtpChanged);
+    on<SignUp>(_onSignUp);
+    on<ValidateForm>(_onValidateForm);
   }
 
   @override
@@ -121,5 +123,23 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
       // For now, just restart the timer
       add(StartTimer());
     }
+  }
+
+  Future<void> _onValidateForm(ValidateForm event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      isValidate: true,
+    ));
+  }
+
+  Future<void> _onSignUp(SignUp event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      success: false,
+      isLoading: true,
+    ));
+    await Future.delayed(const Duration(seconds: 2));
+    emit(state.copyWith(
+      isLoading: false,
+      success: true,
+    ));
   }
 }

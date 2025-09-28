@@ -56,19 +56,21 @@ class AppTheme {
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: colors.mainAccent,
+        strokeWidth: 2,
+        color: colors.textprimary,
+        refreshBackgroundColor: colors.lightBorder,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           padding: const WidgetStatePropertyAll(buttonPadding),
           visualDensity: VisualDensity.comfortable,
-          overlayColor: WidgetStatePropertyAll(colors.mainAccent),
+          overlayColor: WidgetStatePropertyAll(colors.textprimary),
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) {
               if (states.contains(WidgetState.disabled)) {
                 return colors.dividerColor;
               }
-              return colors.mainAccent;
+              return colors.textprimary;
             },
           ),
           shape: const WidgetStatePropertyAll(
@@ -151,7 +153,7 @@ class AppTheme {
         prefixIconColor: colors.black,
       ),
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: colors.mainAccent,
+        cursorColor: colors.textprimary,
         selectionHandleColor: colors.mainAccent,
         selectionColor: colors.mainAccent,
       ),

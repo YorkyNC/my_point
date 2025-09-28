@@ -1,5 +1,5 @@
-import '../../../app/imports.dart';
-import '../../../core/extensions/build_context_extension.dart';
+import '../../../../app/imports.dart';
+import '../../../../core/extensions/build_context_extension.dart';
 
 class CustomSnackBar {
   static SnackBar show({

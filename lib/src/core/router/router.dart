@@ -3,7 +3,8 @@
 import 'package:my_point/src/features/introduction/presentation/introduction_page.dart';
 import 'package:my_point/src/features/loading/presentation/splash_page.dart';
 import 'package:my_point/src/features/login/presentation/login_page.dart';
-import 'package:my_point/src/features/otp/presentation/otp_page.dart';
+import 'package:my_point/src/features/login/presentation/unregistered_user_view.dart';
+import 'package:my_point/src/features/otp/presentation/page/otp_page.dart';
 import 'package:my_point/src/features/payment/presentation/page/payment_method_page.dart';
 import 'package:my_point/src/features/personal%20identification/presentation/document_selection_page.dart';
 import 'package:my_point/src/features/personal%20identification/presentation/identity_verification_page.dart';

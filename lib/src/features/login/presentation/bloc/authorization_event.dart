@@ -72,6 +72,17 @@ class TimerTicked extends AuthorizationEvent {
   TimerTicked(this.remainingSeconds);
 }
 
+class ValidateForm extends AuthorizationEvent {}
+
+class SignUp extends AuthorizationEvent {
+  final String surname;
+  final String name;
+  final String email;
+  final String password;
+  final String confirmPassword;
+  SignUp(this.surname, this.name, this.email, this.password, this.confirmPassword);
+}
+
 class StartTimer extends AuthorizationEvent {}
 
 class ResetTimer extends AuthorizationEvent {}
