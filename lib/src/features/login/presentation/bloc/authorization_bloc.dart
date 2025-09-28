@@ -25,6 +25,7 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     on<TimerTicked>(_onTimerTicked);
     on<ResetTimer>(_onResetTimer);
     on<ResendOtp>(_onResendOtp);
+    on<OtpChanged>(_onOtpChanged);
   }
 
   @override
@@ -62,6 +63,20 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     emit(state.copyWith(
       isLoading: false,
       success: true,
+    ));
+  }
+
+  Future<void> _onOtpChanged(OtpChanged event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      isOtpSuccess: false,
+      isOtpLoading: true,
+    ));
+    await Future.delayed(const Duration(seconds: 2));
+    emit(state.copyWith(
+      otp: event.otp,
+      isOtpFilled: event.otp.isNotEmpty,
+      isOtpLoading: false,
+      isOtpSuccess: true,
     ));
   }
 

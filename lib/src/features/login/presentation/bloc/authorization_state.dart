@@ -4,6 +4,11 @@ part of 'authorization_bloc.dart';
 abstract class AuthorizationState with _$AuthorizationState {
   const AuthorizationState._();
   const factory AuthorizationState({
+    String? otp,
+    @Default(false) bool isOtpFilled,
+    @Default(false) bool isOtpError,
+    @Default(false) bool isOtpLoading,
+    @Default(false) bool isOtpSuccess,
     String? phoneCode,
     @Default(false) bool isPhoneCodeFilled,
     String? flag,

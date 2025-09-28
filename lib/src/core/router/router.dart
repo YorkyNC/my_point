@@ -37,6 +37,7 @@ GoRouter routerProvider() {
     // initialLocation: RoutePaths.
     // initialLocation: RoutePaths.main,
     initialLocation: RoutePaths.loading,
+    // initialLocation: RoutePaths.otp,
     debugLogDiagnostics: true,
     routes: _routes,
   );

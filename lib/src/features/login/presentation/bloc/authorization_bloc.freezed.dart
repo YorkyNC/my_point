@@ -16,6 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthorizationState {
+  String? get otp => throw _privateConstructorUsedError;
+  bool get isOtpFilled => throw _privateConstructorUsedError;
+  bool get isOtpError => throw _privateConstructorUsedError;
+  bool get isOtpLoading => throw _privateConstructorUsedError;
+  bool get isOtpSuccess => throw _privateConstructorUsedError;
   String? get phoneCode => throw _privateConstructorUsedError;
   bool get isPhoneCodeFilled => throw _privateConstructorUsedError;
   String? get flag => throw _privateConstructorUsedError;
@@ -41,7 +46,12 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       _$AuthorizationStateCopyWithImpl<$Res, AuthorizationState>;
   @useResult
   $Res call(
-      {String? phoneCode,
+      {String? otp,
+      bool isOtpFilled,
+      bool isOtpError,
+      bool isOtpLoading,
+      bool isOtpSuccess,
+      String? phoneCode,
       bool isPhoneCodeFilled,
       String? flag,
       String? phoneNumber,
@@ -68,6 +78,11 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? otp = freezed,
+    Object? isOtpFilled = null,
+    Object? isOtpError = null,
+    Object? isOtpLoading = null,
+    Object? isOtpSuccess = null,
     Object? phoneCode = freezed,
     Object? isPhoneCodeFilled = null,
     Object? flag = freezed,
@@ -80,6 +95,26 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
     Object? isTimerRunning = null,
   }) {
     return _then(_value.copyWith(
+      otp: freezed == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isOtpFilled: null == isOtpFilled
+          ? _value.isOtpFilled
+          : isOtpFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpError: null == isOtpError
+          ? _value.isOtpError
+          : isOtpError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpLoading: null == isOtpLoading
+          ? _value.isOtpLoading
+          : isOtpLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpSuccess: null == isOtpSuccess
+          ? _value.isOtpSuccess
+          : isOtpSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
       phoneCode: freezed == phoneCode
           ? _value.phoneCode
           : phoneCode // ignore: cast_nullable_to_non_nullable
@@ -133,7 +168,12 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? phoneCode,
+      {String? otp,
+      bool isOtpFilled,
+      bool isOtpError,
+      bool isOtpLoading,
+      bool isOtpSuccess,
+      String? phoneCode,
       bool isPhoneCodeFilled,
       String? flag,
       String? phoneNumber,
@@ -158,6 +198,11 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? otp = freezed,
+    Object? isOtpFilled = null,
+    Object? isOtpError = null,
+    Object? isOtpLoading = null,
+    Object? isOtpSuccess = null,
     Object? phoneCode = freezed,
     Object? isPhoneCodeFilled = null,
     Object? flag = freezed,
@@ -170,6 +215,26 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
     Object? isTimerRunning = null,
   }) {
     return _then(_$AuthorizationStateImpl(
+      otp: freezed == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isOtpFilled: null == isOtpFilled
+          ? _value.isOtpFilled
+          : isOtpFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpError: null == isOtpError
+          ? _value.isOtpError
+          : isOtpError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpLoading: null == isOtpLoading
+          ? _value.isOtpLoading
+          : isOtpLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOtpSuccess: null == isOtpSuccess
+          ? _value.isOtpSuccess
+          : isOtpSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
       phoneCode: freezed == phoneCode
           ? _value.phoneCode
           : phoneCode // ignore: cast_nullable_to_non_nullable
@@ -218,7 +283,12 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
 
 class _$AuthorizationStateImpl extends _AuthorizationState {
   const _$AuthorizationStateImpl(
-      {this.phoneCode,
+      {this.otp,
+      this.isOtpFilled = false,
+      this.isOtpError = false,
+      this.isOtpLoading = false,
+      this.isOtpSuccess = false,
+      this.phoneCode,
       this.isPhoneCodeFilled = false,
       this.flag,
       this.phoneNumber,
@@ -230,6 +300,20 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
       this.isTimerRunning = false})
       : super._();
 
+  @override
+  final String? otp;
+  @override
+  @JsonKey()
+  final bool isOtpFilled;
+  @override
+  @JsonKey()
+  final bool isOtpError;
+  @override
+  @JsonKey()
+  final bool isOtpLoading;
+  @override
+  @JsonKey()
+  final bool isOtpSuccess;
   @override
   final String? phoneCode;
   @override
@@ -260,7 +344,7 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
 
   @override
   String toString() {
-    return 'AuthorizationState(phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning)';
+    return 'AuthorizationState(otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning)';
   }
 
   @override
@@ -268,6 +352,15 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthorizationStateImpl &&
+            (identical(other.otp, otp) || other.otp == otp) &&
+            (identical(other.isOtpFilled, isOtpFilled) ||
+                other.isOtpFilled == isOtpFilled) &&
+            (identical(other.isOtpError, isOtpError) ||
+                other.isOtpError == isOtpError) &&
+            (identical(other.isOtpLoading, isOtpLoading) ||
+                other.isOtpLoading == isOtpLoading) &&
+            (identical(other.isOtpSuccess, isOtpSuccess) ||
+                other.isOtpSuccess == isOtpSuccess) &&
             (identical(other.phoneCode, phoneCode) ||
                 other.phoneCode == phoneCode) &&
             (identical(other.isPhoneCodeFilled, isPhoneCodeFilled) ||
@@ -291,6 +384,11 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      otp,
+      isOtpFilled,
+      isOtpError,
+      isOtpLoading,
+      isOtpSuccess,
       phoneCode,
       isPhoneCodeFilled,
       flag,
@@ -314,7 +412,12 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
 
 abstract class _AuthorizationState extends AuthorizationState {
   const factory _AuthorizationState(
-      {final String? phoneCode,
+      {final String? otp,
+      final bool isOtpFilled,
+      final bool isOtpError,
+      final bool isOtpLoading,
+      final bool isOtpSuccess,
+      final String? phoneCode,
       final bool isPhoneCodeFilled,
       final String? flag,
       final String? phoneNumber,
@@ -326,6 +429,16 @@ abstract class _AuthorizationState extends AuthorizationState {
       final bool isTimerRunning}) = _$AuthorizationStateImpl;
   const _AuthorizationState._() : super._();
 
+  @override
+  String? get otp;
+  @override
+  bool get isOtpFilled;
+  @override
+  bool get isOtpError;
+  @override
+  bool get isOtpLoading;
+  @override
+  bool get isOtpSuccess;
   @override
   String? get phoneCode;
   @override

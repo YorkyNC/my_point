@@ -25,4 +25,5 @@ class RouteNames {
   static const String paymentMethod = 'payment-method';
   static const String currency = 'currency';
   static const String accountDetails = 'account-details';
+  static const String unregisteredUser = 'unregistered-user';
 }

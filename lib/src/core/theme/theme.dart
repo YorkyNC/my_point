@@ -99,8 +99,8 @@ class AppTheme {
         style: ButtonStyle(
           padding: const WidgetStatePropertyAll(buttonPadding),
           visualDensity: VisualDensity.compact,
-          backgroundColor: WidgetStatePropertyAll(colors.brand25),
-          overlayColor: WidgetStatePropertyAll(colors.brand50),
+          backgroundColor: WidgetStatePropertyAll(colors.mainAccent),
+          overlayColor: WidgetStatePropertyAll(colors.mainAccent),
           shape: const WidgetStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -116,9 +116,9 @@ class AppTheme {
           foregroundColor: WidgetStateProperty.resolveWith(
             (states) {
               if (states.contains(WidgetState.disabled)) {
-                return colors.brand50;
+                return colors.mainAccent;
               }
-              return colors.brand600;
+              return colors.mainAccent;
             },
           ),
         ),

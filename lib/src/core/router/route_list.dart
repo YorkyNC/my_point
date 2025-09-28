@@ -149,10 +149,14 @@ final List<RouteBase> _routes = [
         final data = state.extra as Map<String, dynamic>;
         return getPage(
           child: OtpPage(phone: data['phone']),
+          // child: const OtpPage(),
           state: state,
         );
       }),
-
+  GoRoute(
+    path: RoutePaths.unregisteredUser,
+    pageBuilder: (context, state) => getPage(child: const UnregisteredUserView(), state: state),
+  ),
   GoRoute(
     path: RoutePaths.personalIdentification,
     pageBuilder: (context, state) => getPage(child: const PersonalIdentificationPage(), state: state),
