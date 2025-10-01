@@ -119,14 +119,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildTitleSection(BuildContext context) {
     if (subtitle == null) {
-      return Text(title!, style: titleStyle ?? context.typography.inter16Bold.copyWith(color: context.colors.black));
+      return Text(title!,
+          style: titleStyle ?? context.typography.smallParagraphMedium.copyWith(color: context.colors.black));
     } else {
       return Column(
         crossAxisAlignment: titleCrossAlignment,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(title!, style: titleStyle ?? context.typography.inter16Bold.copyWith(color: context.colors.black)),
-          Text(subtitle!, style: subtitleStyle ?? context.typography.inter14Bold.copyWith(color: context.colors.black)),
+          Text(title!,
+              style: titleStyle ?? context.typography.smallParagraphMedium.copyWith(color: context.colors.black)),
+          Text(subtitle!,
+              style: subtitleStyle ?? context.typography.smallParagraph.copyWith(color: context.colors.black)),
         ],
       );
     }

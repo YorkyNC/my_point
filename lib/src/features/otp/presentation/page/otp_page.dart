@@ -53,9 +53,11 @@ class _OtpPageState extends State<OtpPage> {
             ),
           );
 
-          Future.delayed(Duration(seconds: 1), () {
-            // TODO: check if user is registered
-            context.push(RoutePaths.unregisteredUser);
+          // TODO: check if user is registered
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (context.mounted) {
+              context.push(RoutePaths.unregisteredUser);
+            }
           });
         },
         child: BlocBuilder<AuthorizationBloc, AuthorizationState>(
@@ -72,152 +74,155 @@ class _OtpPageState extends State<OtpPage> {
                 ),
               ),
               backgroundColor: context.colors.white,
-              body: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 24,
-                    horizontal: 16,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Подтвердите номер',
-                        style: context.typography.title.copyWith(
-                          color: context.colors.black,
+              body: state.isOtpLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 24,
+                          horizontal: 16,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 24),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.phone,
-                            style: context.typography.title.copyWith(
-                              color: context.colors.textprimary,
-                            ),
-                          ),
-                          Text(
-                            'Введите код из SMS сообщения',
-                            style: context.typography.smallParagraph.copyWith(
-                              color: context.colors.textprimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PinCodeTextField(
-                              appContext: context,
-                              length: 4,
-                              hintCharacter: '•',
-                              textStyle: context.typography.smallParagraph.copyWith(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Подтвердите номер',
+                              style: context.typography.title.copyWith(
                                 color: context.colors.black,
                               ),
-                              hintStyle: context.typography.smallParagraph.copyWith(
-                                color: context.colors.gray500,
-                              ),
-                              controller: _otpController,
-                              animationType: AnimationType.none,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              keyboardType: TextInputType.number,
-                              onCompleted: (value) {
-                                context.read<AuthorizationBloc>().add(OtpChanged(value));
-                                log(state.success.toString());
-                                log(state.isOtpFilled.toString());
-                                log(state.isLoading.toString());
-
-                                log(state.otp.toString());
-                              },
-                              pinTheme: PinTheme(
-                                disabledBorderWidth: 1.0,
-                                activeBorderWidth: 1.0,
-                                inactiveBorderWidth: 1.0,
-                                selectedBorderWidth: 1.0,
-                                shape: PinCodeFieldShape.underline,
-                                fieldWidth: MediaQuery.of(context).size.width * 0.175,
-                                borderWidth: 1.0,
-                                selectedColor: context.colors.textprimary,
-                                selectedFillColor: context.colors.white,
-                                inactiveColor: context.colors.gray500,
-                                inactiveFillColor: context.colors.white,
-                                activeColor: context.colors.lightSecondaryText,
-                                activeFillColor: context.colors.white,
-                                disabledColor: context.colors.textprimary,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                              textAlign: TextAlign.left,
+                            ),
+                            const SizedBox(height: 24),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.phone,
+                                  style: context.typography.title.copyWith(
+                                    color: context.colors.textprimary,
+                                  ),
+                                ),
+                                Text(
+                                  'Введите код из SMS сообщения',
+                                  style: context.typography.smallParagraph.copyWith(
+                                    color: context.colors.textprimary,
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
+                            const SizedBox(height: 24),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
+                                Expanded(
+                                  child: PinCodeTextField(
+                                    controller: _otpController,
+                                    autoDisposeControllers: false,
+                                    appContext: context,
+                                    length: 4,
+                                    hintCharacter: '•',
                                     textStyle: context.typography.smallParagraph.copyWith(
-                                      color: context.colors.lightSecondaryText,
+                                      color: context.colors.black,
                                     ),
+                                    hintStyle: context.typography.smallParagraph.copyWith(
+                                      color: context.colors.gray500,
+                                    ),
+                                    animationType: AnimationType.none,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    keyboardType: TextInputType.number,
+                                    onCompleted: (value) {
+                                      context.read<AuthorizationBloc>().add(OtpChanged(value));
+                                      log(state.success.toString());
+                                      log(state.isOtpFilled.toString());
+                                      log(state.isLoading.toString());
+
+                                      log(state.otp.toString());
+                                    },
+                                    pinTheme: PinTheme(
+                                      disabledBorderWidth: 1.0,
+                                      activeBorderWidth: 1.0,
+                                      inactiveBorderWidth: 1.0,
+                                      selectedBorderWidth: 1.0,
+                                      shape: PinCodeFieldShape.underline,
+                                      fieldWidth: MediaQuery.of(context).size.width * 0.175,
+                                      borderWidth: 1.0,
+                                      selectedColor: context.colors.textprimary,
+                                      selectedFillColor: context.colors.white,
+                                      inactiveColor: context.colors.gray500,
+                                      inactiveFillColor: context.colors.white,
+                                      activeColor: context.colors.lightSecondaryText,
+                                      activeFillColor: context.colors.white,
+                                      disabledColor: context.colors.textprimary,
+                                    ),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                    ],
                                   ),
-                                  onPressed: state.canRequestCode
-                                      ? () => context.read<AuthorizationBloc>().add(ResendOtp())
-                                      : null,
-                                  child: state.canRequestCode
-                                      ? Text(
-                                          'Отправить SMS-код повторно',
-                                          style: context.typography.smallParagraphMedium.copyWith(
-                                            color: context.colors.textprimary,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          textStyle: context.typography.smallParagraph.copyWith(
+                                            color: context.colors.lightSecondaryText,
                                           ),
-                                        )
-                                      : RichText(
-                                          text: TextSpan(
-                                            style: context.typography.smallParagraph,
-                                            children: [
-                                              TextSpan(
-                                                text: 'Новый код через ',
-                                                style: TextStyle(
-                                                  color: context.colors.lightSecondaryText,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '${state.remainingSeconds} секунд',
+                                        ),
+                                        onPressed: state.canRequestCode
+                                            ? () => context.read<AuthorizationBloc>().add(ResendOtp())
+                                            : null,
+                                        child: state.canRequestCode
+                                            ? Text(
+                                                'Отправить SMS-код повторно',
                                                 style: context.typography.smallParagraphMedium.copyWith(
                                                   color: context.colors.textprimary,
                                                 ),
+                                              )
+                                            : RichText(
+                                                text: TextSpan(
+                                                  style: context.typography.smallParagraph,
+                                                  children: [
+                                                    TextSpan(
+                                                      text: 'Новый код через ',
+                                                      style: TextStyle(
+                                                        color: context.colors.lightSecondaryText,
+                                                      ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: '${state.remainingSeconds} секунд',
+                                                      style: context.typography.smallParagraphMedium.copyWith(
+                                                        color: context.colors.textprimary,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 16),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Отправить код по WhatsApp',
-                                style: context.typography.smallParagraphMedium.copyWith(
-                                  color: context.colors.accent2,
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 16),
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Отправить код по WhatsApp',
+                                      style: context.typography.smallParagraphMedium.copyWith(
+                                        color: context.colors.accent2,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
             );
           },
         ),

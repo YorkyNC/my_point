@@ -51,11 +51,8 @@ void main([List<String>? args, AppFlavor flavor = AppFlavor.development]) async 
   // Start with loading screen
   runApp(
     Material(
-      child: ChangeNotifierProvider(
-        create: (_) => NetworkStatusNotifier(),
-        child: const MainApp(
-          flavor: AppFlavor.production,
-        ),
+      child: const MainApp(
+        flavor: AppFlavor.production,
       ),
     ),
   );

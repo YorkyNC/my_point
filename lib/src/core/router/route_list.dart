@@ -71,7 +71,7 @@ final List<RouteBase> _routes = [
           GoRoute(path: RoutePaths.initial, redirect: (context, state) => RoutePaths.main),
           GoRoute(
             path: RoutePaths.main,
-            pageBuilder: (context, state) => getPage(child: const ReviewPage(), state: state),
+            pageBuilder: (context, state) => getPage(child: const IntroductionPage(), state: state),
           ),
         ],
       ),
@@ -84,14 +84,14 @@ final List<RouteBase> _routes = [
       //     ),
       //   ],
       // ),
-      StatefulShellBranch(
-        routes: [
-          GoRoute(
-            path: RoutePaths.profile,
-            pageBuilder: (context, state) => getPage(child: const ProfilePage(), state: state),
-          ),
-        ],
-      ),
+      // StatefulShellBranch(
+      //   routes: [
+      //     GoRoute(
+      //       path: RoutePaths.profile,
+      //       pageBuilder: (context, state) => getPage(child: const ProfilePage(), state: state),
+      //     ),
+      //   ],
+      // ),
     ],
   ),
 
@@ -157,48 +157,21 @@ final List<RouteBase> _routes = [
     path: RoutePaths.unregisteredUser,
     pageBuilder: (context, state) => getPage(child: const UnregisteredUserView(), state: state),
   ),
+
   GoRoute(
-    path: RoutePaths.personalIdentification,
-    pageBuilder: (context, state) => getPage(child: const PersonalIdentificationPage(), state: state),
+    path: RoutePaths.successRegister,
+    pageBuilder: (context, state) {
+      return getPage(
+        child: SuccessRegisterPage(),
+        state: state,
+        fullscreenDialog: true,
+      );
+    },
   ),
   GoRoute(
-    path: RoutePaths.documentSelection,
-    pageBuilder: (context, state) => getPage(child: const DocumentSelectionPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.identification,
-    pageBuilder: (context, state) => getPage(child: const IdentityVerificationPage(), state: state),
-  ),
-  // GoRoute(
-  //   path: RoutePaths.orderDetails,
-  //   pageBuilder: (context, state) => getPage(child: const OrderDetailsPage(), state: state),
-  // ),
-  GoRoute(
-    path: RoutePaths.responses,
-    pageBuilder: (context, state) => getPage(child: const ResponsesPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.acceptedOrderDetails,
-    pageBuilder: (context, state) => getPage(child: const AcceptedOrderDetailsPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.support,
-    pageBuilder: (context, state) => getPage(child: const SupportPage(), state: state, fullscreenDialog: true),
-  ),
-  GoRoute(
-    path: RoutePaths.languageSelection,
-    pageBuilder: (context, state) => getPage(child: const LanguageSelectionPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.paymentMethod,
-    pageBuilder: (context, state) => getPage(child: const PaymentMethodPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.currency,
-    pageBuilder: (context, state) => getPage(child: const CurrencySelectionPage(), state: state),
-  ),
-  GoRoute(
-    path: RoutePaths.accountDetails,
-    pageBuilder: (context, state) => getPage(child: const AccountDetailsPage(), state: state),
+    path: RoutePaths.registerPVZ,
+    pageBuilder: (context, state) {
+      return getPage(child: RegisterPVZPage(), state: state);
+    },
   ),
 ];

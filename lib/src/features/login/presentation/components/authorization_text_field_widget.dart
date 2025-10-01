@@ -17,56 +17,45 @@ class AuthorizationTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: context.colors.lightSecondaryText,
-            width: 1.0,
-          ),
-        ),
+    return TextField(
+      onChanged: (value) => onChanged(value),
+      controller: _phoneController,
+      style: context.typography.smallParagraph.copyWith(
+        color: context.colors.black,
       ),
-      child: TextField(
-        onChanged: (value) => onChanged(value),
-        controller: _phoneController,
-        style: context.typography.smallParagraph.copyWith(
-          color: context.colors.black,
+      keyboardType: TextInputType.phone,
+      inputFormatters: [MaskedInputFormatter('(###) ###-####')],
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(vertical: 15),
+        hintText: '(_ _ _) _ _ _-_ _ -_ _',
+        hintStyle: context.typography.smallParagraph.copyWith(
+          color: context.colors.textGray,
         ),
-        keyboardType: TextInputType.phone,
-        inputFormatters: [MaskedInputFormatter('(###) ###-####')],
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(vertical: 15),
-          hintText: '(_ _ _) _ _ _-_ _ -_ _',
-          hintStyle: context.typography.smallParagraph.copyWith(
-            color: context.colors.textGray,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
           ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-            borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-            borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 1,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
           ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

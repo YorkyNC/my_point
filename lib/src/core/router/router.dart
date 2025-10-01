@@ -2,21 +2,11 @@
 
 import 'package:my_point/src/features/introduction/presentation/introduction_page.dart';
 import 'package:my_point/src/features/loading/presentation/splash_page.dart';
-import 'package:my_point/src/features/login/presentation/login_page.dart';
-import 'package:my_point/src/features/login/presentation/unregistered_user_view.dart';
+import 'package:my_point/src/features/login/presentation/components/success_register_page.dart';
+import 'package:my_point/src/features/login/presentation/page/login_page.dart';
+import 'package:my_point/src/features/login/presentation/page/unregistered_user_view.dart';
 import 'package:my_point/src/features/otp/presentation/page/otp_page.dart';
-import 'package:my_point/src/features/payment/presentation/page/payment_method_page.dart';
-import 'package:my_point/src/features/personal%20identification/presentation/document_selection_page.dart';
-import 'package:my_point/src/features/personal%20identification/presentation/identity_verification_page.dart';
-import 'package:my_point/src/features/personal%20identification/presentation/personal_identification_page.dart';
-import 'package:my_point/src/features/profile/presentation/page/account_details_page.dart';
-import 'package:my_point/src/features/profile/presentation/page/currency_selection_page.dart';
-import 'package:my_point/src/features/profile/presentation/page/language_selection_page.dart';
-import 'package:my_point/src/features/profile/presentation/page/profile_page.dart';
-import 'package:my_point/src/features/review/presentation/page/accepted_order_details_page.dart';
-import 'package:my_point/src/features/review/presentation/page/responses_page.dart';
-import 'package:my_point/src/features/review/presentation/page/review_page.dart';
-import 'package:my_point/src/features/review/presentation/page/support_page.dart';
+import 'package:my_point/src/features/register/presentation/page/register_p_v_z_page.dart';
 
 import '../../app/app_navigation_wrapper.dart';
 import '../../app/imports.dart';

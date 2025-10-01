@@ -31,7 +31,7 @@ class AppTheme {
           backgroundColor: WidgetStatePropertyAll(colors.white),
           shadowColor: const WidgetStatePropertyAll(Color(0x0D0A0D12)),
           textStyle: WidgetStatePropertyAll(
-            typography.inter16Bold.copyWith(
+            typography.smallParagraphMedium.copyWith(
               height: 1, //TODO height does not work properly with icon
             ),
           ),
@@ -109,7 +109,7 @@ class AppTheme {
             ),
           ),
           textStyle: WidgetStatePropertyAll(
-            typography.inter16Bold.copyWith(
+            typography.smallParagraphMedium.copyWith(
               height: 1, //TODO height does not work properly with icon
             ),
           ),
@@ -146,7 +146,7 @@ class AppTheme {
           borderSide: BorderSide(color: colors.mainAccent),
         ),
         enabledBorder: defaultInputBorder,
-        hintStyle: typography.interText16.copyWith(
+        hintStyle: typography.smallParagraphMedium.copyWith(
           color: colors.textGray,
         ),
         iconColor: colors.black,

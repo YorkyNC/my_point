@@ -87,7 +87,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
               Expanded(
                 child: TextField(
                   controller: _searchController,
-                  style: context.typography.inter16Medium.copyWith(
+                  style: context.typography.smallParagraphMedium.copyWith(
                     color: context.colors.black,
                   ),
                   decoration: InputDecoration(
@@ -101,7 +101,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                       color: context.colors.textGray,
                     ),
                     hintText: 'Поиск',
-                    hintStyle: context.typography.interText16.copyWith(
+                    hintStyle: context.typography.smallParagraphMedium.copyWith(
                       color: context.colors.textGray,
                     ),
                     border: OutlineInputBorder(
@@ -149,7 +149,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           '${country.name} (${country.dialCode})',
-                          style: context.typography.inter16Medium.copyWith(
+                          style: context.typography.smallParagraphMedium.copyWith(
                             color: context.colors.black,
                           ),
                         ),

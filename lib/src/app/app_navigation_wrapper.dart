@@ -24,11 +24,11 @@ class AppNavigationWrapper extends StatelessWidget {
         backgroundColor: context.colors.white,
         elevation: 8,
         unselectedItemColor: context.colors.gray,
-        unselectedLabelStyle: context.typography.interText8.copyWith(
+        unselectedLabelStyle: context.typography.smallParagraph.copyWith(
           color: context.colors.gray,
         ),
         selectedItemColor: context.colors.blue,
-        selectedLabelStyle: context.typography.interText8.copyWith(
+        selectedLabelStyle: context.typography.smallParagraph.copyWith(
           color: context.colors.blue,
           fontWeight: FontWeight.w600,
         ),

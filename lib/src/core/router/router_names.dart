@@ -26,4 +26,6 @@ class RouteNames {
   static const String currency = 'currency';
   static const String accountDetails = 'account-details';
   static const String unregisteredUser = 'unregistered-user';
+  static const String successRegister = 'success-register';
+  static const String registerPVZ = 'register-pvz';
 }

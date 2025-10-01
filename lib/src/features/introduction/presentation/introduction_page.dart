@@ -149,6 +149,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              overlayColor: context.colors.mainAccent.withValues(alpha: 0.1),
+                              backgroundColor: context.colors.mainAccent,
+                            ),
                             onPressed: () {
                               context.go(RoutePaths.login);
                               st.setHasSeenIntroduction(true);
@@ -157,12 +161,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                               spacing: 8,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  context.loc.continueNext,
-                                  style: context.typography.interText16.copyWith(
-                                    color: context.colors.white,
-                                  ),
-                                ),
+                                Text(context.loc.continueNext),
                                 Icon(
                                   Icons.arrow_forward,
                                   color: context.colors.white,

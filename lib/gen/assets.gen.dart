@@ -27,8 +27,12 @@ class $AssetsAppImagesGen {
   /// File path: assets/app_images/my_point_second.svg
   String get myPointSecond => 'assets/app_images/my_point_second.svg';
 
+  /// File path: assets/app_images/success.jpg
+  AssetGenImage get successJpg =>
+      const AssetGenImage('assets/app_images/success.jpg');
+
   /// File path: assets/app_images/success.svg
-  String get success => 'assets/app_images/success.svg';
+  String get successSvg => 'assets/app_images/success.svg';
 
   /// List of all assets
   List<dynamic> get values => [
@@ -36,7 +40,8 @@ class $AssetsAppImagesGen {
         introductionPageJpg,
         introductionPageSvg,
         myPointSecond,
-        success
+        successJpg,
+        successSvg
       ];
 }
 

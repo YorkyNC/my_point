@@ -15,12 +15,6 @@ import 'package:my_point/src/core/api/client/rest/dio/dio_client.dart' as _i274;
 import 'package:my_point/src/core/services/auth/auth_service_impl.dart'
     as _i765;
 import 'package:my_point/src/core/services/auth/i_auth_service.dart' as _i1037;
-import 'package:my_point/src/features/airport/data/repositories/mock_airport_repository.dart'
-    as _i317;
-import 'package:my_point/src/features/airport/domain/repositories/airport_repository_impl.dart'
-    as _i652;
-import 'package:my_point/src/features/create_delivery/presentation/bloc/create_delivery_bloc.dart'
-    as _i306;
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart'
     as _i1033;
 
@@ -47,10 +41,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i765.AuthServiceImpl(gh<_i274.DioRestClient>()),
       instanceName: 'AuthServiceImpl',
     );
-    gh.lazySingleton<_i652.AirportRepositoryImpl>(
-        () => _i317.MockAirportRepository());
-    gh.factory<_i306.CreateDeliveryBloc>(
-        () => _i306.CreateDeliveryBloc(gh<_i652.AirportRepositoryImpl>()));
     return this;
   }
 }
