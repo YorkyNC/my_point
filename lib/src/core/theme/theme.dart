@@ -109,7 +109,7 @@ class AppTheme {
             ),
           ),
           textStyle: WidgetStatePropertyAll(
-            typography.smallParagraphMedium.copyWith(
+            typography.smallParagraphMedium2.copyWith(
               height: 1, //TODO height does not work properly with icon
             ),
           ),

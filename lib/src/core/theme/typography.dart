@@ -13,6 +13,16 @@ class AppTextStyles {
         letterSpacing: 0,
       );
 
+  TextStyle get mediumParagraph => const TextStyle(
+        fontSize: 16,
+        decoration: TextDecoration.none,
+        fontFamily: 'Montserrat',
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        height: 16 / 16,
+        letterSpacing: 0,
+      );
+
   TextStyle get introTitle => const TextStyle(
         fontSize: 28,
         decoration: TextDecoration.none,
@@ -60,6 +70,15 @@ class AppTextStyles {
         fontWeight: FontWeight.w500,
         height: 18 / 14,
         letterSpacing: 0,
+      );
+  TextStyle get smallParagraphMedium2 => const TextStyle(
+        fontSize: 11,
+        decoration: TextDecoration.none,
+        fontFamily: 'Montserrat',
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        height: 18 / 11,
+        letterSpacing: 0.04,
       );
 
   TextStyle get extraSmallParagraphMedium => const TextStyle(
