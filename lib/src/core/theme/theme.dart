@@ -155,7 +155,7 @@ class AppTheme {
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: colors.textprimary,
         selectionHandleColor: colors.mainAccent,
-        selectionColor: colors.mainAccent,
+        selectionColor: colors.textSelectionColor,
       ),
       cupertinoOverrideTheme: NoDefaultCupertinoThemeData(
         primaryColor: colors.brand300,

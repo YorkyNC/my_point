@@ -51,7 +51,7 @@ class SuccessRegisterMessageWidget extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () async {
-                      context.pop();
+                      // context.pop(); // maybe delete this line
 
                       context.push(RoutePaths.successRegister);
                     },

@@ -18,6 +18,8 @@ class AppColors {
 
   Color get mainAccent => const Color(0xffF96000);
 
+  Color get textSelectionColor => const Color(0x4D36bff9);
+
   Color get textprimary => const Color(0xff131315);
 
   Color get textSecondary => const Color(0xffFCEFDB);

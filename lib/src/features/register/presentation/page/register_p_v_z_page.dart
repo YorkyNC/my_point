@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
-import 'package:my_point/src/features/login/presentation/components/unregistered_user_text_field.dart';
-import 'package:my_point/src/features/register/presentation/components/register_p_v_z_page.dart';
+import 'package:my_point/src/core/services/injectable/injectable_service.dart';
+import 'package:my_point/src/features/register/presentation/components/first_step_view.dart';
+import 'package:my_point/src/features/register/presentation/components/second_step_view.dart';
+import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart';
 
 class RegisterPVZPage extends StatefulWidget {
   const RegisterPVZPage({super.key});
@@ -12,6 +14,10 @@ class RegisterPVZPage extends StatefulWidget {
 }
 
 class _RegisterPVZPageState extends State<RegisterPVZPage> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  final int _totalPages = 2;
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _totalAreaController = TextEditingController();
   final TextEditingController _entranceController = TextEditingController();
@@ -21,92 +27,103 @@ class _RegisterPVZPageState extends State<RegisterPVZPage> {
   final TextEditingController _commentController = TextEditingController();
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    _nameController.dispose();
+    _totalAreaController.dispose();
+    _entranceController.dispose();
+    _apartmentController.dispose();
+    _floorController.dispose();
+    _phoneController.dispose();
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  void _nextPage() {
+    if (_currentPage < _totalPages - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _previousPage() {
+    if (_currentPage > 0) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      context.pop();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Icon(
-            CupertinoIcons.chevron_left,
-            color: context.colors.textprimary,
-          ),
-        ),
+    return BlocProvider(
+      create: (context) => getIt<RegisterPvzBloc>(),
+      child: Scaffold(
         backgroundColor: context.colors.white,
-        title: Text('Шаг 1'),
-        titleTextStyle: context.typography.mediumParagraph.copyWith(color: context.colors.black),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(),
-            child: Text(
-              'закрыть'.toUpperCase(),
-              style: context.typography.smallParagraphMedium2.copyWith(
-                color: context.colors.accent2,
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            onPressed: _previousPage,
+            icon: Icon(
+              CupertinoIcons.chevron_left,
+              color: context.colors.textprimary,
+            ),
+          ),
+          backgroundColor: context.colors.white,
+          title: Text('Шаг ${_currentPage + 1}'),
+          titleTextStyle: context.typography.mediumParagraph.copyWith(color: context.colors.black),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(),
+              child: Text(
+                'закрыть'.toUpperCase(),
+                style: context.typography.smallParagraphMedium2.copyWith(
+                  color: context.colors.accent2,
+                ),
               ),
             ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4.0),
-          child: LinearProgressIndicator(
-            color: context.colors.mainAccent,
-            backgroundColor: context.colors.gray100,
-            minHeight: 2,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 14),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text('Общие сведения',
-                      style: context.typography.title.copyWith(color: context.colors.textprimary)),
-                ),
-                SizedBox(height: 20),
-                UnregisteredUserTextField(hintText: 'Наименование ПВЗ', controller: _nameController),
-                SizedBox(height: 20),
-                UnregisteredUserTextField(hintText: 'Общая площадь', controller: _totalAreaController),
-                SizedBox(height: 40),
-                UnregisteredListTile(title: 'Населенный пункт', subtitle: 'г. Алматы'),
-                SizedBox(height: 24),
-                UnregisteredListTile(title: 'улица, дом', subtitle: 'Введите адрес'),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(child: UnregisteredUserTextField(hintText: 'Подъезд', controller: _entranceController)),
-                    SizedBox(width: 16),
-                    Expanded(
-                        child:
-                            UnregisteredUserTextField(hintText: '№ квартиры/офиса', controller: _apartmentController)),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(child: UnregisteredUserTextField(hintText: 'Этаж', controller: _floorController)),
-                    SizedBox(width: 16),
-                    Expanded(child: UnregisteredUserTextField(hintText: 'Домофон', controller: _phoneController)),
-                  ],
-                ),
-                SizedBox(height: 20),
-                UnregisteredUserTextField(hintText: 'Комментарии', controller: _commentController),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                        child: ElevatedButton(
-                            onPressed: _phoneController.text.isNotEmpty ? () {} : null, child: Text('Далее'))),
-                  ],
-                ),
-              ],
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(4.0),
+            child: LinearProgressIndicator(
+              value: (_currentPage + 1) / _totalPages,
+              color: context.colors.mainAccent,
+              backgroundColor: context.colors.gray100,
+              minHeight: 2,
             ),
           ),
+        ),
+        body: BlocBuilder<RegisterPvzBloc, RegisterPvzState>(
+          builder: (context, state) {
+            final bloc = context.read<RegisterPvzBloc>();
+            return PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              children: [
+                FirstStepView(
+                  nameController: _nameController,
+                  totalAreaController: _totalAreaController,
+                  entranceController: _entranceController,
+                  apartmentController: _apartmentController,
+                  floorController: _floorController,
+                  phoneController: _phoneController,
+                  commentController: _commentController,
+                  onNext: _nextPage,
+                ),
+                SecondStepView(),
+              ],
+            );
+          },
         ),
       ),
     );
