@@ -68,30 +68,46 @@ final List<RouteBase> _routes = [
       // Tab 0 - Home
       StatefulShellBranch(
         routes: [
-          GoRoute(path: RoutePaths.initial, redirect: (context, state) => RoutePaths.main),
+          GoRoute(path: RoutePaths.initial, redirect: (context, state) => RoutePaths.home),
           GoRoute(
-            path: RoutePaths.main,
-            pageBuilder: (context, state) => getPage(child: const IntroductionPage(), state: state),
+            path: RoutePaths.home,
+            pageBuilder: (context, state) => getPage(child: HomePage(), state: state),
           ),
         ],
       ),
       // Tab 1 - Create Delivery
-      // StatefulShellBranch(
-      //   routes: [
-      //     GoRoute(
-      //       path: RoutePaths.createDelivery,
-      //       pageBuilder: (context, state) => getPage(child: CreateDeliveryPage(), state: state),
-      //     ),
-      //   ],
-      // ),
-      // StatefulShellBranch(
-      //   routes: [
-      //     GoRoute(
-      //       path: RoutePaths.profile,
-      //       pageBuilder: (context, state) => getPage(child: const ProfilePage(), state: state),
-      //     ),
-      //   ],
-      // ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: RoutePaths.delivery,
+            pageBuilder: (context, state) => getPage(child: DeliveryPage(), state: state),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: RoutePaths.order,
+            pageBuilder: (context, state) => getPage(child: OrderPage(), state: state),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: RoutePaths.profile,
+            pageBuilder: (context, state) => getPage(child: ProfilePage(), state: state),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: RoutePaths.scan,
+            pageBuilder: (context, state) => getPage(child: ScanPage(), state: state),
+          ),
+        ],
+      ),
     ],
   ),
 

@@ -18,55 +18,97 @@ class AppNavigationWrapper extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.colors.white,
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: context.colors.white,
-        elevation: 8,
-        unselectedItemColor: context.colors.gray,
-        unselectedLabelStyle: context.typography.smallParagraph.copyWith(
-          color: context.colors.gray,
+      bottomNavigationBar: Container(
+        height: 80,
+        margin: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: context.colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF000000).withOpacity(0.07),
+                      blurRadius: 30,
+                      spreadRadius: 0,
+                      offset: const Offset(-10, 10),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildNavItem(
+                      context,
+                      index: 0,
+                      icon: Icons.home_outlined,
+                      activeIcon: Icons.home,
+                    ),
+                    _buildNavItem(
+                      context,
+                      index: 1,
+                      icon: Icons.local_shipping_outlined,
+                      activeIcon: Icons.local_shipping,
+                    ),
+                    _buildNavItem(
+                      context,
+                      index: 2,
+                      icon: Icons.inventory_outlined,
+                      activeIcon: Icons.inventory,
+                    ),
+                    _buildNavItem(
+                      context,
+                      index: 3,
+                      icon: Icons.person_outline,
+                      activeIcon: Icons.person,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () => onTap(4),
+              child: Container(
+                height: 80,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
+                decoration: BoxDecoration(
+                  color: context.colors.mainAccent,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.qr_code_scanner,
+                  color: context.colors.white,
+                  size: 28,
+                ),
+              ),
+            ),
+          ],
         ),
-        selectedItemColor: context.colors.blue,
-        selectedLabelStyle: context.typography.smallParagraph.copyWith(
-          color: context.colors.blue,
-          fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    BuildContext context, {
+    required int index,
+    required IconData icon,
+    required IconData activeIcon,
+  }) {
+    final bool isActive = currentIndex == index;
+
+    return GestureDetector(
+      onTap: () => onTap(index),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
+        child: Icon(
+          isActive ? activeIcon : icon,
+          color: isActive ? context.colors.mainAccent : Colors.grey[600],
+          size: 24,
         ),
-        onTap: (value) {
-          onTap(value);
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: currentIndex == 0 ? context.colors.blue : context.colors.gray,
-            ),
-            activeIcon: Icon(
-              Icons.home,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_box_outlined,
-              color: currentIndex == 1 ? context.colors.blue : context.colors.gray,
-            ),
-            activeIcon: Icon(
-              Icons.add_box,
-            ),
-            label: 'Create',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              color: currentIndex == 2 ? context.colors.blue : context.colors.gray,
-            ),
-            activeIcon: Icon(
-              Icons.person,
-            ),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }

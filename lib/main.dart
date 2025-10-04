@@ -1,6 +1,4 @@
 import 'package:logger/logger.dart';
-import 'package:my_point/src/core/network/network_status_notifier.dart';
-import 'package:provider/provider.dart';
 
 import 'src/app/application.dart';
 import 'src/app/imports.dart';

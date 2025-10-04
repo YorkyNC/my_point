@@ -28,4 +28,8 @@ class RouteNames {
   static const String unregisteredUser = 'unregistered-user';
   static const String successRegister = 'success-register';
   static const String registerPVZ = 'register-pvz';
+  static const String home = 'home';
+  static const String delivery = 'delivery';
+  static const String scan = 'scan';
+  static const String order = 'order';
 }
