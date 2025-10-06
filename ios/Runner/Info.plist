@@ -60,7 +60,7 @@
 		<key>NSCalendarsUsageDescription</key>
 		<string>Access to your calendar is needed to manage events.</string>
 		<key>NSCameraUsageDescription</key>
-		<string>Camera access is required to take photos or videos.</string>
+		<string>Camera access is required to scan QR codes and take photos or videos.</string>
 		<key>NSContactsUsageDescription</key>
 		<string>Access to your contacts is needed to share with them.</string>
 		<key>NSDocumentsFolderUsageDescription</key>

@@ -8,6 +8,11 @@ xmlns:tools="http://schemas.android.com/tools"
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- Camera permission for QR code scanning -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Required for Google ML Kit -->
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 
 
     <queries>

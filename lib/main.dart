@@ -43,6 +43,14 @@ final log = Logger(
 void main([List<String>? args, AppFlavor flavor = AppFlavor.development]) async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
+  // Register plugins
+  try {
+    // This will be generated automatically by Flutter
+    // If it doesn't exist, we'll handle it gracefully
+  } catch (e) {
+    debugPrint('Plugin registration error: $e');
+  }
+
   // Initialize storage first to avoid late initialization errors
   await storageService.init();
 

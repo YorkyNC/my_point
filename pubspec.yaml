@@ -25,6 +25,7 @@ dependencies:
   equatable: ^2.0.7
   file_picker: 10.2.0
   firebase_analytics: ^11.6.0
+  floating_navbar: ^3.0.0
   firebase_core: 3.15.2
   firebase_crashlytics: ^4.3.10
   firebase_messaging: 15.2.10
@@ -46,6 +47,7 @@ dependencies:
   google_api_availability: ^5.0.0
   googleapis: ^14.0.0
   googleapis_auth: ^2.0.0
+  mobile_scanner: ^7.1.2
   hive_flutter: ^1.1.0
   image_picker: ^1.1.2
   injectable: ^2.1.1

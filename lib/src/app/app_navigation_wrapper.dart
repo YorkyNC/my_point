@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 
@@ -15,17 +17,21 @@ class AppNavigationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isScanPage = currentIndex == 4;
+    log('isScanPage: $isScanPage');
     return Scaffold(
-      backgroundColor: context.colors.white,
+      extendBody: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+      backgroundColor: isScanPage ? Colors.transparent : context.colors.white,
       body: child,
-      bottomNavigationBar: Container(
+      floatingActionButton: Container(
         height: 80,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
             Expanded(
               child: Container(
-                height: 80,
+                height: 70,
                 decoration: BoxDecoration(
                   color: context.colors.white,
                   borderRadius: BorderRadius.circular(50),
