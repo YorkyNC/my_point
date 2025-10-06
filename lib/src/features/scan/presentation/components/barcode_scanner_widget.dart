@@ -3,28 +3,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:my_point/src/features/scan/presentation/components/custom_scan_window_overlay.dart';
+import 'package:my_point/src/features/scan/presentation/components/barcode_scan_window_overlay.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_loading_state_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_text_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/torch_toggle_widget.dart';
 import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/q_r_bloc.dart';
 
-class QRScannerWidget extends StatefulWidget {
+class BarcodeScannerWidget extends StatefulWidget {
   final VoidCallback? onClose;
 
-  const QRScannerWidget({
+  const BarcodeScannerWidget({
     super.key,
     this.onClose,
   });
 
   @override
-  State<QRScannerWidget> createState() => _QRScannerWidgetState();
+  State<BarcodeScannerWidget> createState() => _BarcodeScannerWidgetState();
 }
 
-class _QRScannerWidgetState extends State<QRScannerWidget> {
+class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   MobileScannerController? controller;
 
-  static const double _scanAreaWidthPercent = 0.7;
+  static const double _scanAreaWidthPercent = 0.85;
+  static const double _scanAreaHeightRatio = 0.5;
   static const double _borderRadius = 16.0;
 
   @override
@@ -34,7 +35,17 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
       autoStart: true,
       detectionSpeed: DetectionSpeed.normal,
       detectionTimeoutMs: 250,
-      formats: [],
+      formats: [
+        BarcodeFormat.ean13,
+        BarcodeFormat.ean8,
+        BarcodeFormat.code128,
+        BarcodeFormat.code39,
+        BarcodeFormat.code93,
+        BarcodeFormat.upcA,
+        BarcodeFormat.upcE,
+        BarcodeFormat.codabar,
+        BarcodeFormat.itf,
+      ],
       returnImage: false,
       torchEnabled: false,
       invertImage: false,
@@ -56,7 +67,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     if (!qrBloc.state.hasScanned && capture.barcodes.isNotEmpty) {
       final String? code = capture.barcodes.first.rawValue;
       if (code != null) {
-        qrBloc.add(QRCodeDetected(code));
+        qrBloc.add(BarcodeCodeDetected(code));
       }
     }
   }
@@ -64,12 +75,13 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final scanAreaSize = screenSize.width * _scanAreaWidthPercent;
+    final scanAreaWidth = screenSize.width * _scanAreaWidthPercent;
+    final scanAreaHeight = scanAreaWidth * _scanAreaHeightRatio;
 
     final scanWindow = Rect.fromCenter(
       center: screenSize.center(Offset.zero),
-      width: scanAreaSize,
-      height: scanAreaSize,
+      width: scanAreaWidth,
+      height: scanAreaHeight,
     );
 
     return BlocListener<QRBloc, QRState>(
@@ -92,7 +104,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                     ),
                     IgnorePointer(
                       child: CustomPaint(
-                        painter: CustomScanWindowOverlay(
+                        painter: BarcodeScanWindowOverlay(
                           scanWindow: scanWindow,
                           borderRadius: _borderRadius,
                         ),
@@ -101,16 +113,15 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                     ),
                     ScannerTextWidget(
                         screenSize: screenSize,
-                        scanAreaSize: scanAreaSize,
-                        text: 'Скан QR-кода',
-                        subtitle: 'Направьте камеру на QR-код'),
+                        scanAreaSize: scanAreaHeight,
+                        text: 'Скан штрих-кода',
+                        subtitle: 'Направьте камеру на штрих-код'),
                     TorchToggleWidget(
                       screenSize: screenSize,
-                      scanAreaHeight: scanAreaSize,
+                      scanAreaHeight: scanAreaHeight,
                       torchEnabled: state.torchEnabled,
                     ),
-                    // Loading overlay
-                    if (state.isLoading) ScannerLoadingStateWidget(text: 'Обработка QR-кода...'),
+                    if (state.isLoading) ScannerLoadingStateWidget(text: 'Обработка штрих-кода...'),
                   ],
                 );
               },

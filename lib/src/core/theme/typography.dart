@@ -148,4 +148,12 @@ class AppTextStyles {
         height: 1,
         letterSpacing: 0,
       );
+  TextStyle get semiBold2 => const TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w600,
+        fontStyle: FontStyle.normal,
+        fontSize: 14,
+        height: 1,
+        letterSpacing: 0,
+      );
 }

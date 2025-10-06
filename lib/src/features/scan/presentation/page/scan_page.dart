@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
+import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/services/injectable/injectable_service.dart';
+import 'package:my_point/src/features/login/presentation/components/custom_snack_bar.dart';
 
+import '../components/barcode_scanner_widget.dart';
 import '../components/qr_scanner_widget.dart';
-import '../services/permission_service.dart';
+import 'bloc/bloc/q_r_bloc.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -11,89 +15,142 @@ class ScanPage extends StatefulWidget {
   State<ScanPage> createState() => _ScanPageState();
 }
 
-class _ScanPageState extends State<ScanPage> {
-  bool _hasPermission = false;
-  bool _isCheckingPermission = true;
+class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late QRBloc _qrBloc;
 
   @override
   void initState() {
     super.initState();
-    _checkPermissions();
+    _qrBloc = getIt<QRBloc>()..add(ScanQRCode());
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_onTabChanged);
   }
 
-  Future<void> _checkPermissions() async {
-    final hasPermission = await PermissionService.checkCameraPermission();
-    setState(() {
-      _hasPermission = hasPermission;
-      _isCheckingPermission = false;
-    });
-
-    if (!hasPermission) {
-      _requestPermission();
+  void _onTabChanged() {
+    if (_tabController.indexIsChanging && mounted) {
+      _qrBloc.add(ResetScanner());
+      _qrBloc.add(ScanQRCode());
     }
   }
 
-  Future<void> _requestPermission() async {
-    final granted = await PermissionService.requestCameraPermission();
-    setState(() {
-      _hasPermission = granted;
-    });
-
-    if (!granted) {
-      _showPermissionDeniedDialog();
-    }
+  @override
+  void dispose() {
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
+    _qrBloc.close();
+    super.dispose();
   }
 
-  void _showPermissionDeniedDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Camera Permission Required'),
-        content: const Text(
-          'This app needs camera permission to scan QR codes. '
-          'Please grant permission in settings.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Show instruction to manually enable camera permission in settings
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Please enable camera permission in your device settings'),
-                  duration: Duration(seconds: 3),
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: _qrBloc,
+      child: BlocListener<QRBloc, QRState>(
+        listener: (context, state) {
+          if (state.qrCode != null && state.processedQRCode == null && !state.isLoading) {
+            _showCodeResult(context, state.qrCode!, _tabController.index == 0);
+          }
+
+          if (state.processedQRCode != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.show(
+                color: context.colors.success500,
+                title: state.processedQRCode!,
+                seconds: 3,
+                context: context,
+              ),
+            );
+            context.read<QRBloc>().add(ResetScanner());
+            context.read<QRBloc>().add(ScanQRCode());
+          }
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.show(
+                color: context.colors.error500,
+                title: state.errorMessage!,
+                seconds: 3,
+                context: context,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            leading: const Icon(Icons.arrow_back_ios_new_rounded, size: 24), // dont
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  CupertinoIcons.question_circle,
+                  size: 24,
                 ),
-              );
-            },
-            child: const Text('Settings'),
+              ),
+            ],
+            title: Text('Сканирование посылок'),
+            titleTextStyle: context.typography.mediumParagraph,
+            backgroundColor: context.colors.mainAccent,
+            foregroundColor: context.colors.white,
+            elevation: 0,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: context.colors.mainAccent,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
+                ),
+                child: TabBar(
+                  dividerColor: Colors.transparent,
+                  tabAlignment: TabAlignment.fill,
+                  padding: EdgeInsets.zero,
+                  controller: _tabController,
+                  indicatorColor: context.colors.white,
+                  labelColor: context.colors.white,
+                  unselectedLabelColor: context.colors.white,
+                  labelStyle: context.typography.semiBold2,
+                  unselectedLabelStyle: context.typography.semiBold2,
+                  tabs: const [
+                    Tab(text: 'Штрих-код'),
+                    Tab(text: 'QR-код'),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ],
+          body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const [
+              BarcodeScannerWidget(),
+              QRScannerWidget(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  void _onQRCodeDetected(String qrCode) {
-    _showQRCodeResult(qrCode);
-  }
-
-  void _showQRCodeResult(String qrCode) {
+  void _showCodeResult(BuildContext context, String code, bool isQRCode) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('QR Code Detected'),
+      builder: (dialogContext) => AlertDialog(
+        title: Text(isQRCode ? 'QR-код обнаружен' : 'Штрих-код обнаружен'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Content:'),
+            const Text('Содержание:'),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(8),
@@ -102,7 +159,7 @@ class _ScanPageState extends State<ScanPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                qrCode,
+                code,
                 style: const TextStyle(fontFamily: 'monospace'),
               ),
             ),
@@ -110,99 +167,22 @@ class _ScanPageState extends State<ScanPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            onPressed: () {
+              dialogContext.pop();
+              context.read<QRBloc>().add(ResetScanner());
+              context.read<QRBloc>().add(ScanQRCode());
+            },
+            child: const Text('Закрыть'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
-              // Here you can add logic to copy to clipboard, open URL, etc.
-              _handleQRCodeAction(qrCode);
+              dialogContext.pop();
+              context.read<QRBloc>().add(StopScanning());
             },
-            child: const Text('Action'),
+            child: const Text('Действие'),
           ),
         ],
       ),
-    );
-  }
-
-  void _handleQRCodeAction(String qrCode) {
-    // Add your QR code handling logic here
-    // For example: copy to clipboard, open URL, navigate to specific screen, etc.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('QR Code processed: ${qrCode.length > 50 ? '${qrCode.substring(0, 50)}...' : qrCode}'),
-        duration: const Duration(seconds: 3),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_isCheckingPermission) {
-      return const Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16),
-              Text('Checking permissions...'),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (!_hasPermission) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('QR Scanner'),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.camera_alt_outlined,
-                  size: 64,
-                  color: Colors.grey[400],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Camera Permission Required',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'To scan QR codes, please grant camera permission.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _requestPermission,
-                  child: const Text('Grant Permission'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    return QRScannerWidget(
-      onQRCodeDetected: _onQRCodeDetected,
-      onClose: () => context.pop(),
     );
   }
 }
