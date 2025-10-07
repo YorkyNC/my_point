@@ -59,11 +59,9 @@ class AppNavigationWrapper extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
                 decoration: BoxDecoration(color: context.colors.mainAccent, shape: BoxShape.circle),
                 child: SvgPicture.asset(
+                  width: 30,
+                  height: 30,
                   context.assetImages.scan,
-                  // colorFilter: ColorFilter.mode(
-                  //   context.colors.white,
-                  //   BlendMode.srcIn,
-                  // ),
                 ),
               ),
             ),
