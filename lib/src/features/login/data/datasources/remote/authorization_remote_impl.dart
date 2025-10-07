@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_point/src/features/login/domain/entities/request_otp_code_entity.dart';
 import 'package:my_point/src/features/login/domain/entities/sign_in_entity.dart';
 import 'package:my_point/src/features/login/domain/entities/sign_up_entity.dart';
+import 'package:my_point/src/features/login/domain/request/request_otp_code.dart';
 import 'package:my_point/src/features/login/domain/request/sign_in_request.dart';
 import 'package:my_point/src/features/login/domain/request/sign_up_request.dart';
 
@@ -64,6 +66,31 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
       },
       (result) async {
         return Right(SignUpEntity.fromJson(result.data['data']));
+      },
+    );
+  }
+
+  @override
+  Future<Either<DomainException, RequestOtpCodeEntity>> requestOtpCode(RequestOtpCode request) async {
+    final Either<DomainException, Response<dynamic>> response = await client.get(
+      '${EndPoints.baseUrl}${EndPoints.signUp}',
+      queryParameters: {
+        'phoneNumber': request.phoneNumber,
+      },
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+        },
+      ),
+    );
+    return response.fold(
+      (error) {
+        log.d(request.phoneNumber.toString());
+        return Left(error);
+      },
+      (result) async {
+        return Right(RequestOtpCodeEntity.fromJson(result.data['data']));
       },
     );
   }
