@@ -18,24 +18,44 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late QRBloc _qrBloc;
+  final GlobalKey _barcodeKey = GlobalKey();
+  final GlobalKey _qrKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _qrBloc = getIt<QRBloc>()..add(ScanQRCode());
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
-    if (_tabController.indexIsChanging && mounted) {
+    if (!_tabController.indexIsChanging && mounted) {
       _qrBloc.add(ResetScanner());
       _qrBloc.add(ScanQRCode());
+
+      // Stop the inactive scanner and start the active one
+      if (_tabController.index == 0) {
+        // Barcode tab is active
+        (_qrKey.currentState as dynamic)?.stopScanning();
+        Future.delayed(const Duration(milliseconds: 100), () {
+          (_barcodeKey.currentState as dynamic)?.startScanning();
+        });
+      } else {
+        // QR tab is active
+        (_barcodeKey.currentState as dynamic)?.stopScanning();
+        Future.delayed(const Duration(milliseconds: 100), () {
+          (_qrKey.currentState as dynamic)?.startScanning();
+        });
+      }
     }
   }
 
   @override
   void dispose() {
+    (_barcodeKey.currentState as dynamic)?.stopScanning();
+    (_qrKey.currentState as dynamic)?.stopScanning();
+
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
     _qrBloc.close();
@@ -49,8 +69,10 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
       child: BlocListener<QRBloc, QRState>(
         listener: (context, state) {
           if (state.qrCode != null && state.processedQRCode == null && !state.isLoading) {
-            _showCodeResult(context, state.qrCode!, _tabController.index == 0);
-          }
+            _showCodeResult(context, state.qrCode!, true);
+          } else if (state.barcodeCode != null && state.processedQRCode == null && !state.isLoading) {
+            _showCodeResult(context, state.barcodeCode!, false);
+          } else {}
 
           if (state.processedQRCode != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -131,9 +153,9 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
           body: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
-            children: const [
-              BarcodeScannerWidget(),
-              QRScannerWidget(),
+            children: [
+              BarcodeScannerWidget(key: _barcodeKey),
+              QRScannerWidget(key: _qrKey),
             ],
           ),
         ),
@@ -144,45 +166,52 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
   void _showCodeResult(BuildContext context, String code, bool isQRCode) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(isQRCode ? 'QR-код обнаружен' : 'Штрих-код обнаружен'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Содержание:'),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
+      builder: (diaContext) {
+        return AlertDialog(
+          title: Text(isQRCode ? 'QR-код обнаружен' : 'Штрих-код обнаружен'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Тип: ${isQRCode ? "QR-код" : "Штрих-код"}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              child: Text(
-                code,
-                style: const TextStyle(fontFamily: 'monospace'),
+              const SizedBox(height: 12),
+              const Text('Содержание:'),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SelectableText(
+                  code,
+                  style: const TextStyle(fontFamily: 'monospace'),
+                ),
               ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                diaContext.pop();
+                context.read<QRBloc>().add(ResetScanner());
+                context.read<QRBloc>().add(ScanQRCode());
+              },
+              child: const Text('Закрыть'),
+            ),
+            TextButton(
+              onPressed: () {
+                diaContext.pop();
+                context.read<QRBloc>().add(StopScanning());
+              },
+              child: const Text('Действие'),
             ),
           ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              dialogContext.pop();
-              context.read<QRBloc>().add(ResetScanner());
-              context.read<QRBloc>().add(ScanQRCode());
-            },
-            child: const Text('Закрыть'),
-          ),
-          TextButton(
-            onPressed: () {
-              dialogContext.pop();
-              context.read<QRBloc>().add(StopScanning());
-            },
-            child: const Text('Действие'),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

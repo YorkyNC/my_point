@@ -20,6 +20,8 @@ import 'package:my_point/src/features/login/data/repositories/i_auth_repository.
     as _i207;
 import 'package:my_point/src/features/login/domain/repositories/authorization_repository_impl.dart'
     as _i320;
+import 'package:my_point/src/features/login/domain/usecases/request_otp_code_use_case.dart'
+    as _i742;
 import 'package:my_point/src/features/login/domain/usecases/sign_in_use_case.dart'
     as _i584;
 import 'package:my_point/src/features/login/domain/usecases/sing_up_use_case.dart'
@@ -66,6 +68,9 @@ extension GetItInjectableX on _i174.GetIt {
             instanceName: 'AuthorizationRepositoryImpl')));
     gh.lazySingleton<_i584.SignInUseCase>(() => _i584.SignInUseCase(
         gh<_i207.IAuthRepository>(
+            instanceName: 'AuthorizationRepositoryImpl')));
+    gh.lazySingleton<_i742.RequestOtpCodeUseCase>(() =>
+        _i742.RequestOtpCodeUseCase(gh<_i207.IAuthRepository>(
             instanceName: 'AuthorizationRepositoryImpl')));
     return this;
   }

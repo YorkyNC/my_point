@@ -46,6 +46,7 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     emit(state.copyWith(
       phoneCode: event.phoneCode,
       flag: event.flag,
+      isPhoneCodeFilled: event.phoneCode.isNotEmpty,
     ));
   }
 

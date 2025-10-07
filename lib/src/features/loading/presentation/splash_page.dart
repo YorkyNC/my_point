@@ -79,9 +79,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -113,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 children: [
                   Text(
                     'Версия приложения 1.5.5',
-                    style: textTheme.bodyMedium?.copyWith(
+                    style: context.textTheme.bodyMedium?.copyWith(
                       color: Colors.grey[600],
                       fontSize: 14,
                     ),

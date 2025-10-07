@@ -13,6 +13,7 @@ final class QRCodeDetected extends QREvent {
 
   QRCodeDetected(this.qrCode);
 }
+
 final class BarcodeCodeDetected extends QREvent {
   final String barcodeCode;
 
@@ -24,3 +25,9 @@ final class ToggleTorch extends QREvent {}
 final class StopScanning extends QREvent {}
 
 final class ResetScanner extends QREvent {}
+
+final class SetInitializing extends QREvent {
+  final bool isInitializing;
+
+  SetInitializing(this.isInitializing);
+}

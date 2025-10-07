@@ -168,11 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: _phoneController.text.isEmpty
-                                        ? null
-                                        : () {
+                                    onPressed: state.isLoginVerified
+                                        ? () {
                                             bloc.add(SignIn(state.phoneCode ?? '+7', _phoneController.text, ''));
-                                          },
+                                          }
+                                        : null,
                                     child: Text('Войти'),
                                   ),
                                 ),

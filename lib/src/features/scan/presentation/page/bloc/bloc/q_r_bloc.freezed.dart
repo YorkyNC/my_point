@@ -24,6 +24,7 @@ mixin _$QRState {
   bool get hasScanned => throw _privateConstructorUsedError;
   bool get isScanning => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isInitializing => throw _privateConstructorUsedError;
 
   /// Create a copy of QRState
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +45,8 @@ abstract class $QRStateCopyWith<$Res> {
       bool torchEnabled,
       bool hasScanned,
       bool isScanning,
-      bool isLoading});
+      bool isLoading,
+      bool isInitializing});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$QRStateCopyWithImpl<$Res, $Val extends QRState>
     Object? hasScanned = null,
     Object? isScanning = null,
     Object? isLoading = null,
+    Object? isInitializing = null,
   }) {
     return _then(_value.copyWith(
       qrCode: freezed == qrCode
@@ -104,6 +107,10 @@ class _$QRStateCopyWithImpl<$Res, $Val extends QRState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -123,7 +130,8 @@ abstract class _$$QRStateImplCopyWith<$Res> implements $QRStateCopyWith<$Res> {
       bool torchEnabled,
       bool hasScanned,
       bool isScanning,
-      bool isLoading});
+      bool isLoading,
+      bool isInitializing});
 }
 
 /// @nodoc
@@ -147,6 +155,7 @@ class __$$QRStateImplCopyWithImpl<$Res>
     Object? hasScanned = null,
     Object? isScanning = null,
     Object? isLoading = null,
+    Object? isInitializing = null,
   }) {
     return _then(_$QRStateImpl(
       qrCode: freezed == qrCode
@@ -181,6 +190,10 @@ class __$$QRStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -196,7 +209,8 @@ class _$QRStateImpl implements _QRState {
       this.torchEnabled = false,
       this.hasScanned = false,
       this.isScanning = false,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.isInitializing = false});
 
   @override
   final String? qrCode;
@@ -218,10 +232,13 @@ class _$QRStateImpl implements _QRState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isInitializing;
 
   @override
   String toString() {
-    return 'QRState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading)';
+    return 'QRState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading, isInitializing: $isInitializing)';
   }
 
   @override
@@ -243,7 +260,9 @@ class _$QRStateImpl implements _QRState {
             (identical(other.isScanning, isScanning) ||
                 other.isScanning == isScanning) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.isInitializing, isInitializing) ||
+                other.isInitializing == isInitializing));
   }
 
   @override
@@ -256,7 +275,8 @@ class _$QRStateImpl implements _QRState {
       torchEnabled,
       hasScanned,
       isScanning,
-      isLoading);
+      isLoading,
+      isInitializing);
 
   /// Create a copy of QRState
   /// with the given fields replaced by the non-null parameter values.
@@ -276,7 +296,8 @@ abstract class _QRState implements QRState {
       final bool torchEnabled,
       final bool hasScanned,
       final bool isScanning,
-      final bool isLoading}) = _$QRStateImpl;
+      final bool isLoading,
+      final bool isInitializing}) = _$QRStateImpl;
 
   @override
   String? get qrCode;
@@ -294,6 +315,8 @@ abstract class _QRState implements QRState {
   bool get isScanning;
   @override
   bool get isLoading;
+  @override
+  bool get isInitializing;
 
   /// Create a copy of QRState
   /// with the given fields replaced by the non-null parameter values.

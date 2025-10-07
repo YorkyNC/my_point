@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,18 +22,26 @@ class BarcodeScannerWidget extends StatefulWidget {
   State<BarcodeScannerWidget> createState() => _BarcodeScannerWidgetState();
 }
 
-class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
+class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> with AutomaticKeepAliveClientMixin {
   MobileScannerController? controller;
+  bool _isActive = true;
 
   static const double _scanAreaWidthPercent = 0.85;
   static const double _scanAreaHeightRatio = 0.5;
   static const double _borderRadius = 16.0;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void initState() {
     super.initState();
+    _initController();
+  }
+
+  void _initController() {
     controller = MobileScannerController(
-      autoStart: true,
+      autoStart: false,
       detectionSpeed: DetectionSpeed.normal,
       detectionTimeoutMs: 250,
       formats: [
@@ -52,20 +61,40 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
       autoZoom: false,
       facing: CameraFacing.back,
     );
+    if (_isActive) {
+      controller?.start();
+    }
+  }
+
+  void startScanning() {
+    if (!_isActive && mounted) {
+      _isActive = true;
+      controller?.start();
+    }
+  }
+
+  void stopScanning() {
+    if (_isActive) {
+      _isActive = false;
+      controller?.stop();
+    }
   }
 
   @override
   Future<void> dispose() async {
-    super.dispose();
+    _isActive = false;
     await controller?.dispose();
     controller = null;
+    super.dispose();
   }
 
   void _onDetect(BuildContext context, BarcodeCapture capture) {
     final qrBloc = context.read<QRBloc>();
 
     if (!qrBloc.state.hasScanned && capture.barcodes.isNotEmpty) {
-      final String? code = capture.barcodes.first.rawValue;
+      final barcode = capture.barcodes.first;
+      final String? code = barcode.rawValue;
+      log('📸 Barcode Scanner detected: format=${barcode.format}, code=$code');
       if (code != null) {
         qrBloc.add(BarcodeCodeDetected(code));
       }
@@ -74,6 +103,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final screenSize = MediaQuery.of(context).size;
     final scanAreaWidth = screenSize.width * _scanAreaWidthPercent;
     final scanAreaHeight = scanAreaWidth * _scanAreaHeightRatio;
@@ -96,6 +127,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
                 return Stack(
                   children: [
                     MobileScanner(
+                      useAppLifecycleState: true,
                       scanWindow: scanWindow,
                       tapToFocus: true,
                       controller: controller,

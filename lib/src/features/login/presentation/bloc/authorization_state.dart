@@ -21,4 +21,9 @@ abstract class AuthorizationState with _$AuthorizationState {
     @Default(false) bool canRequestCode,
     @Default(false) bool isTimerRunning,
   }) = _AuthorizationState;
+
+  bool get isLoginVerified {
+    final result = isPhoneNumberFilled && isPhoneCodeFilled;
+    return result;
+  }
 }

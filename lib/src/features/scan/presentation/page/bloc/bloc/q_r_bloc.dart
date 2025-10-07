@@ -15,11 +15,13 @@ class QRBloc extends Bloc<QREvent, QRState> {
     on<StopScanning>(_onStopScanning);
     on<ResetScanner>(_onResetScanner);
     on<BarcodeCodeDetected>(_onBarcodeCodeDetected);
+    on<SetInitializing>(_onSetInitializing);
   }
 
   void _onScanQRCode(ScanQRCode event, Emitter<QRState> emit) {
     emit(state.copyWith(
       qrCode: null,
+      barcodeCode: null,
       processedQRCode: null,
       errorMessage: null,
       hasScanned: false,
@@ -69,16 +71,23 @@ class QRBloc extends Bloc<QREvent, QRState> {
   }
 
   void _onBarcodeCodeDetected(BarcodeCodeDetected event, Emitter<QRState> emit) async {
+    if (!state.hasScanned) {
+      emit(state.copyWith(
+        isLoading: true,
+        hasScanned: true,
+      ));
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      emit(state.copyWith(
+        barcodeCode: event.barcodeCode,
+        isLoading: false,
+      ));
+    }
+  }
+
+  void _onSetInitializing(SetInitializing event, Emitter<QRState> emit) {
     emit(state.copyWith(
-      barcodeCode: event.barcodeCode,
-    ));
-    emit(state.copyWith(
-      isLoading: true,
-      hasScanned: true,
-    ));
-    await Future.delayed(const Duration(milliseconds: 1500));
-    emit(state.copyWith(
-      isLoading: false,
+      isInitializing: event.isInitializing,
     ));
   }
 }

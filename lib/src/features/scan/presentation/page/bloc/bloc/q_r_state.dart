@@ -11,5 +11,6 @@ class QRState with _$QRState {
     @Default(false) bool hasScanned,
     @Default(false) bool isScanning,
     @Default(false) bool isLoading,
+    @Default(false) bool isInitializing,
   }) = _QRState;
 }
