@@ -57,9 +57,9 @@ class _IntroductionPageState extends State<IntroductionPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              BuildMetricBox(context: context, icon: Icons.inventory_2, value: "20"),
-                              BuildMetricBox(context: context, icon: Icons.show_chart, value: "35%"),
-                              BuildMetricBox(context: context, icon: Icons.mail, value: "400"),
+                              BuildMetricBox(context: context, icon: context.icons.box, value: "20"),
+                              BuildMetricBox(context: context, icon: context.icons.chart_line, value: "35%"),
+                              BuildMetricBox(context: context, icon: context.icons.shopping_bag, value: "400"),
                             ],
                           ),
                         ),
@@ -115,7 +115,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                                           child: Transform.rotate(
                                             angle: 5 * (3.14159 / 180),
                                             child: BuildActionIcon(
-                                              icon: Icons.local_shipping,
+                                              icon: context.icons.delivery,
                                               iconColor: context.colors.white,
                                               backgroundColor: context.colors.gray700,
                                               rotation: 0,
@@ -128,7 +128,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                                           child: Transform.rotate(
                                             angle: 3 * (3.14159 / 180),
                                             child: BuildActionIcon(
-                                              icon: Icons.refresh,
+                                              icon: context.icons.refresh,
                                               iconColor: context.colors.black,
                                               backgroundColor: context.colors.white,
                                               rotation: 0,
@@ -163,7 +163,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                               children: [
                                 Text(context.loc.continueNext),
                                 Icon(
-                                  Icons.arrow_forward,
+                                  context.icons.arrow_right,
                                   color: context.colors.white,
                                 ),
                               ],

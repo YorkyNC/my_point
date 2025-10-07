@@ -8,7 +8,7 @@ part 'sign_in_request.g.dart';
 @freezed
 class SignInRequest extends BaseRequest with _$SignInRequest {
   const factory SignInRequest({
-    required String username,
+    required String email,
     required String password,
   }) = _SignInRequest;
 

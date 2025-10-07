@@ -30,9 +30,10 @@ GoRouter routerProvider() {
   return GoRouter(
     refreshListenable: st,
     // initialLocation: hasSeenIntroduction ? RoutePaths.authorization : RoutePaths.introduction,
-    // initialLocation: RoutePaths.
+    // initialLocation: RoutePaths.loading,
+    initialLocation: RoutePaths.introduction,
     // initialLocation: RoutePaths.main,
-    initialLocation: RoutePaths.home,
+    // initialLocation: RoutePaths.home,
     // initialLocation: RoutePaths.otp,
     debugLogDiagnostics: true,
     routes: _routes,

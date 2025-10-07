@@ -20,7 +20,7 @@ SignInRequest _$SignInRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SignInRequest {
-  String get username => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
 
   /// Serializes this SignInRequest to a JSON map.
@@ -39,7 +39,7 @@ abstract class $SignInRequestCopyWith<$Res> {
           SignInRequest value, $Res Function(SignInRequest) then) =
       _$SignInRequestCopyWithImpl<$Res, SignInRequest>;
   @useResult
-  $Res call({String username, String password});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -57,13 +57,13 @@ class _$SignInRequestCopyWithImpl<$Res, $Val extends SignInRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? email = null,
     Object? password = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
           ? _value.password
@@ -81,7 +81,7 @@ abstract class _$$SignInRequestImplCopyWith<$Res>
       __$$SignInRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String password});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -97,13 +97,13 @@ class __$$SignInRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? email = null,
     Object? password = null,
   }) {
     return _then(_$SignInRequestImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
           ? _value.password
@@ -116,19 +116,19 @@ class __$$SignInRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SignInRequestImpl implements _SignInRequest {
-  const _$SignInRequestImpl({required this.username, required this.password});
+  const _$SignInRequestImpl({required this.email, required this.password});
 
   factory _$SignInRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$SignInRequestImplFromJson(json);
 
   @override
-  final String username;
+  final String email;
   @override
   final String password;
 
   @override
   String toString() {
-    return 'SignInRequest(username: $username, password: $password)';
+    return 'SignInRequest(email: $email, password: $password)';
   }
 
   @override
@@ -136,15 +136,14 @@ class _$SignInRequestImpl implements _SignInRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignInRequestImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, email, password);
 
   /// Create a copy of SignInRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -164,14 +163,14 @@ class _$SignInRequestImpl implements _SignInRequest {
 
 abstract class _SignInRequest implements SignInRequest {
   const factory _SignInRequest(
-      {required final String username,
+      {required final String email,
       required final String password}) = _$SignInRequestImpl;
 
   factory _SignInRequest.fromJson(Map<String, dynamic> json) =
       _$SignInRequestImpl.fromJson;
 
   @override
-  String get username;
+  String get email;
   @override
   String get password;
 

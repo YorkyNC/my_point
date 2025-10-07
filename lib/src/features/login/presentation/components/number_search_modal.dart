@@ -96,7 +96,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                     filled: true,
                     fillColor: context.colors.dividerColor,
                     prefixIcon: Icon(
-                      context.icons.magnifying_glass__glass_search_magnifying,
+                      context.icons.search,
                       size: 24,
                       color: context.colors.textGray,
                     ),

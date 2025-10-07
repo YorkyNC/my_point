@@ -44,7 +44,7 @@ class CustomSnackBar {
                   ),
                 )
               : Icon(
-                  context.icons.delete_1__remove_add_button_buttons_delete_cross_x_mathematics_multiply_math,
+                  context.icons.multiplication,
                   color: context.colors.white,
                 ),
         ],

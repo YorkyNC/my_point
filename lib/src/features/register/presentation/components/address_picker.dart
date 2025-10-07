@@ -87,7 +87,7 @@ class SearchFieldWidget extends StatelessWidget {
         filled: true,
         fillColor: context.colors.gray100,
         prefixIcon: Icon(
-          context.icons.magnifying_glass__glass_search_magnifying,
+          context.icons.search,
           size: 24,
           color: context.colors.lightSecondaryText,
         ),

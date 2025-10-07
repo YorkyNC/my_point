@@ -9,12 +9,13 @@ class AuthorizationTextFieldWidget extends StatelessWidget {
     required this.bloc,
     required TextEditingController phoneController,
     required this.onChanged,
+    required this.onSuffixIconTap,
   }) : _phoneController = phoneController;
 
   final AuthorizationBloc bloc;
+  final VoidCallback onSuffixIconTap;
   final Function(String) onChanged;
   final TextEditingController _phoneController;
-
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -26,6 +27,17 @@ class AuthorizationTextFieldWidget extends StatelessWidget {
       keyboardType: TextInputType.phone,
       inputFormatters: [MaskedInputFormatter('(###) ###-####')],
       decoration: InputDecoration(
+        suffixIcon: _phoneController.text.isNotEmpty
+            ? InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: onSuffixIconTap,
+                child: Icon(
+                  context.icons.close_circle_filled,
+                  color: context.colors.textprimary,
+                ),
+              )
+            : null,
         isDense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 15),
         hintText: '(_ _ _) _ _ _-_ _ -_ _',

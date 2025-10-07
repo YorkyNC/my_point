@@ -12,9 +12,14 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:my_point/src/core/api/client/rest/dio/dio_client.dart' as _i274;
-import 'package:my_point/src/core/services/auth/auth_service_impl.dart'
-    as _i765;
-import 'package:my_point/src/core/services/auth/i_auth_service.dart' as _i1037;
+import 'package:my_point/src/features/login/data/datasources/remote/authorization_remote_impl.dart'
+    as _i869;
+import 'package:my_point/src/features/login/data/datasources/remote/i_authorization_remote.dart'
+    as _i426;
+import 'package:my_point/src/features/login/data/repositories/i_auth_repository.dart'
+    as _i207;
+import 'package:my_point/src/features/login/domain/repositories/authorization_repository_impl.dart'
+    as _i320;
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart'
     as _i1033;
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart'
@@ -43,9 +48,14 @@ extension GetItInjectableX on _i174.GetIt {
       },
       preResolve: true,
     );
-    gh.lazySingleton<_i1037.IAuthService>(
-      () => _i765.AuthServiceImpl(gh<_i274.DioRestClient>()),
-      instanceName: 'AuthServiceImpl',
+    gh.lazySingleton<_i426.IAuthorizationRemote>(
+      () => _i869.AuthorizationRemoteImpl(),
+      instanceName: 'AuthorizationRemoteImpl',
+    );
+    gh.lazySingleton<_i207.IAuthRepository>(
+      () => _i320.AuthorizationRepositoryImpl(
+          gh<_i426.IAuthorizationRemote>(instanceName: 'IAuthorizationRemote')),
+      instanceName: 'AuthorizationRepositoryImpl',
     );
     return this;
   }

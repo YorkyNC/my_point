@@ -164,7 +164,10 @@ final List<RouteBase> _routes = [
       pageBuilder: (context, state) {
         final data = state.extra as Map<String, dynamic>;
         return getPage(
-          child: OtpPage(phone: data['phone']),
+          child: OtpPage(
+            phone: data['phone'],
+            phoneCode: data['phoneCode'],
+          ),
           // child: const OtpPage(),
           state: state,
         );

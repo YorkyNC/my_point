@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/router/router.dart';
@@ -13,8 +12,9 @@ class OtpPage extends StatefulWidget {
   const OtpPage({
     super.key,
     required this.phone,
+    required this.phoneCode,
   });
-
+  final String phoneCode;
   final String phone;
 
   @override
@@ -68,7 +68,7 @@ class _OtpPageState extends State<OtpPage> {
                 leading: IconButton(
                   onPressed: () => context.pop(),
                   icon: Icon(
-                    CupertinoIcons.chevron_left,
+                    context.icons.chevron_left,
                     color: context.colors.black,
                   ),
                 ),
@@ -97,7 +97,7 @@ class _OtpPageState extends State<OtpPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.phone,
+                                  '${widget.phoneCode} ${widget.phone}',
                                   style: context.typography.title.copyWith(
                                     color: context.colors.textprimary,
                                   ),
@@ -207,15 +207,15 @@ class _OtpPageState extends State<OtpPage> {
                                     ],
                                   ),
                                   SizedBox(height: 16),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Отправить код по WhatsApp',
-                                      style: context.typography.smallParagraphMedium.copyWith(
-                                        color: context.colors.accent2,
-                                      ),
-                                    ),
-                                  ),
+                                  // TextButton(
+                                  //   onPressed: () {},
+                                  //   child: Text(
+                                  //     'Отправить код по WhatsApp',
+                                  //     style: context.typography.smallParagraphMedium.copyWith(
+                                  //       color: context.colors.accent2,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

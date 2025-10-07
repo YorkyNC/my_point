@@ -37,7 +37,7 @@ class _SuccessRegisterPageState extends State<SuccessRegisterPage> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () => context.pop(),
-                      child: Icon(Icons.close, color: context.colors.white),
+                      child: Icon(context.icons.close, color: context.colors.white),
                     ),
                   ],
                 ),
@@ -66,7 +66,7 @@ class _SuccessRegisterPageState extends State<SuccessRegisterPage> {
                           children: [
                             Text('Заполнить заявку'),
                             Icon(
-                              Icons.arrow_forward,
+                              context.icons.arrow_right,
                               color: context.colors.white,
                             ),
                           ],

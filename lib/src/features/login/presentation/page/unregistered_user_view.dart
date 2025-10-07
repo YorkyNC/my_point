@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
@@ -54,7 +53,7 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
           leading: IconButton(
             onPressed: () => context.pop(),
             icon: Icon(
-              CupertinoIcons.chevron_left,
+              context.icons.chevron_left,
               color: context.colors.black,
             ),
           ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
@@ -37,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   // context.pop();
                 },
-                icon: Icon(context.icons.delete_1__remove_add_button_buttons_delete_cross_x_mathematics_multiply_math,
-                    color: context.colors.black),
+                icon: Icon(context.icons.close, color: context.colors.black),
               ),
             ),
           ],
@@ -53,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     RoutePaths.otp,
                     extra: {
                       'phone': _phoneController.text,
+                      'phoneCode': state.phoneCode,
                     },
                   );
                 }
@@ -63,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
+                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -127,8 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                                             ),
                                           ),
                                           Icon(
-                                            CupertinoIcons.chevron_down,
-                                            size: 16,
+                                            context.icons.chevron_down,
+                                            size: 18,
                                             color: context.colors.textprimary,
                                           ),
                                         ],
@@ -151,6 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                                     child: AuthorizationTextFieldWidget(
                                       bloc: bloc,
                                       phoneController: _phoneController,
+                                      onSuffixIconTap: () {
+                                        _phoneController.clear();
+                                        bloc.add(PhoneNumberChanged(''));
+                                      },
                                       onChanged: (String value) {
                                         bloc.add(PhoneNumberChanged(value));
                                       },

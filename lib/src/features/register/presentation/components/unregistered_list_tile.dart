@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 
@@ -20,7 +19,7 @@ class UnregisteredListTile extends StatelessWidget {
       hoverColor: Colors.transparent,
       onTap: onTap,
       trailing: Icon(
-        CupertinoIcons.chevron_right,
+        context.icons.chevron_right,
         color: context.colors.textprimary,
         size: 24,
       ),

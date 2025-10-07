@@ -58,11 +58,7 @@ Future<T?> showSheetPopup<T>(
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: context.pop,
-                              child: Icon(
-                                  context.icons
-                                      .delete_1__remove_add_button_buttons_delete_cross_x_mathematics_multiply_math,
-                                  size: 24,
-                                  color: context.colors.black),
+                              child: Icon(context.icons.close, size: 24, color: context.colors.black),
                             ),
                           ],
                         ),
