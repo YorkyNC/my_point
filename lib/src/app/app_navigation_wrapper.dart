@@ -1,15 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 
 class AppNavigationWrapper extends StatelessWidget {
-  const AppNavigationWrapper({
-    super.key,
-    required this.child,
-    required this.currentIndex,
-    required this.onTap,
-  });
+  const AppNavigationWrapper({super.key, required this.child, required this.currentIndex, required this.onTap});
 
   final Widget child;
   final int currentIndex;
@@ -37,7 +33,7 @@ class AppNavigationWrapper extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF000000).withOpacity(0.07),
+                      color: const Color(0xFF000000).withValues(alpha: 0.07),
                       blurRadius: 30,
                       spreadRadius: 0,
                       offset: const Offset(-10, 10),
@@ -47,30 +43,10 @@ class AppNavigationWrapper extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildNavItem(
-                      context,
-                      index: 0,
-                      icon: Icons.home_outlined,
-                      activeIcon: Icons.home,
-                    ),
-                    _buildNavItem(
-                      context,
-                      index: 1,
-                      icon: Icons.local_shipping_outlined,
-                      activeIcon: Icons.local_shipping,
-                    ),
-                    _buildNavItem(
-                      context,
-                      index: 2,
-                      icon: Icons.inventory_outlined,
-                      activeIcon: Icons.inventory,
-                    ),
-                    _buildNavItem(
-                      context,
-                      index: 3,
-                      icon: Icons.person_outline,
-                      activeIcon: Icons.person,
-                    ),
+                    _buildNavItem(context, index: 0, icon: context.icons.home, activeIcon: context.icons.home),
+                    _buildNavItem(context, index: 1, icon: context.icons.delivery, activeIcon: context.icons.delivery),
+                    _buildNavItem(context, index: 2, icon: context.icons.box, activeIcon: context.icons.box),
+                    _buildNavItem(context, index: 3, icon: context.icons.profile, activeIcon: context.icons.profile),
                   ],
                 ),
               ),
@@ -81,14 +57,13 @@ class AppNavigationWrapper extends StatelessWidget {
               child: Container(
                 height: 80,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
-                decoration: BoxDecoration(
-                  color: context.colors.mainAccent,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.qr_code_scanner,
-                  color: context.colors.white,
-                  size: 28,
+                decoration: BoxDecoration(color: context.colors.mainAccent, shape: BoxShape.circle),
+                child: SvgPicture.asset(
+                  context.assetImages.scan,
+                  // colorFilter: ColorFilter.mode(
+                  //   context.colors.white,
+                  //   BlendMode.srcIn,
+                  // ),
                 ),
               ),
             ),
@@ -112,8 +87,7 @@ class AppNavigationWrapper extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
         child: Icon(
           isActive ? activeIcon : icon,
-          color: isActive ? context.colors.mainAccent : Colors.grey[600],
-          size: 24,
+          color: isActive ? context.colors.mainAccent : context.colors.textprimary,
         ),
       ),
     );

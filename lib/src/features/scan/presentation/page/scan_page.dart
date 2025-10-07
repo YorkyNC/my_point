@@ -34,15 +34,12 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
       _qrBloc.add(ResetScanner());
       _qrBloc.add(ScanQRCode());
 
-      // Stop the inactive scanner and start the active one
       if (_tabController.index == 0) {
-        // Barcode tab is active
         (_qrKey.currentState as dynamic)?.stopScanning();
         Future.delayed(const Duration(milliseconds: 100), () {
           (_barcodeKey.currentState as dynamic)?.startScanning();
         });
       } else {
-        // QR tab is active
         (_barcodeKey.currentState as dynamic)?.stopScanning();
         Future.delayed(const Duration(milliseconds: 100), () {
           (_qrKey.currentState as dynamic)?.startScanning();
@@ -107,7 +104,7 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
                 bottomLeft: Radius.circular(20),
               ),
             ),
-            leading: const Icon(Icons.arrow_back_ios_new_rounded, size: 24), // dont
+            leading: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
             actions: [
               IconButton(
                 onPressed: () {},

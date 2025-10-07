@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/constants/app_icons.dart';
 import 'colors.dart';
@@ -21,6 +22,13 @@ class AppTheme {
   static final appTheme = ThemeData(
       brightness: Brightness.dark,
       textTheme: textTheme,
+      appBarTheme: const AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.black,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      ),
       bottomSheetTheme: const BottomSheetThemeData(constraints: BoxConstraints.expand()),
       iconTheme: IconThemeData(
         color: colors.black,

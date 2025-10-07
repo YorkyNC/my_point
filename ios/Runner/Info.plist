@@ -87,7 +87,7 @@
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
 		<key>UIStatusBarHidden</key>
-		<true/>
+		<false/>
 		<key>UIStatusBarStyle</key>
 		<string>UIStatusBarStyleDefault</string>
 		<key>UISupportedInterfaceOrientations</key>

@@ -41,29 +41,33 @@ final log = Logger(
 );
 
 void main([List<String>? args, AppFlavor flavor = AppFlavor.development]) async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+    overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
+  );
 
-  // Register plugins
-  try {
-    // This will be generated automatically by Flutter
-    // If it doesn't exist, we'll handle it gracefully
-  } catch (e) {
+  try {} catch (e) {
     debugPrint('Plugin registration error: $e');
   }
 
-  // Initialize storage first to avoid late initialization errors
   await storageService.init();
 
-  // Start with loading screen
   runApp(
-    Material(
-      child: const MainApp(
-        flavor: AppFlavor.production,
+    AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      child: Material(
+        child: const MainApp(
+          flavor: AppFlavor.production,
+        ),
       ),
     ),
   );
 
-  // Initialize remaining services in background
   await _initializeApp();
 }
 
@@ -74,8 +78,6 @@ Future<void> _initializeApp() async {
     // Initialize chat service
     // await ChatService.initializeChat();
     // Prevent landscape mode
-    UIHelpers.statusBarTheme();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   } catch (e) {
     debugPrint('App initialization error: $e');

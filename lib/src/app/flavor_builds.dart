@@ -81,12 +81,6 @@ Widget development(GoRouter router, String languageCode) => MaterialApp.router(
       // Other
       debugShowCheckedModeBanner: true,
       useInheritedMediaQuery: true,
-
-      // builder: (context, child) {
-      //   return NetworkAwareWidget(
-      //       child: child ?? const SizedBox.shrink(),
-      //     );
-      // },
     );
 
 MaterialApp staging(GoRouter router, String languageCode) => MaterialApp.router(
@@ -113,13 +107,6 @@ MaterialApp staging(GoRouter router, String languageCode) => MaterialApp.router(
 
       // Other
       debugShowCheckedModeBanner: false,
-
-      // Add builder for network awareness
-      // builder: (context, child) {
-      //   return NetworkAwareWidget(
-      //     child: child ?? const SizedBox.shrink(),
-      //   );
-      // },
     );
 
 MaterialApp production(GoRouter router, String languageCode) => MaterialApp.router(

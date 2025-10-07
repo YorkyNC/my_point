@@ -143,7 +143,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAli
                       scanAreaHeight: scanAreaSize,
                       torchEnabled: state.torchEnabled,
                     ),
-                    // Loading overlay
                     if (state.isLoading) ScannerLoadingStateWidget(text: 'Обработка QR-кода...'),
                   ],
                 );
