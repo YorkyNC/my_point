@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
-import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/q_r_bloc.dart';
+import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart';
 
 class TorchToggleWidget extends StatelessWidget {
   final bool torchEnabled;
@@ -44,7 +44,7 @@ class TorchToggleWidget extends StatelessWidget {
               ],
             ),
             onTap: () {
-              context.read<QRBloc>().add(ToggleTorch());
+              context.read<ScannerBloc>().add(ScannerTorchToggled());
             },
           ),
         ],

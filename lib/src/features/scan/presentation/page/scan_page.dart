@@ -3,10 +3,11 @@ import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
 import 'package:my_point/src/features/login/presentation/components/custom_snack_bar.dart';
+import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart';
 
 import '../components/barcode_scanner_widget.dart';
 import '../components/qr_scanner_widget.dart';
-import 'bloc/bloc/q_r_bloc.dart';
+import '../components/scanner_result_dialog_widget.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -17,32 +18,32 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late QRBloc _qrBloc;
-  final GlobalKey _barcodeKey = GlobalKey();
-  final GlobalKey _qrKey = GlobalKey();
+  late ScannerBloc _qrBloc;
+  final GlobalKey<BarcodeScannerWidgetState> _barcodeKey = GlobalKey<BarcodeScannerWidgetState>();
+  final GlobalKey<QRScannerWidgetState> _qrKey = GlobalKey<QRScannerWidgetState>();
 
   @override
   void initState() {
     super.initState();
-    _qrBloc = getIt<QRBloc>()..add(ScanQRCode());
+    _qrBloc = getIt<ScannerBloc>()..add(ScannerStarted());
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     if (!_tabController.indexIsChanging && mounted) {
-      _qrBloc.add(ResetScanner());
-      _qrBloc.add(ScanQRCode());
+      _qrBloc.add(ScannerReseted());
+      _qrBloc.add(ScannerStarted());
 
       if (_tabController.index == 0) {
-        (_qrKey.currentState as dynamic)?.stopScanning();
+        _qrKey.currentState?.stopScanning();
         Future.delayed(const Duration(milliseconds: 100), () {
-          (_barcodeKey.currentState as dynamic)?.startScanning();
+          _barcodeKey.currentState?.startScanning();
         });
       } else {
-        (_barcodeKey.currentState as dynamic)?.stopScanning();
+        _barcodeKey.currentState?.stopScanning();
         Future.delayed(const Duration(milliseconds: 100), () {
-          (_qrKey.currentState as dynamic)?.startScanning();
+          _qrKey.currentState?.startScanning();
         });
       }
     }
@@ -50,8 +51,8 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
 
   @override
   void dispose() {
-    (_barcodeKey.currentState as dynamic)?.stopScanning();
-    (_qrKey.currentState as dynamic)?.stopScanning();
+    _barcodeKey.currentState?.stopScanning();
+    _qrKey.currentState?.stopScanning();
 
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
@@ -63,12 +64,24 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _qrBloc,
-      child: BlocListener<QRBloc, QRState>(
+      child: BlocListener<ScannerBloc, ScannerState>(
         listener: (context, state) {
           if (state.qrCode != null && state.processedQRCode == null && !state.isLoading) {
-            _showCodeResult(context, state.qrCode!, true);
+            ScannerResultDialogWidget.show(
+              context,
+              code: state.qrCode!,
+              isQRCode: true,
+            );
+            context.read<ScannerBloc>().add(ScannerReseted());
+            context.read<ScannerBloc>().add(ScannerStarted());
           } else if (state.barcodeCode != null && state.processedQRCode == null && !state.isLoading) {
-            _showCodeResult(context, state.barcodeCode!, false);
+            ScannerResultDialogWidget.show(
+              context,
+              code: state.barcodeCode!,
+              isQRCode: false,
+            );
+            context.read<ScannerBloc>().add(ScannerReseted());
+            context.read<ScannerBloc>().add(ScannerStarted());
           } else {}
 
           if (state.processedQRCode != null) {
@@ -80,8 +93,8 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
                 context: context,
               ),
             );
-            context.read<QRBloc>().add(ResetScanner());
-            context.read<QRBloc>().add(ScanQRCode());
+            context.read<ScannerBloc>().add(ScannerReseted());
+            context.read<ScannerBloc>().add(ScannerStarted());
           }
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -157,58 +170,6 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
           ),
         ),
       ),
-    );
-  }
-
-  void _showCodeResult(BuildContext context, String code, bool isQRCode) {
-    showDialog(
-      context: context,
-      builder: (diaContext) {
-        return AlertDialog(
-          title: Text(isQRCode ? 'QR-код обнаружен' : 'Штрих-код обнаружен'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Тип: ${isQRCode ? "QR-код" : "Штрих-код"}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              const Text('Содержание:'),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: SelectableText(
-                  code,
-                  style: const TextStyle(fontFamily: 'monospace'),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                diaContext.pop();
-                context.read<QRBloc>().add(ResetScanner());
-                context.read<QRBloc>().add(ScanQRCode());
-              },
-              child: const Text('Закрыть'),
-            ),
-            TextButton(
-              onPressed: () {
-                diaContext.pop();
-                context.read<QRBloc>().add(StopScanning());
-              },
-              child: const Text('Действие'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

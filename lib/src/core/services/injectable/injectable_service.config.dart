@@ -30,8 +30,8 @@ import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc
     as _i1033;
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart'
     as _i83;
-import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/q_r_bloc.dart'
-    as _i283;
+import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart'
+    as _i559;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -44,7 +44,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i283.QRBloc>(() => _i283.QRBloc());
+    gh.factory<_i559.ScannerBloc>(() => _i559.ScannerBloc());
     gh.factory<_i83.RegisterPvzBloc>(() => _i83.RegisterPvzBloc());
     gh.factory<_i1033.AuthorizationBloc>(() => _i1033.AuthorizationBloc());
     await gh.singletonAsync<_i274.DioRestClient>(

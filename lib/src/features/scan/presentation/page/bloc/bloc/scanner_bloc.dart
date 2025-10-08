@@ -2,23 +2,23 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-part 'q_r_bloc.freezed.dart';
-part 'q_r_event.dart';
-part 'q_r_state.dart';
+part 'scanner_bloc.freezed.dart';
+part 'scanner_event.dart';
+part 'scanner_state.dart';
 
 @injectable
-class QRBloc extends Bloc<QREvent, QRState> {
-  QRBloc() : super(const QRState()) {
-    on<ScanQRCode>(_onScanQRCode);
-    on<QRCodeDetected>(_onQRCodeDetected);
-    on<ToggleTorch>(_onToggleTorch);
-    on<StopScanning>(_onStopScanning);
-    on<ResetScanner>(_onResetScanner);
-    on<BarcodeCodeDetected>(_onBarcodeCodeDetected);
-    on<SetInitializing>(_onSetInitializing);
+class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
+  ScannerBloc() : super(const ScannerState()) {
+    on<ScannerStarted>(_onScannerStarted);
+    on<ScannerQRCodeDetected>(_onQRCodeDetected);
+    on<ScannerTorchToggled>(_onTorchToggled);
+    on<ScannerStopped>(_onScannerStopped);
+    on<ScannerReseted>(_onScannerReset);
+    on<ScannerBarcodeDetected>(_onBarcodeDetected);
+    on<ScannerInitializingSetted>(_onInitializingSet);
   }
 
-  void _onScanQRCode(ScanQRCode event, Emitter<QRState> emit) {
+  void _onScannerStarted(ScannerStarted event, Emitter<ScannerState> emit) {
     emit(state.copyWith(
       qrCode: null,
       barcodeCode: null,
@@ -29,7 +29,7 @@ class QRBloc extends Bloc<QREvent, QRState> {
     ));
   }
 
-  void _onQRCodeDetected(QRCodeDetected event, Emitter<QRState> emit) async {
+  void _onQRCodeDetected(ScannerQRCodeDetected event, Emitter<ScannerState> emit) async {
     if (!state.hasScanned) {
       emit(state.copyWith(
         isLoading: true,
@@ -44,13 +44,13 @@ class QRBloc extends Bloc<QREvent, QRState> {
     }
   }
 
-  void _onToggleTorch(ToggleTorch event, Emitter<QRState> emit) {
+  void _onTorchToggled(ScannerTorchToggled event, Emitter<ScannerState> emit) {
     emit(state.copyWith(
       torchEnabled: !state.torchEnabled,
     ));
   }
 
-  void _onStopScanning(StopScanning event, Emitter<QRState> emit) {
+  void _onScannerStopped(ScannerStopped event, Emitter<ScannerState> emit) {
     if (state.qrCode != null) {
       final processedMessage = state.qrCode!.length > 50
           ? 'QR Code processed: ${state.qrCode!.substring(0, 50)}...'
@@ -63,14 +63,14 @@ class QRBloc extends Bloc<QREvent, QRState> {
     }
   }
 
-  void _onResetScanner(ResetScanner event, Emitter<QRState> emit) {
-    emit(QRState(
+  void _onScannerReset(ScannerReseted event, Emitter<ScannerState> emit) {
+    emit(ScannerState(
       torchEnabled: state.torchEnabled,
       isLoading: false,
     ));
   }
 
-  void _onBarcodeCodeDetected(BarcodeCodeDetected event, Emitter<QRState> emit) async {
+  void _onBarcodeDetected(ScannerBarcodeDetected event, Emitter<ScannerState> emit) async {
     if (!state.hasScanned) {
       emit(state.copyWith(
         isLoading: true,
@@ -85,7 +85,7 @@ class QRBloc extends Bloc<QREvent, QRState> {
     }
   }
 
-  void _onSetInitializing(SetInitializing event, Emitter<QRState> emit) {
+  void _onInitializingSet(ScannerInitializingSetted event, Emitter<ScannerState> emit) {
     emit(state.copyWith(
       isInitializing: event.isInitializing,
     ));

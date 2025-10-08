@@ -1,8 +1,8 @@
-part of 'q_r_bloc.dart';
+part of 'scanner_bloc.dart';
 
 @freezed
-class QRState with _$QRState {
-  const factory QRState({
+class ScannerState with _$ScannerState {
+  const factory ScannerState({
     String? qrCode,
     String? barcodeCode,
     String? processedQRCode,
@@ -12,5 +12,5 @@ class QRState with _$QRState {
     @Default(false) bool isScanning,
     @Default(false) bool isLoading,
     @Default(false) bool isInitializing,
-  }) = _QRState;
+  }) = _ScannerState;
 }

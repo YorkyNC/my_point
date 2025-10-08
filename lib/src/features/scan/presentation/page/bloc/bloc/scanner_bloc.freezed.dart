@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'q_r_bloc.dart';
+part of 'scanner_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$QRState {
+mixin _$ScannerState {
   String? get qrCode => throw _privateConstructorUsedError;
   String? get barcodeCode => throw _privateConstructorUsedError;
   String? get processedQRCode => throw _privateConstructorUsedError;
@@ -26,16 +26,18 @@ mixin _$QRState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isInitializing => throw _privateConstructorUsedError;
 
-  /// Create a copy of QRState
+  /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $QRStateCopyWith<QRState> get copyWith => throw _privateConstructorUsedError;
+  $ScannerStateCopyWith<ScannerState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $QRStateCopyWith<$Res> {
-  factory $QRStateCopyWith(QRState value, $Res Function(QRState) then) =
-      _$QRStateCopyWithImpl<$Res, QRState>;
+abstract class $ScannerStateCopyWith<$Res> {
+  factory $ScannerStateCopyWith(
+          ScannerState value, $Res Function(ScannerState) then) =
+      _$ScannerStateCopyWithImpl<$Res, ScannerState>;
   @useResult
   $Res call(
       {String? qrCode,
@@ -50,16 +52,16 @@ abstract class $QRStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QRStateCopyWithImpl<$Res, $Val extends QRState>
-    implements $QRStateCopyWith<$Res> {
-  _$QRStateCopyWithImpl(this._value, this._then);
+class _$ScannerStateCopyWithImpl<$Res, $Val extends ScannerState>
+    implements $ScannerStateCopyWith<$Res> {
+  _$ScannerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of QRState
+  /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -116,10 +118,11 @@ class _$QRStateCopyWithImpl<$Res, $Val extends QRState>
 }
 
 /// @nodoc
-abstract class _$$QRStateImplCopyWith<$Res> implements $QRStateCopyWith<$Res> {
-  factory _$$QRStateImplCopyWith(
-          _$QRStateImpl value, $Res Function(_$QRStateImpl) then) =
-      __$$QRStateImplCopyWithImpl<$Res>;
+abstract class _$$ScannerStateImplCopyWith<$Res>
+    implements $ScannerStateCopyWith<$Res> {
+  factory _$$ScannerStateImplCopyWith(
+          _$ScannerStateImpl value, $Res Function(_$ScannerStateImpl) then) =
+      __$$ScannerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -135,14 +138,14 @@ abstract class _$$QRStateImplCopyWith<$Res> implements $QRStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$QRStateImplCopyWithImpl<$Res>
-    extends _$QRStateCopyWithImpl<$Res, _$QRStateImpl>
-    implements _$$QRStateImplCopyWith<$Res> {
-  __$$QRStateImplCopyWithImpl(
-      _$QRStateImpl _value, $Res Function(_$QRStateImpl) _then)
+class __$$ScannerStateImplCopyWithImpl<$Res>
+    extends _$ScannerStateCopyWithImpl<$Res, _$ScannerStateImpl>
+    implements _$$ScannerStateImplCopyWith<$Res> {
+  __$$ScannerStateImplCopyWithImpl(
+      _$ScannerStateImpl _value, $Res Function(_$ScannerStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of QRState
+  /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -157,7 +160,7 @@ class __$$QRStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isInitializing = null,
   }) {
-    return _then(_$QRStateImpl(
+    return _then(_$ScannerStateImpl(
       qrCode: freezed == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
@@ -200,8 +203,8 @@ class __$$QRStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$QRStateImpl implements _QRState {
-  const _$QRStateImpl(
+class _$ScannerStateImpl implements _ScannerState {
+  const _$ScannerStateImpl(
       {this.qrCode,
       this.barcodeCode,
       this.processedQRCode,
@@ -238,14 +241,14 @@ class _$QRStateImpl implements _QRState {
 
   @override
   String toString() {
-    return 'QRState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading, isInitializing: $isInitializing)';
+    return 'ScannerState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading, isInitializing: $isInitializing)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$QRStateImpl &&
+            other is _$ScannerStateImpl &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
             (identical(other.barcodeCode, barcodeCode) ||
                 other.barcodeCode == barcodeCode) &&
@@ -278,17 +281,17 @@ class _$QRStateImpl implements _QRState {
       isLoading,
       isInitializing);
 
-  /// Create a copy of QRState
+  /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$QRStateImplCopyWith<_$QRStateImpl> get copyWith =>
-      __$$QRStateImplCopyWithImpl<_$QRStateImpl>(this, _$identity);
+  _$$ScannerStateImplCopyWith<_$ScannerStateImpl> get copyWith =>
+      __$$ScannerStateImplCopyWithImpl<_$ScannerStateImpl>(this, _$identity);
 }
 
-abstract class _QRState implements QRState {
-  const factory _QRState(
+abstract class _ScannerState implements ScannerState {
+  const factory _ScannerState(
       {final String? qrCode,
       final String? barcodeCode,
       final String? processedQRCode,
@@ -297,7 +300,7 @@ abstract class _QRState implements QRState {
       final bool hasScanned,
       final bool isScanning,
       final bool isLoading,
-      final bool isInitializing}) = _$QRStateImpl;
+      final bool isInitializing}) = _$ScannerStateImpl;
 
   @override
   String? get qrCode;
@@ -318,10 +321,10 @@ abstract class _QRState implements QRState {
   @override
   bool get isInitializing;
 
-  /// Create a copy of QRState
+  /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QRStateImplCopyWith<_$QRStateImpl> get copyWith =>
+  _$$ScannerStateImplCopyWith<_$ScannerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

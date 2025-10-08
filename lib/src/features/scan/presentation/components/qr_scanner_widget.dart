@@ -8,7 +8,7 @@ import 'package:my_point/src/features/scan/presentation/components/custom_scan_w
 import 'package:my_point/src/features/scan/presentation/components/scanner_loading_state_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_text_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/torch_toggle_widget.dart';
-import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/q_r_bloc.dart';
+import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart';
 
 class QRScannerWidget extends StatefulWidget {
   final VoidCallback? onClose;
@@ -19,10 +19,10 @@ class QRScannerWidget extends StatefulWidget {
   });
 
   @override
-  State<QRScannerWidget> createState() => _QRScannerWidgetState();
+  State<QRScannerWidget> createState() => QRScannerWidgetState();
 }
 
-class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAliveClientMixin {
+class QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAliveClientMixin {
   MobileScannerController? controller;
   bool _isActive = true;
 
@@ -80,14 +80,14 @@ class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAli
   }
 
   void _onDetect(BuildContext context, BarcodeCapture capture) {
-    final qrBloc = context.read<QRBloc>();
+    final qrBloc = context.read<ScannerBloc>();
 
     if (!qrBloc.state.hasScanned && capture.barcodes.isNotEmpty) {
       final barcode = capture.barcodes.first;
       final String? code = barcode.rawValue;
       log('📸 QR Scanner detected: format=${barcode.format}, code=$code');
       if (code != null) {
-        qrBloc.add(QRCodeDetected(code));
+        qrBloc.add(ScannerQRCodeDetected(code));
       }
     }
   }
@@ -105,14 +105,14 @@ class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAli
       height: scanAreaSize,
     );
 
-    return BlocListener<QRBloc, QRState>(
+    return BlocListener<ScannerBloc, ScannerState>(
       listenWhen: (previous, current) => previous.torchEnabled != current.torchEnabled,
       listener: (context, state) {
         controller?.toggleTorch();
       },
       child: controller == null
           ? const Center(child: CircularProgressIndicator())
-          : BlocBuilder<QRBloc, QRState>(
+          : BlocBuilder<ScannerBloc, ScannerState>(
               builder: (context, state) {
                 return Stack(
                   children: [
@@ -123,9 +123,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAli
                       controller: controller,
                       onDetect: (capture) => _onDetect(context, capture),
                       fit: BoxFit.cover,
-                    ),
-                    IgnorePointer(
-                      child: CustomPaint(
+                      overlayBuilder: (context, constraints) => CustomPaint(
                         painter: CustomScanWindowOverlay(
                           scanWindow: scanWindow,
                           borderRadius: _borderRadius,
@@ -133,6 +131,15 @@ class _QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAli
                         child: Container(),
                       ),
                     ),
+                    // IgnorePointer(
+                    //   child: CustomPaint(
+                    //     painter: CustomScanWindowOverlay(
+                    //       scanWindow: scanWindow,
+                    //       borderRadius: _borderRadius,
+                    //     ),
+                    //     child: Container(),
+                    //   ),
+                    // ),
                     ScannerTextWidget(
                         screenSize: screenSize,
                         scanAreaSize: scanAreaSize,
