@@ -147,6 +147,7 @@ class BarcodeScannerWidgetState extends State<BarcodeScannerWidget> with Automat
                         text: 'Скан штрих-кода',
                         subtitle: 'Направьте камеру на штрих-код'),
                     TorchToggleWidget(
+                      isBarcode: true,
                       screenSize: screenSize,
                       scanAreaHeight: scanAreaHeight,
                       torchEnabled: state.torchEnabled,

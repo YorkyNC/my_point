@@ -36,6 +36,9 @@ class $AssetsAppImagesGen {
   /// File path: assets/app_images/scan.svg
   String get scan => 'assets/app_images/scan.svg';
 
+  /// File path: assets/app_images/scanner.svg
+  String get scanner => 'assets/app_images/scanner.svg';
+
   /// File path: assets/app_images/square_add.svg
   String get squareAdd => 'assets/app_images/square_add.svg';
 
@@ -55,6 +58,7 @@ class $AssetsAppImagesGen {
         introductionPageSvg,
         myPointSecond,
         scan,
+        scanner,
         squareAdd,
         successJpg,
         successSvg

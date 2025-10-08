@@ -5,16 +5,19 @@ class UnregisteredUserTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
   const UnregisteredUserTextField({
     super.key,
     required this.hintText,
     required this.controller,
     this.onChanged,
+    this.keyboardType,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: keyboardType,
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(

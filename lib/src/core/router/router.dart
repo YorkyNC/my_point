@@ -11,6 +11,8 @@ import 'package:my_point/src/features/order/presentation/page/order_page.dart';
 import 'package:my_point/src/features/otp/presentation/page/otp_page.dart';
 import 'package:my_point/src/features/profile/presentation/page/profile_page.dart';
 import 'package:my_point/src/features/register/presentation/page/register_p_v_z_page.dart';
+import 'package:my_point/src/features/scan/presentation/components/manual_barcode_input_widget.dart';
+import 'package:my_point/src/features/scan/presentation/components/torch_toggle_widget.dart';
 import 'package:my_point/src/features/scan/presentation/page/scan_page.dart';
 
 import '../../app/app_navigation_wrapper.dart';

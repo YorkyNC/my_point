@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
@@ -117,12 +116,12 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
                 bottomLeft: Radius.circular(20),
               ),
             ),
-            leading: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+            leading: Icon(context.icons.chevron_left, size: 24),
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
-                  CupertinoIcons.question_circle,
+                icon: Icon(
+                  context.icons.help,
                   size: 24,
                 ),
               ),

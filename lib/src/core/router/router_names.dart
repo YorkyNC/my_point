@@ -32,4 +32,5 @@ class RouteNames {
   static const String delivery = 'delivery';
   static const String scan = 'scan';
   static const String order = 'order';
+  static const String manualBarcodeInput = 'manual-barcode-input';
 }

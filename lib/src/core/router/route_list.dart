@@ -193,4 +193,8 @@ final List<RouteBase> _routes = [
       return getPage(child: RegisterPVZPage(), state: state);
     },
   ),
+  GoRoute(
+    path: RoutePaths.manualBarcodeInput,
+    pageBuilder: (context, state) => getPage(child: ManualBarcodeInputWidget(), state: state),
+  ),
 ];
