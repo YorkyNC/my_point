@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:my_point/src/features/scan/domain/request/qr_scan_request.dart';
 import 'package:my_point/src/features/scan/presentation/components/custom_scan_window_overlay.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_loading_state_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_text_widget.dart';
@@ -87,7 +88,7 @@ class QRScannerWidgetState extends State<QRScannerWidget> with AutomaticKeepAliv
       final String? code = barcode.rawValue;
       log('📸 QR Scanner detected: format=${barcode.format}, code=$code');
       if (code != null) {
-        qrBloc.add(ScannerQRCodeDetected(code));
+        qrBloc.add(ScannerQRCodeDetected(QrScanRequest(encodedData: code, currentPvzId: '1'))); // mock for now
       }
     }
   }

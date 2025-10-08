@@ -65,7 +65,7 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
       value: _qrBloc,
       child: BlocListener<ScannerBloc, ScannerState>(
         listener: (context, state) {
-          if (state.qrCode != null && state.processedQRCode == null && !state.isLoading) {
+          if (state.qrCode != null && state.processedQRCode == null && !state.isLoading && state.isSuccess) {
             ScannerResultDialogWidget.show(
               context,
               code: state.qrCode!,
@@ -73,7 +73,10 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
             );
             context.read<ScannerBloc>().add(ScannerReseted());
             context.read<ScannerBloc>().add(ScannerStarted());
-          } else if (state.barcodeCode != null && state.processedQRCode == null && !state.isLoading) {
+          } else if (state.barcodeCode != null &&
+              state.processedQRCode == null &&
+              !state.isLoading &&
+              state.isSuccess) {
             ScannerResultDialogWidget.show(
               context,
               code: state.barcodeCode!,

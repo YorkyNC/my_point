@@ -8,16 +8,16 @@ final class ScannerPermissionRequested extends ScannerEvent {}
 
 final class ScannerStarted extends ScannerEvent {}
 
-final class ScannerQRCodeDetected extends ScannerEvent {
-  final String qrCode;
+final class ScannerBarcodeDetected extends ScannerEvent {
+  final BarcodeScanRequest barcodeScanRequest;
 
-  ScannerQRCodeDetected(this.qrCode);
+  ScannerBarcodeDetected(this.barcodeScanRequest);
 }
 
-final class ScannerBarcodeDetected extends ScannerEvent {
-  final String barcodeCode;
+final class ScannerQRCodeDetected extends ScannerEvent {
+  final QrScanRequest qrCode;
 
-  ScannerBarcodeDetected(this.barcodeCode);
+  ScannerQRCodeDetected(this.qrCode);
 }
 
 final class ScannerTorchToggled extends ScannerEvent {}

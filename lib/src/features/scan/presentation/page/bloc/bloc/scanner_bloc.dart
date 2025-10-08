@@ -1,6 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_point/src/features/scan/domain/entities/barcode_scan_entity.dart';
+import 'package:my_point/src/features/scan/domain/entities/qr_scan_entity.dart';
+import 'package:my_point/src/features/scan/domain/request/barcode_scan_request.dart';
+import 'package:my_point/src/features/scan/domain/request/qr_scan_request.dart';
+import 'package:my_point/src/features/scan/domain/usecases/barcode_scan_use_case.dart';
+import 'package:my_point/src/features/scan/domain/usecases/qr_code_scan_use_case.dart';
 
 part 'scanner_bloc.freezed.dart';
 part 'scanner_event.dart';
@@ -8,7 +14,14 @@ part 'scanner_state.dart';
 
 @injectable
 class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
-  ScannerBloc() : super(const ScannerState()) {
+  ScannerBloc(this._barcodeScanUseCase, this._qrCodeScanUseCase) : super(const ScannerState()) {
+    setUpHandlers();
+  }
+
+  final BarcodeScanUseCase _barcodeScanUseCase;
+  final QrCodeScanUseCase _qrCodeScanUseCase;
+
+  void setUpHandlers() {
     on<ScannerStarted>(_onScannerStarted);
     on<ScannerQRCodeDetected>(_onQRCodeDetected);
     on<ScannerTorchToggled>(_onTorchToggled);
@@ -35,12 +48,23 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
         isLoading: true,
         hasScanned: true,
       ));
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      emit(state.copyWith(
-        qrCode: event.qrCode,
-        isLoading: false,
-      ));
+      final result = await _qrCodeScanUseCase.execute(event.qrCode);
+      result.fold(
+        (error) {
+          emit(state.copyWith(
+            isSuccess: false,
+            errorMessage: error.message,
+            isLoading: false,
+          ));
+        },
+        (response) {
+          emit(state.copyWith(
+            qrScanEntity: response,
+            isSuccess: true,
+            isLoading: false,
+          ));
+        },
+      );
     }
   }
 
@@ -76,12 +100,23 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
         isLoading: true,
         hasScanned: true,
       ));
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      emit(state.copyWith(
-        barcodeCode: event.barcodeCode,
-        isLoading: false,
-      ));
+      final result = await _barcodeScanUseCase.execute(event.barcodeScanRequest);
+      result.fold(
+        (error) {
+          emit(state.copyWith(
+            isSuccess: false,
+            errorMessage: error.message,
+            isLoading: false,
+          ));
+        },
+        (response) {
+          emit(state.copyWith(
+            barcodeScanEntity: response,
+            isSuccess: true,
+            isLoading: false,
+          ));
+        },
+      );
     }
   }
 

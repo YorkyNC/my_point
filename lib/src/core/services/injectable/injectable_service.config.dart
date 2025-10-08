@@ -30,6 +30,18 @@ import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc
     as _i1033;
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart'
     as _i83;
+import 'package:my_point/src/features/scan/data/datasources/remote/i_scan_remote.dart'
+    as _i1039;
+import 'package:my_point/src/features/scan/data/datasources/remote/scan_remote_impl.dart'
+    as _i941;
+import 'package:my_point/src/features/scan/data/repositories/i_scan_repository.dart'
+    as _i236;
+import 'package:my_point/src/features/scan/domain/repositories/scan_repository_impl.dart'
+    as _i126;
+import 'package:my_point/src/features/scan/domain/usecases/barcode_scan_use_case.dart'
+    as _i935;
+import 'package:my_point/src/features/scan/domain/usecases/qr_code_scan_use_case.dart'
+    as _i496;
 import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart'
     as _i559;
 
@@ -44,7 +56,6 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i559.ScannerBloc>(() => _i559.ScannerBloc());
     gh.factory<_i83.RegisterPvzBloc>(() => _i83.RegisterPvzBloc());
     gh.factory<_i1033.AuthorizationBloc>(() => _i1033.AuthorizationBloc());
     await gh.singletonAsync<_i274.DioRestClient>(
@@ -54,10 +65,27 @@ extension GetItInjectableX on _i174.GetIt {
       },
       preResolve: true,
     );
+    gh.lazySingleton<_i1039.IScanRemote>(
+      () => _i941.ScanRemoteImpl(),
+      instanceName: 'ScanRemoteImpl',
+    );
+    gh.lazySingleton<_i236.IScanRepository>(
+      () => _i126.ScanRepositoryImpl(
+          gh<_i1039.IScanRemote>(instanceName: 'IScanRemote')),
+      instanceName: 'ScanRepositoryImpl',
+    );
     gh.lazySingleton<_i426.IAuthorizationRemote>(
       () => _i869.AuthorizationRemoteImpl(),
       instanceName: 'AuthorizationRemoteImpl',
     );
+    gh.lazySingleton<_i496.QrCodeScanUseCase>(() => _i496.QrCodeScanUseCase(
+        gh<_i236.IScanRepository>(instanceName: 'ScanRepositoryImpl')));
+    gh.lazySingleton<_i935.BarcodeScanUseCase>(() => _i935.BarcodeScanUseCase(
+        gh<_i236.IScanRepository>(instanceName: 'ScanRepositoryImpl')));
+    gh.factory<_i559.ScannerBloc>(() => _i559.ScannerBloc(
+          gh<_i935.BarcodeScanUseCase>(),
+          gh<_i496.QrCodeScanUseCase>(),
+        ));
     gh.lazySingleton<_i207.IAuthRepository>(
       () => _i320.AuthorizationRepositoryImpl(
           gh<_i426.IAuthorizationRemote>(instanceName: 'IAuthorizationRemote')),

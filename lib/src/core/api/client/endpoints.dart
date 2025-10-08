@@ -4,4 +4,6 @@ class EndPoints {
   static const signIn = "/user/sign-in";
   static const signUp = "/user/sign-up";
   static const refreshToken = "/user/refresh-token";
+  static const barcodeScan = "/orders/scan";
+  static const qrScan = "/orders/scan-qr";
 }

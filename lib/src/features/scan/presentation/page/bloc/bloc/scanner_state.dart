@@ -12,5 +12,8 @@ class ScannerState with _$ScannerState {
     @Default(false) bool isScanning,
     @Default(false) bool isLoading,
     @Default(false) bool isInitializing,
+    BarcodeScanEntity? barcodeScanEntity,
+    QrScanEntity? qrScanEntity,
+    @Default(false) bool isSuccess,
   }) = _ScannerState;
 }

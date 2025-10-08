@@ -25,6 +25,10 @@ mixin _$ScannerState {
   bool get isScanning => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isInitializing => throw _privateConstructorUsedError;
+  BarcodeScanEntity? get barcodeScanEntity =>
+      throw _privateConstructorUsedError;
+  QrScanEntity? get qrScanEntity => throw _privateConstructorUsedError;
+  bool get isSuccess => throw _privateConstructorUsedError;
 
   /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
@@ -48,7 +52,13 @@ abstract class $ScannerStateCopyWith<$Res> {
       bool hasScanned,
       bool isScanning,
       bool isLoading,
-      bool isInitializing});
+      bool isInitializing,
+      BarcodeScanEntity? barcodeScanEntity,
+      QrScanEntity? qrScanEntity,
+      bool isSuccess});
+
+  $BarcodeScanEntityCopyWith<$Res>? get barcodeScanEntity;
+  $QrScanEntityCopyWith<$Res>? get qrScanEntity;
 }
 
 /// @nodoc
@@ -75,6 +85,9 @@ class _$ScannerStateCopyWithImpl<$Res, $Val extends ScannerState>
     Object? isScanning = null,
     Object? isLoading = null,
     Object? isInitializing = null,
+    Object? barcodeScanEntity = freezed,
+    Object? qrScanEntity = freezed,
+    Object? isSuccess = null,
   }) {
     return _then(_value.copyWith(
       qrCode: freezed == qrCode
@@ -113,7 +126,47 @@ class _$ScannerStateCopyWithImpl<$Res, $Val extends ScannerState>
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
               as bool,
+      barcodeScanEntity: freezed == barcodeScanEntity
+          ? _value.barcodeScanEntity
+          : barcodeScanEntity // ignore: cast_nullable_to_non_nullable
+              as BarcodeScanEntity?,
+      qrScanEntity: freezed == qrScanEntity
+          ? _value.qrScanEntity
+          : qrScanEntity // ignore: cast_nullable_to_non_nullable
+              as QrScanEntity?,
+      isSuccess: null == isSuccess
+          ? _value.isSuccess
+          : isSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of ScannerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BarcodeScanEntityCopyWith<$Res>? get barcodeScanEntity {
+    if (_value.barcodeScanEntity == null) {
+      return null;
+    }
+
+    return $BarcodeScanEntityCopyWith<$Res>(_value.barcodeScanEntity!, (value) {
+      return _then(_value.copyWith(barcodeScanEntity: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ScannerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $QrScanEntityCopyWith<$Res>? get qrScanEntity {
+    if (_value.qrScanEntity == null) {
+      return null;
+    }
+
+    return $QrScanEntityCopyWith<$Res>(_value.qrScanEntity!, (value) {
+      return _then(_value.copyWith(qrScanEntity: value) as $Val);
+    });
   }
 }
 
@@ -134,7 +187,15 @@ abstract class _$$ScannerStateImplCopyWith<$Res>
       bool hasScanned,
       bool isScanning,
       bool isLoading,
-      bool isInitializing});
+      bool isInitializing,
+      BarcodeScanEntity? barcodeScanEntity,
+      QrScanEntity? qrScanEntity,
+      bool isSuccess});
+
+  @override
+  $BarcodeScanEntityCopyWith<$Res>? get barcodeScanEntity;
+  @override
+  $QrScanEntityCopyWith<$Res>? get qrScanEntity;
 }
 
 /// @nodoc
@@ -159,6 +220,9 @@ class __$$ScannerStateImplCopyWithImpl<$Res>
     Object? isScanning = null,
     Object? isLoading = null,
     Object? isInitializing = null,
+    Object? barcodeScanEntity = freezed,
+    Object? qrScanEntity = freezed,
+    Object? isSuccess = null,
   }) {
     return _then(_$ScannerStateImpl(
       qrCode: freezed == qrCode
@@ -197,6 +261,18 @@ class __$$ScannerStateImplCopyWithImpl<$Res>
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
               as bool,
+      barcodeScanEntity: freezed == barcodeScanEntity
+          ? _value.barcodeScanEntity
+          : barcodeScanEntity // ignore: cast_nullable_to_non_nullable
+              as BarcodeScanEntity?,
+      qrScanEntity: freezed == qrScanEntity
+          ? _value.qrScanEntity
+          : qrScanEntity // ignore: cast_nullable_to_non_nullable
+              as QrScanEntity?,
+      isSuccess: null == isSuccess
+          ? _value.isSuccess
+          : isSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -213,7 +289,10 @@ class _$ScannerStateImpl implements _ScannerState {
       this.hasScanned = false,
       this.isScanning = false,
       this.isLoading = false,
-      this.isInitializing = false});
+      this.isInitializing = false,
+      this.barcodeScanEntity,
+      this.qrScanEntity,
+      this.isSuccess = false});
 
   @override
   final String? qrCode;
@@ -238,10 +317,17 @@ class _$ScannerStateImpl implements _ScannerState {
   @override
   @JsonKey()
   final bool isInitializing;
+  @override
+  final BarcodeScanEntity? barcodeScanEntity;
+  @override
+  final QrScanEntity? qrScanEntity;
+  @override
+  @JsonKey()
+  final bool isSuccess;
 
   @override
   String toString() {
-    return 'ScannerState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading, isInitializing: $isInitializing)';
+    return 'ScannerState(qrCode: $qrCode, barcodeCode: $barcodeCode, processedQRCode: $processedQRCode, errorMessage: $errorMessage, torchEnabled: $torchEnabled, hasScanned: $hasScanned, isScanning: $isScanning, isLoading: $isLoading, isInitializing: $isInitializing, barcodeScanEntity: $barcodeScanEntity, qrScanEntity: $qrScanEntity, isSuccess: $isSuccess)';
   }
 
   @override
@@ -265,7 +351,13 @@ class _$ScannerStateImpl implements _ScannerState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.isInitializing, isInitializing) ||
-                other.isInitializing == isInitializing));
+                other.isInitializing == isInitializing) &&
+            (identical(other.barcodeScanEntity, barcodeScanEntity) ||
+                other.barcodeScanEntity == barcodeScanEntity) &&
+            (identical(other.qrScanEntity, qrScanEntity) ||
+                other.qrScanEntity == qrScanEntity) &&
+            (identical(other.isSuccess, isSuccess) ||
+                other.isSuccess == isSuccess));
   }
 
   @override
@@ -279,7 +371,10 @@ class _$ScannerStateImpl implements _ScannerState {
       hasScanned,
       isScanning,
       isLoading,
-      isInitializing);
+      isInitializing,
+      barcodeScanEntity,
+      qrScanEntity,
+      isSuccess);
 
   /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
@@ -300,7 +395,10 @@ abstract class _ScannerState implements ScannerState {
       final bool hasScanned,
       final bool isScanning,
       final bool isLoading,
-      final bool isInitializing}) = _$ScannerStateImpl;
+      final bool isInitializing,
+      final BarcodeScanEntity? barcodeScanEntity,
+      final QrScanEntity? qrScanEntity,
+      final bool isSuccess}) = _$ScannerStateImpl;
 
   @override
   String? get qrCode;
@@ -320,6 +418,12 @@ abstract class _ScannerState implements ScannerState {
   bool get isLoading;
   @override
   bool get isInitializing;
+  @override
+  BarcodeScanEntity? get barcodeScanEntity;
+  @override
+  QrScanEntity? get qrScanEntity;
+  @override
+  bool get isSuccess;
 
   /// Create a copy of ScannerState
   /// with the given fields replaced by the non-null parameter values.
