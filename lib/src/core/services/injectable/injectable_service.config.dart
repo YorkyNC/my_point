@@ -57,7 +57,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.factory<_i83.RegisterPvzBloc>(() => _i83.RegisterPvzBloc());
-    gh.factory<_i1033.AuthorizationBloc>(() => _i1033.AuthorizationBloc());
     await gh.singletonAsync<_i274.DioRestClient>(
       () {
         final i = _i274.DioRestClient();
@@ -87,8 +86,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i496.QrCodeScanUseCase>(),
         ));
     gh.lazySingleton<_i207.IAuthRepository>(
-      () => _i320.AuthorizationRepositoryImpl(
-          gh<_i426.IAuthorizationRemote>(instanceName: 'IAuthorizationRemote')),
+      () => _i320.AuthorizationRepositoryImpl(gh<_i426.IAuthorizationRemote>(
+          instanceName: 'AuthorizationRemoteImpl')),
       instanceName: 'AuthorizationRepositoryImpl',
     );
     gh.lazySingleton<_i577.SignUpUseCase>(() => _i577.SignUpUseCase(
@@ -100,6 +99,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i742.RequestOtpCodeUseCase>(() =>
         _i742.RequestOtpCodeUseCase(gh<_i207.IAuthRepository>(
             instanceName: 'AuthorizationRepositoryImpl')));
+    gh.factory<_i1033.AuthorizationBloc>(
+        () => _i1033.AuthorizationBloc(gh<_i584.SignInUseCase>()));
     return this;
   }
 }

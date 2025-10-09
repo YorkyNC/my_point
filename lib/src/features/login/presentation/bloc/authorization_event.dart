@@ -10,10 +10,9 @@ class SavePassword extends AuthorizationEvent {
 }
 
 class SignIn extends AuthorizationEvent {
-  final String phoneCode;
-  final String phoneNumber;
+  final String email;
   final String password;
-  SignIn(this.phoneCode, this.phoneNumber, this.password);
+  SignIn(this.email, this.password);
 }
 
 class CheckPasswordsMatch extends AuthorizationEvent {
@@ -88,3 +87,18 @@ class StartTimer extends AuthorizationEvent {}
 class ResetTimer extends AuthorizationEvent {}
 
 class ClearOtpError extends AuthorizationEvent {}
+
+class EmailChanged extends AuthorizationEvent {
+  final String email;
+  EmailChanged(this.email);
+}
+
+class PasswordChanged extends AuthorizationEvent {
+  final String password;
+  PasswordChanged(this.password);
+}
+
+class PasswordVisibilityChanged extends AuthorizationEvent {
+  final bool isVisible;
+  PasswordVisibilityChanged(this.isVisible);
+}

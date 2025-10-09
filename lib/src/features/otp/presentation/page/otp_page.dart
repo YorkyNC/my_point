@@ -44,6 +44,7 @@ class _OtpPageState extends State<OtpPage> {
           return !previous.isOtpSuccess && current.isOtpSuccess;
         },
         listener: (context, state) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
             CustomSnackBar.show(
               color: context.colors.brand500,

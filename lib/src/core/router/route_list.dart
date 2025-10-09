@@ -139,7 +139,11 @@ final List<RouteBase> _routes = [
   // In your router.dart file, add this route
   GoRoute(
     path: RoutePaths.login,
-    pageBuilder: (context, state) => getPage(child: const LoginPage(), state: state),
+    pageBuilder: (context, state) => getPage(
+      child: const LoginPage(),
+      state: state,
+      fullscreenDialog: true,
+    ),
   ),
   // GoRoute(
   //   path: RoutePaths.createDelivery,

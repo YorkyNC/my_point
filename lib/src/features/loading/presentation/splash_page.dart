@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       } else if (token == null || token.isEmpty) {
         context.go(RoutePaths.login);
       } else {
-        context.go(RoutePaths.main);
+        context.go(RoutePaths.home);
       }
     }
   }

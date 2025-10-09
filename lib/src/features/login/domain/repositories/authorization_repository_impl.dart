@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_point/src/features/login/data/datasources/remote/authorization_remote_impl.dart';
 import 'package:my_point/src/features/login/data/datasources/remote/i_authorization_remote.dart';
 import 'package:my_point/src/features/login/domain/entities/request_otp_code_entity.dart';
 import 'package:my_point/src/features/login/domain/entities/sign_in_entity.dart';
@@ -15,14 +16,14 @@ import '../../data/repositories/i_auth_repository.dart';
 @named
 @LazySingleton(as: IAuthRepository)
 class AuthorizationRepositoryImpl implements IAuthRepository {
-  final IAuthorizationRemote _authRepository;
+  final IAuthorizationRemote _authorizationRemote;
 
-  AuthorizationRepositoryImpl(@Named.from(IAuthorizationRemote) this._authRepository);
+  AuthorizationRepositoryImpl(@Named.from(AuthorizationRemoteImpl) this._authorizationRemote);
 
   @override
   Future<Either<DomainException, SignInEntity>> signIn(SignInRequest body) async {
     try {
-      final requests = await _authRepository.signIn(body);
+      final requests = await _authorizationRemote.signIn(body);
       return requests.fold(
         (error) {
           return Left(error);
@@ -38,7 +39,7 @@ class AuthorizationRepositoryImpl implements IAuthRepository {
   @override
   Future<Either<DomainException, SignUpEntity>> signUp(SignUpRequest body) async {
     try {
-      final requests = await _authRepository.signUp(body);
+      final requests = await _authorizationRemote.signUp(body);
       return requests.fold(
         (error) {
           return Left(error);
@@ -54,7 +55,7 @@ class AuthorizationRepositoryImpl implements IAuthRepository {
   @override
   Future<Either<DomainException, RequestOtpCodeEntity>> requestOtpCode(RequestOtpCode body) async {
     try {
-      final requests = await _authRepository.requestOtpCode(body);
+      final requests = await _authorizationRemote.requestOtpCode(body);
       return requests.fold(
         (error) {
           return Left(error);

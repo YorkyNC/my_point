@@ -154,7 +154,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                               backgroundColor: context.colors.mainAccent,
                             ),
                             onPressed: () {
-                              context.go(RoutePaths.login);
+                              context.push(RoutePaths.login);
                               st.setHasSeenIntroduction(true);
                             },
                             child: Row(

@@ -28,11 +28,12 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
   Future<Either<DomainException, SignInEntity>> signIn(SignInRequest request) async {
     final Either<DomainException, Response<dynamic>> response = await client.post(
       '${EndPoints.baseUrl}${EndPoints.signIn}',
-      data: request,
+      data: request.toJson(),
       options: Options(
         headers: {
           'accept': 'application/json',
-          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),
     );
@@ -42,7 +43,11 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
         return Left(error);
       },
       (result) async {
-        return Right(SignInEntity.fromJson(result.data['data']));
+        final data = result.data;
+        if (data == null) {
+          return Left(UnknownException(message: 'Response data is null'));
+        }
+        return Right(SignInEntity.fromJson(data));
       },
     );
   }
@@ -51,11 +56,12 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
   Future<Either<DomainException, SignUpEntity>> signUp(SignUpRequest request) async {
     final Either<DomainException, Response<dynamic>> response = await client.post(
       '${EndPoints.baseUrl}${EndPoints.signUp}',
-      data: request,
+      data: request.toJson(),
       options: Options(
         headers: {
           'accept': 'application/json',
-          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),
     );
@@ -65,7 +71,11 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
         return Left(error);
       },
       (result) async {
-        return Right(SignUpEntity.fromJson(result.data['data']));
+        final data = result.data;
+        if (data == null || data['data'] == null) {
+          return Left(UnknownException(message: 'Response data is null'));
+        }
+        return Right(SignUpEntity.fromJson(data['data']));
       },
     );
   }
@@ -80,7 +90,8 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
       options: Options(
         headers: {
           'accept': 'application/json',
-          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),
     );
@@ -90,7 +101,11 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
         return Left(error);
       },
       (result) async {
-        return Right(RequestOtpCodeEntity.fromJson(result.data['data']));
+        final data = result.data;
+        if (data == null || data['data'] == null) {
+          return Left(UnknownException(message: 'Response data is null'));
+        }
+        return Right(RequestOtpCodeEntity.fromJson(data['data']));
       },
     );
   }

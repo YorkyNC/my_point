@@ -6,6 +6,8 @@ class AppColors {
 
   Color get lightBorder => const Color(0xffE4E4E8);
 
+  Color get lightErrorBorder => const Color(0xffEF3535);
+
   Color get lightSecondaryText => const Color(0xff9B9B9B);
 
   Color get blue => const Color(0xff1fb6ff);

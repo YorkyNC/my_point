@@ -6,12 +6,14 @@ class UnregisteredUserTextField extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String>? onChanged;
   final TextInputType? keyboardType;
+  final bool? obscureText;
   const UnregisteredUserTextField({
     super.key,
     required this.hintText,
     required this.controller,
     this.onChanged,
     this.keyboardType,
+    this.obscureText,
   });
 
   @override
@@ -20,6 +22,7 @@ class UnregisteredUserTextField extends StatelessWidget {
       keyboardType: keyboardType,
       controller: controller,
       onChanged: onChanged,
+      obscureText: obscureText ?? false,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 15),

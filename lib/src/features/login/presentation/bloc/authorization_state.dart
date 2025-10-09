@@ -20,10 +20,17 @@ abstract class AuthorizationState with _$AuthorizationState {
     @Default(60) int remainingSeconds,
     @Default(false) bool canRequestCode,
     @Default(false) bool isTimerRunning,
+    @Default(false) bool isEmailFilled,
+    String? password,
+    String? email,
+    @Default(false) bool isPasswordFilled,
+    @Default(true) bool isObscurePassword,
+    String? error,
+    String? token,
   }) = _AuthorizationState;
 
   bool get isLoginVerified {
-    final result = isPhoneNumberFilled && isPhoneCodeFilled;
+    final result = isEmailFilled && isPasswordFilled;
     return result;
   }
 }

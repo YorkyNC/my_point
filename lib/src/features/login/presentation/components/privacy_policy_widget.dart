@@ -13,7 +13,7 @@ class PrivacyPolicyWidget extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: 'Продолжая авторизацию, вы соглашаетесь со \nвсеми пунктами документов',
+            text: 'Продолжая авторизацию, вы соглашаетесь со \nвсеми пунктами документов ',
             style: context.typography.extraSmallParagraph.copyWith(
               color: context.colors.lightSecondaryText,
             ),

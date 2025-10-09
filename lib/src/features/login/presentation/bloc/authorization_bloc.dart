@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_point/src/core/base/base_bloc/bloc/base_bloc.dart';
+import 'package:my_point/src/core/router/router.dart';
+import 'package:my_point/src/features/login/domain/request/sign_in_request.dart';
+import 'package:my_point/src/features/login/domain/usecases/sign_in_use_case.dart';
 
 part 'authorization_bloc.freezed.dart';
 part 'authorization_event.dart';
@@ -11,12 +15,12 @@ part 'authorization_state.dart';
 
 @injectable
 class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState> {
-  AuthorizationBloc() : super(AuthorizationState()) {
+  AuthorizationBloc(this._signInUseCase) : super(AuthorizationState()) {
     setUpHandlers();
   }
 
   Timer? _timer;
-
+  final SignInUseCase _signInUseCase;
   void setUpHandlers() {
     on<PhoneCodeChanged>(_onPhoneCodeChanged);
     on<PhoneNumberChanged>(_onPhoneNumberChanged);
@@ -28,12 +32,37 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     on<OtpChanged>(_onOtpChanged);
     on<SignUp>(_onSignUp);
     on<ValidateForm>(_onValidateForm);
+    on<EmailChanged>(_onEmailChanged);
+    on<PasswordChanged>(_onPasswordChanged);
+    on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
   }
 
   @override
   Future<void> close() {
     _timer?.cancel();
     return super.close();
+  }
+
+  Future<void> _onEmailChanged(EmailChanged event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      email: event.email,
+      isEmailFilled: event.email.isNotEmpty,
+      error: null,
+    ));
+  }
+
+  Future<void> _onPasswordChanged(PasswordChanged event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      password: event.password,
+      isPasswordFilled: event.password.isNotEmpty,
+      error: null,
+    ));
+  }
+
+  Future<void> _onPasswordVisibilityChanged(PasswordVisibilityChanged event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      isObscurePassword: event.isVisible,
+    ));
   }
 
   @override
@@ -61,12 +90,36 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     emit(state.copyWith(
       success: false,
       isLoading: true,
+      error: null,
     ));
-    await Future.delayed(const Duration(seconds: 2));
-    emit(state.copyWith(
-      isLoading: false,
-      success: true,
+    final result = await _signInUseCase.execute(SignInRequest(
+      email: event.email,
+      password: event.password,
     ));
+    await result.fold(
+      (l) async {
+        emit(state.copyWith(
+          isLoading: false,
+          error: l.message,
+        ));
+      },
+      (r) async {
+        log('Token saved: ${r.accessToken}');
+        await st.setToken(r.accessToken);
+        emit(
+          state.copyWith(
+            error: null,
+            password: null,
+            email: null,
+            isPasswordFilled: false,
+            isEmailFilled: false,
+            token: r.accessToken,
+            isLoading: false,
+            success: true,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _onOtpChanged(OtpChanged event, Emitter<AuthorizationState> emit) async {

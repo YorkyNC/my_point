@@ -95,11 +95,21 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
                                           UnregisteredUserTextField(
                                               hintText: 'Фамилия', controller: _surnameController),
                                           UnregisteredUserTextField(hintText: 'Имя', controller: _nameController),
-                                          UnregisteredUserTextField(hintText: 'Email', controller: _emailController),
                                           UnregisteredUserTextField(
-                                              hintText: 'Пароль', controller: _passwordController),
+                                            hintText: 'Email',
+                                            controller: _emailController,
+                                            keyboardType: TextInputType.emailAddress,
+                                          ),
                                           UnregisteredUserTextField(
-                                              hintText: 'Подтверждение пароля', controller: _confirmPasswordController),
+                                            hintText: 'Пароль',
+                                            controller: _passwordController,
+                                            obscureText: true,
+                                          ),
+                                          UnregisteredUserTextField(
+                                            hintText: 'Подтверждение пароля',
+                                            controller: _confirmPasswordController,
+                                            obscureText: true,
+                                          ),
                                         ],
                                       ),
                                       SizedBox(height: 24),
