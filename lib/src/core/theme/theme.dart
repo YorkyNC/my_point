@@ -162,7 +162,7 @@ class AppTheme {
       ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: colors.textprimary,
-        selectionHandleColor: colors.mainAccent,
+        selectionHandleColor: colors.textprimary,
         selectionColor: colors.textSelectionColor,
       ),
       cupertinoOverrideTheme: NoDefaultCupertinoThemeData(

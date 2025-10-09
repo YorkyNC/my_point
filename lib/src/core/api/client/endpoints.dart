@@ -6,4 +6,5 @@ class EndPoints {
   static const refreshToken = "/user/refresh-token";
   static const barcodeScan = "/orders/scan";
   static const qrScan = "/orders/scan-qr";
+  static const privacyPolicy = "https://mypoint.kz/#/privacy";
 }

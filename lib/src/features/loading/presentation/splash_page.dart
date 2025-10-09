@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -110,8 +110,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 children: [
                   Text(
                     'Версия приложения 1.5.5',
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
+                    style: context.typography.smallParagraph.copyWith(
+                      color: context.colors.lightSecondaryText,
                       fontSize: 14,
                     ),
                   ),
@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           Container(
                             height: 2,
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
+                              color: context.colors.lightSecondaryText,
                               borderRadius: BorderRadius.circular(2),
                             ),
                             child: FractionallySizedBox(

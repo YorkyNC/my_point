@@ -23,6 +23,12 @@ class $AssetsAppImagesGen {
   /// File path: assets/app_images/delete.svg
   String get delete => 'assets/app_images/delete.svg';
 
+  /// File path: assets/app_images/error.svg
+  String get error => 'assets/app_images/error.svg';
+
+  /// File path: assets/app_images/error_second.svg
+  String get errorSecond => 'assets/app_images/error_second.svg';
+
   /// File path: assets/app_images/introduction_page.jpg
   AssetGenImage get introductionPageJpg =>
       const AssetGenImage('assets/app_images/introduction_page.jpg');
@@ -54,6 +60,8 @@ class $AssetsAppImagesGen {
         mainLogo,
         mapPin,
         delete,
+        error,
+        errorSecond,
         introductionPageJpg,
         introductionPageSvg,
         myPointSecond,

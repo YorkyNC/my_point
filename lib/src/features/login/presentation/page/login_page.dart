@@ -109,10 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                   if (value == null || value.isEmpty) {
                                     return null;
                                   }
-                                  final emailRegex = RegExp(
-                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                                  );
-                                  if (!emailRegex.hasMatch(value)) {
+                                  if (!state.isEmailValid) {
                                     return 'Неверный формат';
                                   }
                                   return null;
@@ -145,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                       backgroundColor: context.colors.mainAccent,
                                       foregroundColor: context.colors.white,
                                     ),
-                                    onPressed: state.isLoginVerified
+                                    onPressed: state.isLoginVerified && state.isEmailValid
                                         ? () {
                                             final currentState = bloc.state;
                                             bloc.add(SignIn(currentState.email ?? '', currentState.password ?? ''));

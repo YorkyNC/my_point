@@ -99,8 +99,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i742.RequestOtpCodeUseCase>(() =>
         _i742.RequestOtpCodeUseCase(gh<_i207.IAuthRepository>(
             instanceName: 'AuthorizationRepositoryImpl')));
-    gh.factory<_i1033.AuthorizationBloc>(
-        () => _i1033.AuthorizationBloc(gh<_i584.SignInUseCase>()));
+    gh.factory<_i1033.AuthorizationBloc>(() => _i1033.AuthorizationBloc(
+          gh<_i584.SignInUseCase>(),
+          gh<_i577.SignUpUseCase>(),
+        ));
     return this;
   }
 }

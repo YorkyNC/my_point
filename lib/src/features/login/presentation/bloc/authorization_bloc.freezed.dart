@@ -32,13 +32,19 @@ mixin _$AuthorizationState {
   int get remainingSeconds => throw _privateConstructorUsedError;
   bool get canRequestCode => throw _privateConstructorUsedError;
   bool get isTimerRunning => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
   bool get isEmailFilled => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   bool get isPasswordFilled => throw _privateConstructorUsedError;
   bool get isObscurePassword => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get surname => throw _privateConstructorUsedError;
+  String? get confirmPassword => throw _privateConstructorUsedError;
+  bool get isNameFilled => throw _privateConstructorUsedError;
+  bool get isSurnameFilled => throw _privateConstructorUsedError;
+  bool get isConfirmPasswordFilled => throw _privateConstructorUsedError;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.
@@ -70,13 +76,19 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       int remainingSeconds,
       bool canRequestCode,
       bool isTimerRunning,
-      String? email,
       bool isEmailFilled,
       String? password,
+      String? email,
       bool isPasswordFilled,
       bool isObscurePassword,
       String? error,
-      String? token});
+      String? token,
+      String? name,
+      String? surname,
+      String? confirmPassword,
+      bool isNameFilled,
+      bool isSurnameFilled,
+      bool isConfirmPasswordFilled});
 }
 
 /// @nodoc
@@ -110,13 +122,19 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
     Object? remainingSeconds = null,
     Object? canRequestCode = null,
     Object? isTimerRunning = null,
-    Object? email = freezed,
     Object? isEmailFilled = null,
     Object? password = freezed,
+    Object? email = freezed,
     Object? isPasswordFilled = null,
     Object? isObscurePassword = null,
     Object? error = freezed,
     Object? token = freezed,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? confirmPassword = freezed,
+    Object? isNameFilled = null,
+    Object? isSurnameFilled = null,
+    Object? isConfirmPasswordFilled = null,
   }) {
     return _then(_value.copyWith(
       isValidate: null == isValidate
@@ -183,10 +201,6 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
           ? _value.isTimerRunning
           : isTimerRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       isEmailFilled: null == isEmailFilled
           ? _value.isEmailFilled
           : isEmailFilled // ignore: cast_nullable_to_non_nullable
@@ -194,6 +208,10 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
       isPasswordFilled: null == isPasswordFilled
           ? _value.isPasswordFilled
@@ -211,6 +229,30 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      confirmPassword: freezed == confirmPassword
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isNameFilled: null == isNameFilled
+          ? _value.isNameFilled
+          : isNameFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSurnameFilled: null == isSurnameFilled
+          ? _value.isSurnameFilled
+          : isSurnameFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isConfirmPasswordFilled: null == isConfirmPasswordFilled
+          ? _value.isConfirmPasswordFilled
+          : isConfirmPasswordFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -240,13 +282,19 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
       int remainingSeconds,
       bool canRequestCode,
       bool isTimerRunning,
-      String? email,
       bool isEmailFilled,
       String? password,
+      String? email,
       bool isPasswordFilled,
       bool isObscurePassword,
       String? error,
-      String? token});
+      String? token,
+      String? name,
+      String? surname,
+      String? confirmPassword,
+      bool isNameFilled,
+      bool isSurnameFilled,
+      bool isConfirmPasswordFilled});
 }
 
 /// @nodoc
@@ -278,13 +326,19 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
     Object? remainingSeconds = null,
     Object? canRequestCode = null,
     Object? isTimerRunning = null,
-    Object? email = freezed,
     Object? isEmailFilled = null,
     Object? password = freezed,
+    Object? email = freezed,
     Object? isPasswordFilled = null,
     Object? isObscurePassword = null,
     Object? error = freezed,
     Object? token = freezed,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? confirmPassword = freezed,
+    Object? isNameFilled = null,
+    Object? isSurnameFilled = null,
+    Object? isConfirmPasswordFilled = null,
   }) {
     return _then(_$AuthorizationStateImpl(
       isValidate: null == isValidate
@@ -351,10 +405,6 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
           ? _value.isTimerRunning
           : isTimerRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       isEmailFilled: null == isEmailFilled
           ? _value.isEmailFilled
           : isEmailFilled // ignore: cast_nullable_to_non_nullable
@@ -362,6 +412,10 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
       isPasswordFilled: null == isPasswordFilled
           ? _value.isPasswordFilled
@@ -379,6 +433,30 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      confirmPassword: freezed == confirmPassword
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isNameFilled: null == isNameFilled
+          ? _value.isNameFilled
+          : isNameFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSurnameFilled: null == isSurnameFilled
+          ? _value.isSurnameFilled
+          : isSurnameFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isConfirmPasswordFilled: null == isConfirmPasswordFilled
+          ? _value.isConfirmPasswordFilled
+          : isConfirmPasswordFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -403,13 +481,19 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
       this.remainingSeconds = 60,
       this.canRequestCode = false,
       this.isTimerRunning = false,
-      this.email,
       this.isEmailFilled = false,
       this.password,
+      this.email,
       this.isPasswordFilled = false,
       this.isObscurePassword = true,
       this.error,
-      this.token})
+      this.token,
+      this.name,
+      this.surname,
+      this.confirmPassword,
+      this.isNameFilled = false,
+      this.isSurnameFilled = false,
+      this.isConfirmPasswordFilled = false})
       : super._();
 
   @override
@@ -457,12 +541,12 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   @JsonKey()
   final bool isTimerRunning;
   @override
-  final String? email;
-  @override
   @JsonKey()
   final bool isEmailFilled;
   @override
   final String? password;
+  @override
+  final String? email;
   @override
   @JsonKey()
   final bool isPasswordFilled;
@@ -473,10 +557,25 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   final String? error;
   @override
   final String? token;
+  @override
+  final String? name;
+  @override
+  final String? surname;
+  @override
+  final String? confirmPassword;
+  @override
+  @JsonKey()
+  final bool isNameFilled;
+  @override
+  @JsonKey()
+  final bool isSurnameFilled;
+  @override
+  @JsonKey()
+  final bool isConfirmPasswordFilled;
 
   @override
   String toString() {
-    return 'AuthorizationState(isValidate: $isValidate, otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning, email: $email, isEmailFilled: $isEmailFilled, password: $password, isPasswordFilled: $isPasswordFilled, isObscurePassword: $isObscurePassword, error: $error, token: $token)';
+    return 'AuthorizationState(isValidate: $isValidate, otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning, isEmailFilled: $isEmailFilled, password: $password, email: $email, isPasswordFilled: $isPasswordFilled, isObscurePassword: $isObscurePassword, error: $error, token: $token, name: $name, surname: $surname, confirmPassword: $confirmPassword, isNameFilled: $isNameFilled, isSurnameFilled: $isSurnameFilled, isConfirmPasswordFilled: $isConfirmPasswordFilled)';
   }
 
   @override
@@ -513,17 +612,28 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
                 other.canRequestCode == canRequestCode) &&
             (identical(other.isTimerRunning, isTimerRunning) ||
                 other.isTimerRunning == isTimerRunning) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.isEmailFilled, isEmailFilled) ||
                 other.isEmailFilled == isEmailFilled) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.isPasswordFilled, isPasswordFilled) ||
                 other.isPasswordFilled == isPasswordFilled) &&
             (identical(other.isObscurePassword, isObscurePassword) ||
                 other.isObscurePassword == isObscurePassword) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.confirmPassword, confirmPassword) ||
+                other.confirmPassword == confirmPassword) &&
+            (identical(other.isNameFilled, isNameFilled) ||
+                other.isNameFilled == isNameFilled) &&
+            (identical(other.isSurnameFilled, isSurnameFilled) ||
+                other.isSurnameFilled == isSurnameFilled) &&
+            (identical(
+                    other.isConfirmPasswordFilled, isConfirmPasswordFilled) ||
+                other.isConfirmPasswordFilled == isConfirmPasswordFilled));
   }
 
   @override
@@ -545,13 +655,19 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
         remainingSeconds,
         canRequestCode,
         isTimerRunning,
-        email,
         isEmailFilled,
         password,
+        email,
         isPasswordFilled,
         isObscurePassword,
         error,
-        token
+        token,
+        name,
+        surname,
+        confirmPassword,
+        isNameFilled,
+        isSurnameFilled,
+        isConfirmPasswordFilled
       ]);
 
   /// Create a copy of AuthorizationState
@@ -582,13 +698,19 @@ abstract class _AuthorizationState extends AuthorizationState {
       final int remainingSeconds,
       final bool canRequestCode,
       final bool isTimerRunning,
-      final String? email,
       final bool isEmailFilled,
       final String? password,
+      final String? email,
       final bool isPasswordFilled,
       final bool isObscurePassword,
       final String? error,
-      final String? token}) = _$AuthorizationStateImpl;
+      final String? token,
+      final String? name,
+      final String? surname,
+      final String? confirmPassword,
+      final bool isNameFilled,
+      final bool isSurnameFilled,
+      final bool isConfirmPasswordFilled}) = _$AuthorizationStateImpl;
   const _AuthorizationState._() : super._();
 
   @override
@@ -624,11 +746,11 @@ abstract class _AuthorizationState extends AuthorizationState {
   @override
   bool get isTimerRunning;
   @override
-  String? get email;
-  @override
   bool get isEmailFilled;
   @override
   String? get password;
+  @override
+  String? get email;
   @override
   bool get isPasswordFilled;
   @override
@@ -637,6 +759,18 @@ abstract class _AuthorizationState extends AuthorizationState {
   String? get error;
   @override
   String? get token;
+  @override
+  String? get name;
+  @override
+  String? get surname;
+  @override
+  String? get confirmPassword;
+  @override
+  bool get isNameFilled;
+  @override
+  bool get isSurnameFilled;
+  @override
+  bool get isConfirmPasswordFilled;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.

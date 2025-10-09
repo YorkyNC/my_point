@@ -67,15 +67,20 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
     );
     return response.fold(
       (error) {
-        log.d(request.email.toString());
         return Left(error);
       },
       (result) async {
         final data = result.data;
-        if (data == null || data['data'] == null) {
+
+        if (data == null) {
           return Left(UnknownException(message: 'Response data is null'));
         }
-        return Right(SignUpEntity.fromJson(data['data']));
+
+        if (data is Map && data.containsKey('data')) {
+          return Right(SignUpEntity.fromJson(data['data']));
+        } else {
+          return Right(SignUpEntity.fromJson(data));
+        }
       },
     );
   }

@@ -74,12 +74,8 @@ class TimerTicked extends AuthorizationEvent {
 class ValidateForm extends AuthorizationEvent {}
 
 class SignUp extends AuthorizationEvent {
-  final String surname;
-  final String name;
-  final String email;
-  final String password;
-  final String confirmPassword;
-  SignUp(this.surname, this.name, this.email, this.password, this.confirmPassword);
+  SignUpRequest request;
+  SignUp(this.request);
 }
 
 class StartTimer extends AuthorizationEvent {}
@@ -101,4 +97,23 @@ class PasswordChanged extends AuthorizationEvent {
 class PasswordVisibilityChanged extends AuthorizationEvent {
   final bool isVisible;
   PasswordVisibilityChanged(this.isVisible);
+}
+
+class NameChanged extends AuthorizationEvent {
+  final String name;
+  NameChanged(this.name);
+}
+
+class SurnameChanged extends AuthorizationEvent {
+  final String surname;
+  SurnameChanged(this.surname);
+}
+
+class ConfirmPasswordChanged extends AuthorizationEvent {
+  final String confirmPassword;
+  ConfirmPasswordChanged(this.confirmPassword);
+}
+
+class ClearError extends AuthorizationEvent {
+  ClearError();
 }

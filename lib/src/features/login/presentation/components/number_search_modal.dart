@@ -118,7 +118,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: context.colors.blue,
+                        color: context.colors.textprimary,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(8),
@@ -133,7 +133,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
             child: _isLoading
                 ? Center(
                     child: CircularProgressIndicator(
-                      color: context.colors.blue,
+                      color: context.colors.textprimary,
                     ),
                   )
                 : ListView.builder(
@@ -141,6 +141,7 @@ class _NumberSearchPageState extends State<NumberSearchModal> {
                     itemBuilder: (context, index) {
                       final country = _filteredCountries[index];
                       return ListTile(
+                        contentPadding: EdgeInsets.zero,
                         leading: Text(
                           country.flag,
                           style: TextStyle(fontSize: 24),
