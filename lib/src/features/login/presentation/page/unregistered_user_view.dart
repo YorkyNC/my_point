@@ -1,5 +1,6 @@
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
 import 'package:my_point/src/features/login/domain/request/sign_up_request.dart';
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
@@ -70,7 +71,7 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
         appBar: AppBar(
           backgroundColor: context.colors.white,
           leading: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.go(RoutePaths.login),
             icon: Icon(
               context.icons.chevron_left,
               color: context.colors.black,

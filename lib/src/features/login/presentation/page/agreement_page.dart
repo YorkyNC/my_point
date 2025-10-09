@@ -1,5 +1,6 @@
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/features/login/presentation/components/__agreement_pdf_viewer.dart';
 
 class AgreementPage extends StatelessWidget {
@@ -11,7 +12,7 @@ class AgreementPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: context.colors.white,
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: () => context.go(RoutePaths.login),
           icon: Icon(
             context.icons.chevron_left,
             color: context.colors.black,

@@ -224,8 +224,25 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
         error: l.message,
       ));
     }, (r) async {
+      final oldToken = st.getToken();
+      final oldAuthStatus = st.getAuthStatus();
+
+      log('🔵 BEFORE UPDATE:');
+      log('  Old Token: ${oldToken?.substring(0, oldToken.length > 30 ? 30 : oldToken.length)}...');
+      log('  Old AuthStatus: $oldAuthStatus');
+      await st.deleteAuthStatus();
+      await st.deleteToken();
+      log('🗑️ AFTER DELETE: Token=${st.getToken()}, AuthStatus=${st.getAuthStatus()}');
       await st.setToken(r.accessToken);
       await st.setAuthStatus(r.authStatus.name.toUpperCase());
+
+      log('🟢 AFTER UPDATE:');
+      log('  New Token: ${r.accessToken.substring(0, r.accessToken.length > 30 ? 30 : r.accessToken.length)}...');
+      log('  New AuthStatus: ${r.authStatus.name.toUpperCase()}');
+      log('  Stored AuthStatus: ${st.getAuthStatus()}');
+      log('  Token Changed: ${oldToken != r.accessToken}');
+      log('  AuthStatus Changed: ${oldAuthStatus != r.authStatus.name.toUpperCase()}');
+
       emit(state.copyWith(
         authStatus: r.authStatus,
         token: r.accessToken,
@@ -302,9 +319,26 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
         ));
       },
       (r) async {
-        log('Token saved: ${r.accessToken}');
+        final oldToken = st.getToken();
+        final oldAuthStatus = st.getAuthStatus();
+
+        log('🔵 SIGN IN - BEFORE UPDATE:');
+        log('  Old Token: ${oldToken?.substring(0, oldToken.length > 30 ? 30 : oldToken.length)}...');
+        log('  Old AuthStatus: $oldAuthStatus');
+
+        await st.deleteAuthStatus();
+        await st.deleteToken();
+        log('🗑️ AFTER DELETE: Token=${st.getToken()}, AuthStatus=${st.getAuthStatus()}');
+
         await st.setToken(r.accessToken);
         await st.setAuthStatus(r.authStatus.name.toUpperCase());
+
+        log('🟢 SIGN IN - AFTER UPDATE:');
+        log('  New Token: ${r.accessToken.substring(0, r.accessToken.length > 30 ? 30 : r.accessToken.length)}...');
+        log('  New AuthStatus: ${r.authStatus.name.toUpperCase()}');
+        log('  Stored AuthStatus: ${st.getAuthStatus()}');
+        log('  Token Changed: ${oldToken != r.accessToken}');
+        log('  AuthStatus Changed: ${oldAuthStatus != r.authStatus.name.toUpperCase()}');
         emit(
           state.copyWith(
             authStatus: r.authStatus,
