@@ -7,8 +7,9 @@ class SuccessRegisterMessageWidget extends StatelessWidget {
   const SuccessRegisterMessageWidget({
     super.key,
     required Animation<double> logoAnimation,
+    required this.isSignUpVerified,
   }) : _logoAnimation = logoAnimation;
-
+  final bool isSignUpVerified;
   final Animation<double> _logoAnimation;
 
   @override
@@ -53,7 +54,7 @@ class SuccessRegisterMessageWidget extends StatelessWidget {
                     onPressed: () async {
                       // context.pop(); // maybe delete this line
 
-                      context.push(RoutePaths.successRegister);
+                      isSignUpVerified ? context.push(RoutePaths.agreement) : context.push(RoutePaths.main);
                     },
                     child: Text('Далее'),
                   ),

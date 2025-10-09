@@ -5,8 +5,10 @@ import 'package:my_point/src/features/home/presentation/page/home_page.dart';
 import 'package:my_point/src/features/introduction/presentation/introduction_page.dart';
 import 'package:my_point/src/features/loading/presentation/splash_page.dart';
 import 'package:my_point/src/features/login/presentation/components/success_register_page.dart';
+import 'package:my_point/src/features/login/presentation/page/agreement_page.dart';
 import 'package:my_point/src/features/login/presentation/page/login_page.dart';
 import 'package:my_point/src/features/login/presentation/page/unregistered_user_view.dart';
+import 'package:my_point/src/features/login/presentation/page/verification_view.dart';
 import 'package:my_point/src/features/order/presentation/page/order_page.dart';
 import 'package:my_point/src/features/otp/presentation/page/otp_page.dart';
 import 'package:my_point/src/features/profile/presentation/page/profile_page.dart';
@@ -31,7 +33,7 @@ GoRouter routerProvider() {
   return GoRouter(
     refreshListenable: st,
     initialLocation: hasSeenIntroduction ? RoutePaths.loading : RoutePaths.introduction,
-    // initialLocation: RoutePaths.introduction,
+    // initialLocation: RoutePaths.agreement,
     // initialLocation: RoutePaths.loading,
     // initialLocation: RoutePaths.introduction,
     // initialLocation: RoutePaths.main,

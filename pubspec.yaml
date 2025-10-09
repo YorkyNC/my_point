@@ -84,6 +84,7 @@ dependencies:
   video_player: ^2.9.5
   video_thumbnail: 0.5.6
   web_socket_channel: ^3.0.2
+  syncfusion_flutter_pdfviewer: ^30.2.5
 
 # * Packages that will not be in the release version of app
 dev_dependencies:
@@ -122,6 +123,7 @@ flutter:
     - assets/app_images/
     - assets/splash/
     - assets/fonts/
+    - assets/documents/
 
   fonts:
     - family: app_icons

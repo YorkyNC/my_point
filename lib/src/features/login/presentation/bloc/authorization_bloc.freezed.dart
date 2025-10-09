@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthorizationState {
+  String? get pinId => throw _privateConstructorUsedError;
   bool get isValidate => throw _privateConstructorUsedError;
   String? get otp => throw _privateConstructorUsedError;
   bool get isOtpFilled => throw _privateConstructorUsedError;
@@ -45,6 +46,10 @@ mixin _$AuthorizationState {
   bool get isNameFilled => throw _privateConstructorUsedError;
   bool get isSurnameFilled => throw _privateConstructorUsedError;
   bool get isConfirmPasswordFilled => throw _privateConstructorUsedError;
+  bool get isVerifyOtpSuccess => throw _privateConstructorUsedError;
+  bool get isVerifyOtpLoading => throw _privateConstructorUsedError;
+  bool get isVerifyOtpError => throw _privateConstructorUsedError;
+  AuthStatusType? get authStatus => throw _privateConstructorUsedError;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.
@@ -60,7 +65,8 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       _$AuthorizationStateCopyWithImpl<$Res, AuthorizationState>;
   @useResult
   $Res call(
-      {bool isValidate,
+      {String? pinId,
+      bool isValidate,
       String? otp,
       bool isOtpFilled,
       bool isOtpError,
@@ -88,7 +94,11 @@ abstract class $AuthorizationStateCopyWith<$Res> {
       String? confirmPassword,
       bool isNameFilled,
       bool isSurnameFilled,
-      bool isConfirmPasswordFilled});
+      bool isConfirmPasswordFilled,
+      bool isVerifyOtpSuccess,
+      bool isVerifyOtpLoading,
+      bool isVerifyOtpError,
+      AuthStatusType? authStatus});
 }
 
 /// @nodoc
@@ -106,6 +116,7 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pinId = freezed,
     Object? isValidate = null,
     Object? otp = freezed,
     Object? isOtpFilled = null,
@@ -135,8 +146,16 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
     Object? isNameFilled = null,
     Object? isSurnameFilled = null,
     Object? isConfirmPasswordFilled = null,
+    Object? isVerifyOtpSuccess = null,
+    Object? isVerifyOtpLoading = null,
+    Object? isVerifyOtpError = null,
+    Object? authStatus = freezed,
   }) {
     return _then(_value.copyWith(
+      pinId: freezed == pinId
+          ? _value.pinId
+          : pinId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isValidate: null == isValidate
           ? _value.isValidate
           : isValidate // ignore: cast_nullable_to_non_nullable
@@ -253,6 +272,22 @@ class _$AuthorizationStateCopyWithImpl<$Res, $Val extends AuthorizationState>
           ? _value.isConfirmPasswordFilled
           : isConfirmPasswordFilled // ignore: cast_nullable_to_non_nullable
               as bool,
+      isVerifyOtpSuccess: null == isVerifyOtpSuccess
+          ? _value.isVerifyOtpSuccess
+          : isVerifyOtpSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerifyOtpLoading: null == isVerifyOtpLoading
+          ? _value.isVerifyOtpLoading
+          : isVerifyOtpLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerifyOtpError: null == isVerifyOtpError
+          ? _value.isVerifyOtpError
+          : isVerifyOtpError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authStatus: freezed == authStatus
+          ? _value.authStatus
+          : authStatus // ignore: cast_nullable_to_non_nullable
+              as AuthStatusType?,
     ) as $Val);
   }
 }
@@ -266,7 +301,8 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isValidate,
+      {String? pinId,
+      bool isValidate,
       String? otp,
       bool isOtpFilled,
       bool isOtpError,
@@ -294,7 +330,11 @@ abstract class _$$AuthorizationStateImplCopyWith<$Res>
       String? confirmPassword,
       bool isNameFilled,
       bool isSurnameFilled,
-      bool isConfirmPasswordFilled});
+      bool isConfirmPasswordFilled,
+      bool isVerifyOtpSuccess,
+      bool isVerifyOtpLoading,
+      bool isVerifyOtpError,
+      AuthStatusType? authStatus});
 }
 
 /// @nodoc
@@ -310,6 +350,7 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pinId = freezed,
     Object? isValidate = null,
     Object? otp = freezed,
     Object? isOtpFilled = null,
@@ -339,8 +380,16 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
     Object? isNameFilled = null,
     Object? isSurnameFilled = null,
     Object? isConfirmPasswordFilled = null,
+    Object? isVerifyOtpSuccess = null,
+    Object? isVerifyOtpLoading = null,
+    Object? isVerifyOtpError = null,
+    Object? authStatus = freezed,
   }) {
     return _then(_$AuthorizationStateImpl(
+      pinId: freezed == pinId
+          ? _value.pinId
+          : pinId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isValidate: null == isValidate
           ? _value.isValidate
           : isValidate // ignore: cast_nullable_to_non_nullable
@@ -457,6 +506,22 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
           ? _value.isConfirmPasswordFilled
           : isConfirmPasswordFilled // ignore: cast_nullable_to_non_nullable
               as bool,
+      isVerifyOtpSuccess: null == isVerifyOtpSuccess
+          ? _value.isVerifyOtpSuccess
+          : isVerifyOtpSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerifyOtpLoading: null == isVerifyOtpLoading
+          ? _value.isVerifyOtpLoading
+          : isVerifyOtpLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerifyOtpError: null == isVerifyOtpError
+          ? _value.isVerifyOtpError
+          : isVerifyOtpError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authStatus: freezed == authStatus
+          ? _value.authStatus
+          : authStatus // ignore: cast_nullable_to_non_nullable
+              as AuthStatusType?,
     ));
   }
 }
@@ -465,7 +530,8 @@ class __$$AuthorizationStateImplCopyWithImpl<$Res>
 
 class _$AuthorizationStateImpl extends _AuthorizationState {
   const _$AuthorizationStateImpl(
-      {this.isValidate = false,
+      {this.pinId,
+      this.isValidate = false,
       this.otp,
       this.isOtpFilled = false,
       this.isOtpError = false,
@@ -493,9 +559,15 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
       this.confirmPassword,
       this.isNameFilled = false,
       this.isSurnameFilled = false,
-      this.isConfirmPasswordFilled = false})
+      this.isConfirmPasswordFilled = false,
+      this.isVerifyOtpSuccess = false,
+      this.isVerifyOtpLoading = false,
+      this.isVerifyOtpError = false,
+      this.authStatus})
       : super._();
 
+  @override
+  final String? pinId;
   @override
   @JsonKey()
   final bool isValidate;
@@ -572,10 +644,21 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
   @override
   @JsonKey()
   final bool isConfirmPasswordFilled;
+  @override
+  @JsonKey()
+  final bool isVerifyOtpSuccess;
+  @override
+  @JsonKey()
+  final bool isVerifyOtpLoading;
+  @override
+  @JsonKey()
+  final bool isVerifyOtpError;
+  @override
+  final AuthStatusType? authStatus;
 
   @override
   String toString() {
-    return 'AuthorizationState(isValidate: $isValidate, otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning, isEmailFilled: $isEmailFilled, password: $password, email: $email, isPasswordFilled: $isPasswordFilled, isObscurePassword: $isObscurePassword, error: $error, token: $token, name: $name, surname: $surname, confirmPassword: $confirmPassword, isNameFilled: $isNameFilled, isSurnameFilled: $isSurnameFilled, isConfirmPasswordFilled: $isConfirmPasswordFilled)';
+    return 'AuthorizationState(pinId: $pinId, isValidate: $isValidate, otp: $otp, isOtpFilled: $isOtpFilled, isOtpError: $isOtpError, isOtpLoading: $isOtpLoading, isOtpSuccess: $isOtpSuccess, phoneCode: $phoneCode, isPhoneCodeFilled: $isPhoneCodeFilled, flag: $flag, phoneNumber: $phoneNumber, isPhoneNumberFilled: $isPhoneNumberFilled, isLoading: $isLoading, success: $success, remainingSeconds: $remainingSeconds, canRequestCode: $canRequestCode, isTimerRunning: $isTimerRunning, isEmailFilled: $isEmailFilled, password: $password, email: $email, isPasswordFilled: $isPasswordFilled, isObscurePassword: $isObscurePassword, error: $error, token: $token, name: $name, surname: $surname, confirmPassword: $confirmPassword, isNameFilled: $isNameFilled, isSurnameFilled: $isSurnameFilled, isConfirmPasswordFilled: $isConfirmPasswordFilled, isVerifyOtpSuccess: $isVerifyOtpSuccess, isVerifyOtpLoading: $isVerifyOtpLoading, isVerifyOtpError: $isVerifyOtpError, authStatus: $authStatus)';
   }
 
   @override
@@ -583,6 +666,7 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthorizationStateImpl &&
+            (identical(other.pinId, pinId) || other.pinId == pinId) &&
             (identical(other.isValidate, isValidate) ||
                 other.isValidate == isValidate) &&
             (identical(other.otp, otp) || other.otp == otp) &&
@@ -633,12 +717,21 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
                 other.isSurnameFilled == isSurnameFilled) &&
             (identical(
                     other.isConfirmPasswordFilled, isConfirmPasswordFilled) ||
-                other.isConfirmPasswordFilled == isConfirmPasswordFilled));
+                other.isConfirmPasswordFilled == isConfirmPasswordFilled) &&
+            (identical(other.isVerifyOtpSuccess, isVerifyOtpSuccess) ||
+                other.isVerifyOtpSuccess == isVerifyOtpSuccess) &&
+            (identical(other.isVerifyOtpLoading, isVerifyOtpLoading) ||
+                other.isVerifyOtpLoading == isVerifyOtpLoading) &&
+            (identical(other.isVerifyOtpError, isVerifyOtpError) ||
+                other.isVerifyOtpError == isVerifyOtpError) &&
+            const DeepCollectionEquality()
+                .equals(other.authStatus, authStatus));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        pinId,
         isValidate,
         otp,
         isOtpFilled,
@@ -667,7 +760,11 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
         confirmPassword,
         isNameFilled,
         isSurnameFilled,
-        isConfirmPasswordFilled
+        isConfirmPasswordFilled,
+        isVerifyOtpSuccess,
+        isVerifyOtpLoading,
+        isVerifyOtpError,
+        const DeepCollectionEquality().hash(authStatus)
       ]);
 
   /// Create a copy of AuthorizationState
@@ -682,7 +779,8 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
 
 abstract class _AuthorizationState extends AuthorizationState {
   const factory _AuthorizationState(
-      {final bool isValidate,
+      {final String? pinId,
+      final bool isValidate,
       final String? otp,
       final bool isOtpFilled,
       final bool isOtpError,
@@ -710,9 +808,15 @@ abstract class _AuthorizationState extends AuthorizationState {
       final String? confirmPassword,
       final bool isNameFilled,
       final bool isSurnameFilled,
-      final bool isConfirmPasswordFilled}) = _$AuthorizationStateImpl;
+      final bool isConfirmPasswordFilled,
+      final bool isVerifyOtpSuccess,
+      final bool isVerifyOtpLoading,
+      final bool isVerifyOtpError,
+      final AuthStatusType? authStatus}) = _$AuthorizationStateImpl;
   const _AuthorizationState._() : super._();
 
+  @override
+  String? get pinId;
   @override
   bool get isValidate;
   @override
@@ -771,6 +875,14 @@ abstract class _AuthorizationState extends AuthorizationState {
   bool get isSurnameFilled;
   @override
   bool get isConfirmPasswordFilled;
+  @override
+  bool get isVerifyOtpSuccess;
+  @override
+  bool get isVerifyOtpLoading;
+  @override
+  bool get isVerifyOtpError;
+  @override
+  AuthStatusType? get authStatus;
 
   /// Create a copy of AuthorizationState
   /// with the given fields replaced by the non-null parameter values.

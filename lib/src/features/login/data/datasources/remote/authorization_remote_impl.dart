@@ -4,9 +4,11 @@ import 'package:injectable/injectable.dart';
 import 'package:my_point/src/features/login/domain/entities/request_otp_code_entity.dart';
 import 'package:my_point/src/features/login/domain/entities/sign_in_entity.dart';
 import 'package:my_point/src/features/login/domain/entities/sign_up_entity.dart';
+import 'package:my_point/src/features/login/domain/entities/verify_otp_entity.dart';
 import 'package:my_point/src/features/login/domain/request/request_otp_code.dart';
 import 'package:my_point/src/features/login/domain/request/sign_in_request.dart';
 import 'package:my_point/src/features/login/domain/request/sign_up_request.dart';
+import 'package:my_point/src/features/login/domain/request/verify_otp_request.dart';
 
 import '../../../../../../main.dart';
 import '../../../../../core/api/client/endpoints.dart';
@@ -86,9 +88,42 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
   }
 
   @override
+  Future<Either<DomainException, VerifyOtpEntity>> verifyOtp(VerifyOtpRequest request) async {
+    final Either<DomainException, Response<dynamic>> response = await client.post(
+      '${EndPoints.baseUrl}${EndPoints.verifyOtp}',
+      data: request.toJson(),
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+        },
+      ),
+    );
+    return response.fold(
+      (error) {
+        return Left(error);
+      },
+      (result) async {
+        final data = result.data;
+
+        if (data == null) {
+          return Left(UnknownException(message: 'Response data is null'));
+        }
+
+        if (data is Map && data.containsKey('data')) {
+          return Right(VerifyOtpEntity.fromJson(data['data']));
+        } else {
+          return Right(VerifyOtpEntity.fromJson(data));
+        }
+      },
+    );
+  }
+
+  @override
   Future<Either<DomainException, RequestOtpCodeEntity>> requestOtpCode(RequestOtpCode request) async {
     final Either<DomainException, Response<dynamic>> response = await client.get(
-      '${EndPoints.baseUrl}${EndPoints.signUp}',
+      '${EndPoints.baseUrl}${EndPoints.requestOtpCode}',
       queryParameters: {
         'phoneNumber': request.phoneNumber,
       },
@@ -96,21 +131,29 @@ class AuthorizationRemoteImpl implements IAuthorizationRemote {
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
+          'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),
     );
+
     return response.fold(
       (error) {
-        log.d(request.phoneNumber.toString());
         return Left(error);
       },
       (result) async {
         final data = result.data;
-        if (data == null || data['data'] == null) {
+
+        if (data == null) {
           return Left(UnknownException(message: 'Response data is null'));
         }
-        return Right(RequestOtpCodeEntity.fromJson(data['data']));
+        if (data is Map && data.containsKey('data')) {
+          if (data['data'] == null) {
+            return Left(UnknownException(message: 'Response data[\'data\'] is null'));
+          }
+          return Right(RequestOtpCodeEntity.fromJson(data['data']));
+        } else {
+          return Right(RequestOtpCodeEntity.fromJson(data));
+        }
       },
     );
   }

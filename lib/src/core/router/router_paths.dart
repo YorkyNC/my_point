@@ -36,4 +36,6 @@ class RoutePaths {
   static const String scan = '/scan';
   static const String order = '/order';
   static const String manualBarcodeInput = '/manual-barcode-input';
+  static const String verification = '/verification';
+  static const String agreement = '/agreement';
 }

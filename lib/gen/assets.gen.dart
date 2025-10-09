@@ -73,6 +73,16 @@ class $AssetsAppImagesGen {
       ];
 }
 
+class $AssetsDocumentsGen {
+  const $AssetsDocumentsGen();
+
+  /// File path: assets/documents/agreement.pdf
+  String get agreement => 'assets/documents/agreement.pdf';
+
+  /// List of all assets
+  List<String> get values => [agreement];
+}
+
 class $AssetsFontsGen {
   const $AssetsFontsGen();
 
@@ -304,6 +314,7 @@ class Assets {
   const Assets._();
 
   static const $AssetsAppImagesGen appImages = $AssetsAppImagesGen();
+  static const $AssetsDocumentsGen documents = $AssetsDocumentsGen();
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsSplashGen splash = $AssetsSplashGen();

@@ -171,6 +171,7 @@ final List<RouteBase> _routes = [
           child: OtpPage(
             phone: data['phone'],
             phoneCode: data['phoneCode'],
+            pinId: data['pinId'],
           ),
           // child: const OtpPage(),
           state: state,
@@ -200,5 +201,13 @@ final List<RouteBase> _routes = [
   GoRoute(
     path: RoutePaths.manualBarcodeInput,
     pageBuilder: (context, state) => getPage(child: ManualBarcodeInputWidget(), state: state),
+  ),
+  GoRoute(
+    path: RoutePaths.verification,
+    pageBuilder: (context, state) => getPage(child: VerificationView(), state: state),
+  ),
+  GoRoute(
+    path: RoutePaths.agreement,
+    pageBuilder: (context, state) => getPage(child: AgreementPage(), state: state),
   ),
 ];

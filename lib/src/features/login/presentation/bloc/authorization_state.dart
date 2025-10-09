@@ -4,6 +4,7 @@ part of 'authorization_bloc.dart';
 abstract class AuthorizationState with _$AuthorizationState {
   const AuthorizationState._();
   const factory AuthorizationState({
+    String? pinId,
     @Default(false) bool isValidate,
     String? otp,
     @Default(false) bool isOtpFilled,
@@ -33,6 +34,10 @@ abstract class AuthorizationState with _$AuthorizationState {
     @Default(false) bool isNameFilled,
     @Default(false) bool isSurnameFilled,
     @Default(false) bool isConfirmPasswordFilled,
+    @Default(false) bool isVerifyOtpSuccess,
+    @Default(false) bool isVerifyOtpLoading,
+    @Default(false) bool isVerifyOtpError,
+    AuthStatusType? authStatus,
   }) = _AuthorizationState;
 
   bool get isLoginVerified {

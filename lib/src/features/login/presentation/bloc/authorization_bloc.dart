@@ -6,10 +6,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_point/src/core/base/base_bloc/bloc/base_bloc.dart';
 import 'package:my_point/src/core/router/router.dart';
+import 'package:my_point/src/features/login/domain/enum/auth_status_type.dart';
+import 'package:my_point/src/features/login/domain/request/request_otp_code.dart';
 import 'package:my_point/src/features/login/domain/request/sign_in_request.dart';
 import 'package:my_point/src/features/login/domain/request/sign_up_request.dart';
+import 'package:my_point/src/features/login/domain/request/verify_otp_request.dart';
+import 'package:my_point/src/features/login/domain/usecases/request_otp_code_use_case.dart';
 import 'package:my_point/src/features/login/domain/usecases/sign_in_use_case.dart';
 import 'package:my_point/src/features/login/domain/usecases/sing_up_use_case.dart';
+import 'package:my_point/src/features/login/domain/usecases/verify_otp_use_case.dart';
 
 part 'authorization_bloc.freezed.dart';
 part 'authorization_event.dart';
@@ -17,14 +22,16 @@ part 'authorization_state.dart';
 
 @injectable
 class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState> {
-  AuthorizationBloc(this._signInUseCase, this._signUpUseCase) : super(AuthorizationState()) {
+  AuthorizationBloc(this._signInUseCase, this._signUpUseCase, this._requestOtpCodeUseCase, this._verifyOtpUseCase)
+      : super(AuthorizationState()) {
     setUpHandlers();
   }
 
   Timer? _timer;
   final SignInUseCase _signInUseCase;
   final SignUpUseCase _signUpUseCase;
-
+  final RequestOtpCodeUseCase _requestOtpCodeUseCase;
+  final VerifyOtpUseCase _verifyOtpUseCase;
   void setUpHandlers() {
     on<PhoneCodeChanged>(_onPhoneCodeChanged);
     on<PhoneNumberChanged>(_onPhoneNumberChanged);
@@ -43,6 +50,8 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     on<SurnameChanged>(_onSurnameChanged);
     on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);
     on<ClearError>(_onClearError);
+    on<OtpCodeRequested>(_onOtpCodeRequested);
+    on<VerifyOtpRequested>(_onVerifyOtpRequested);
   }
 
   @override
@@ -101,6 +110,8 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     emit(state.copyWith(
       error: null,
       success: false,
+      isVerifyOtpError: false,
+      isOtpError: false,
     ));
   }
 
@@ -194,6 +205,8 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     emit(state.copyWith(
       success: false,
       isLoading: true,
+      authStatus: null,
+      token: null,
       error: null,
     ));
     final result = await _signUpUseCase.execute(SignUpRequest(
@@ -205,11 +218,17 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     ));
     await result.fold((l) async {
       emit(state.copyWith(
+        authStatus: null,
+        token: null,
         isLoading: false,
         error: l.message,
       ));
     }, (r) async {
+      await st.setToken(r.accessToken);
+      await st.setAuthStatus(r.authStatus.name.toUpperCase());
       emit(state.copyWith(
+        authStatus: r.authStatus,
+        token: r.accessToken,
         error: null,
         isLoading: false,
         success: true,
@@ -217,10 +236,56 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     });
   }
 
+  Future<void> _onVerifyOtpRequested(VerifyOtpRequested event, Emitter<AuthorizationState> emit) async {
+    emit(state.copyWith(
+      isVerifyOtpSuccess: false,
+      isVerifyOtpLoading: true,
+      isVerifyOtpError: false,
+      error: null,
+    ));
+
+    log('⏳ Calling Verify OTP use case...');
+    final result = await _verifyOtpUseCase.execute(event.request);
+
+    log('📦 Verify OTP use case returned result');
+
+    await result.fold((l) async {
+      log('❌ Verify OTP Request Failed (Network Error): ${l.message}');
+      emit(state.copyWith(
+        isVerifyOtpSuccess: false,
+        isVerifyOtpError: true,
+        isVerifyOtpLoading: false,
+        error: l.message,
+      ));
+    }, (r) async {
+      log('📦 Response received - verified: ${r.verified}, pinError: ${r.pinError}');
+
+      if (r.verified) {
+        log('✅ OTP Verification Success!');
+        emit(state.copyWith(
+          isVerifyOtpSuccess: true,
+          isVerifyOtpError: false,
+          isVerifyOtpLoading: false,
+          error: null,
+        ));
+      } else {
+        log('❌ OTP Verification Failed: ${r.pinError ?? "Unknown error"}');
+        emit(state.copyWith(
+          isVerifyOtpSuccess: false,
+          isVerifyOtpError: true,
+          isVerifyOtpLoading: false,
+          error: r.pinError ?? 'Неверный код',
+        ));
+      }
+    });
+  }
+
   Future<void> _onSignIn(SignIn event, Emitter<AuthorizationState> emit) async {
     emit(state.copyWith(
       success: false,
       isLoading: true,
+      authStatus: null,
+      token: null,
       error: null,
     ));
     final result = await _signInUseCase.execute(SignInRequest(
@@ -230,6 +295,8 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
     await result.fold(
       (l) async {
         emit(state.copyWith(
+          authStatus: null,
+          token: null,
           isLoading: false,
           error: l.message,
         ));
@@ -237,8 +304,10 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
       (r) async {
         log('Token saved: ${r.accessToken}');
         await st.setToken(r.accessToken);
+        await st.setAuthStatus(r.authStatus.name.toUpperCase());
         emit(
           state.copyWith(
+            authStatus: r.authStatus,
             error: null,
             password: null,
             email: null,
@@ -251,5 +320,45 @@ class AuthorizationBloc extends BaseBloc<AuthorizationEvent, AuthorizationState>
         );
       },
     );
+  }
+
+  Future<void> _onOtpCodeRequested(OtpCodeRequested event, Emitter<AuthorizationState> emit) async {
+    log('🎯 OtpCodeRequested event received for: ${event.request.phoneNumber}');
+
+    emit(state.copyWith(
+      isOtpSuccess: false,
+      isOtpLoading: true,
+      error: null,
+      isOtpError: false,
+      isOtpFilled: false,
+      pinId: null,
+    ));
+
+    log('⏳ Calling OTP use case...');
+    final result = await _requestOtpCodeUseCase.execute(event.request);
+
+    log('📦 Use case returned result');
+
+    await result.fold((l) async {
+      log('❌ OTP Request Failed: ${l.message}');
+      emit(state.copyWith(
+        isOtpSuccess: false,
+        isOtpLoading: false,
+        pinId: null,
+        error: l.message,
+        isOtpError: true,
+        isOtpFilled: false,
+      ));
+    }, (r) async {
+      log('✅ OTP Request Success! pinId: ${r.pinId}');
+      emit(state.copyWith(
+        pinId: r.pinId,
+        error: null,
+        isOtpError: false,
+        isOtpLoading: false,
+        isOtpSuccess: true,
+        isOtpFilled: true,
+      ));
+    });
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:developer' show log;
+
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
+import 'package:my_point/src/features/login/domain/enum/auth_status_type.dart';
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart';
 import 'package:my_point/src/features/login/presentation/components/custom_snack_bar.dart';
 import 'package:my_point/src/features/login/presentation/components/login_text_field_widget.dart';
@@ -56,16 +59,14 @@ class _LoginPageState extends State<LoginPage> {
                 if (state.success) {
                   _emailController.clear();
                   _passwordController.clear();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    CustomSnackBar.show(
-                      color: context.colors.brand500,
-                      title: 'Вход выполнен успешно',
-                      seconds: 3,
-                      context: context,
-                    ),
-                  );
-                  context.push(RoutePaths.home);
+                  log('authStatus: ${state.authStatus}');
+                  if (state.authStatus == AuthStatusType.pvz) {
+                    context.push(RoutePaths.unregisteredUser);
+                  } else if (state.authStatus == AuthStatusType.sms) {
+                    context.push(RoutePaths.agreement);
+                  } else {
+                    context.push(RoutePaths.home);
+                  }
                 }
                 if (state.error != null && state.error!.isNotEmpty) {
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -96,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             SizedBox(height: 24),
-
                             LoginTextFieldWidget(
                                 error: state.error != null && state.error!.isNotEmpty,
                                 controller: _emailController,
@@ -181,112 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-                            // Row(
-                            //   mainAxisSize: MainAxisSize.max,
-                            //   children: [
-                            //     Expanded(
-                            //       flex: 1,
-                            //       child: Container(
-                            //         padding: const EdgeInsets.symmetric(vertical: 9),
-                            //         decoration: BoxDecoration(
-                            //           border: Border(
-                            //             bottom: BorderSide(
-                            //               color: context.colors.lightSecondaryText,
-                            //               width: 1.0,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         child: InkWell(
-                            //           splashColor: Colors.transparent,
-                            //           highlightColor: Colors.transparent,
-                            //           onTap: () async {
-                            //             final result = await showSheetPopup(context, title: Text('Выберите страну'),
-                            //                 builder: (context) {
-                            //               return NumberSearchModal(state: state);
-                            //             });
-
-                            //             if (result != null && result is CountrySelection) {
-                            //               final bloc = context.read<AuthorizationBloc>();
-                            //               bloc.add(PhoneCodeChanged(
-                            //                 result.dialCode,
-                            //                 result.flag,
-                            //               ));
-                            //             }
-                            //           },
-                            //           child: Row(
-                            //             mainAxisSize: MainAxisSize.min,
-                            //             spacing: 8,
-                            //             children: [
-                            //               state.flag != null
-                            //                   ? Text(
-                            //                       state.flag!,
-                            //                       style: context.typography.smallParagraph
-                            //                           .copyWith(color: context.colors.black, fontSize: 24),
-                            //                     )
-                            //                   : Text(
-                            //                       '🇰🇿',
-                            //                       style: context.typography.smallParagraph
-                            //                           .copyWith(color: context.colors.black, fontSize: 24),
-                            //                     ),
-                            //               Text(
-                            //                 state.phoneCode ?? '+7',
-                            //                 style: context.typography.smallParagraph.copyWith(
-                            //                   color: context.colors.textprimary,
-                            //                 ),
-                            //               ),
-                            //               Icon(
-                            //                 context.icons.chevron_down,
-                            //                 size: 18,
-                            //                 color: context.colors.textprimary,
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     SizedBox(width: 16),
-                            //     Expanded(
-                            //       flex: 3,
-                            //       child: Container(
-                            //         decoration: BoxDecoration(
-                            //           border: Border(
-                            //             bottom: BorderSide(
-                            //               color: context.colors.lightSecondaryText,
-                            //               width: 1.0,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         child: AuthorizationTextFieldWidget(
-                            //           bloc: bloc,
-                            //           phoneController: _phoneController,
-                            //           onSuffixIconTap: () {
-                            //             _phoneController.clear();
-                            //             bloc.add(PhoneNumberChanged(''));
-                            //           },
-                            //           onChanged: (String value) {
-                            //             bloc.add(PhoneNumberChanged(value));
-                            //           },
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-
                             SizedBox(height: 24),
-                            // Row(
-                            //   children: [
-                            //     Expanded(
-                            //       child: ElevatedButton(
-                            //         onPressed: state.isLoginVerified
-                            //             ? () {
-                            //                 bloc.add(SignIn(state.phoneCode ?? '+7', _phoneController.text, ''));
-                            //               }
-                            //             : null,
-                            //         child: Text('Войти'),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                             Spacer(),
                             PrivacyPolicyWidget()
                           ],

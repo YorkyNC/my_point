@@ -1,9 +1,12 @@
+import 'dart:developer' show log;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
 import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/storage/storage_service_impl.dart';
+import 'package:my_point/src/features/login/domain/enum/auth_status_type.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -65,8 +68,36 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       } else if (token == null || token.isEmpty) {
         context.go(RoutePaths.login);
       } else {
+        final authStatusString = storageService.getAuthStatus();
+        log('Stored authStatus: $authStatusString');
+
+        if (authStatusString != null) {
+          final authStatus = _parseAuthStatus(authStatusString);
+
+          if (authStatus == AuthStatusType.pvz) {
+            context.go(RoutePaths.unregisteredUser);
+            return;
+          } else if (authStatus == AuthStatusType.sms) {
+            context.go(RoutePaths.agreement);
+            return;
+          }
+        }
+
         context.go(RoutePaths.home);
       }
+    }
+  }
+
+  AuthStatusType? _parseAuthStatus(String value) {
+    switch (value.toUpperCase()) {
+      case 'PVZ':
+        return AuthStatusType.pvz;
+      case 'SMS':
+        return AuthStatusType.sms;
+      case 'DONE':
+        return AuthStatusType.done;
+      default:
+        return null;
     }
   }
 

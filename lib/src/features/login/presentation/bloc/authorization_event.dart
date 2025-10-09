@@ -117,3 +117,13 @@ class ConfirmPasswordChanged extends AuthorizationEvent {
 class ClearError extends AuthorizationEvent {
   ClearError();
 }
+
+class OtpCodeRequested extends AuthorizationEvent {
+  final RequestOtpCode request;
+  OtpCodeRequested(this.request);
+}
+
+class VerifyOtpRequested extends AuthorizationEvent {
+  final VerifyOtpRequest request;
+  VerifyOtpRequested(this.request);
+}

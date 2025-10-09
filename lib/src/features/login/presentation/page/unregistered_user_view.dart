@@ -94,7 +94,7 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
             }
 
             if (state.success) {
-              return SuccessRegisterMessageWidget(logoAnimation: _logoAnimation);
+              return SuccessRegisterMessageWidget(logoAnimation: _logoAnimation, isSignUpVerified: true);
             }
 
             if (state.error != null && state.error!.isNotEmpty) {
@@ -177,30 +177,21 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    // onPressed: state.isSignUpVerified
-                                    onPressed: () {
-                                      bloc.add(
-                                        SignUp(
-                                          SignUpRequest(
-                                            surname: 'yera',
-                                            name: 'yera',
-                                            email: 'test3@gmail.com',
-                                            password: '123',
-                                            phoneNumber: '+77086272471',
-                                          ),
-                                        ),
-                                        // SignUp(
-                                        //   SignUpRequest(
-                                        //     surname: _surnameController.text,
-                                        //     name: _nameController.text,
-                                        //     email: _emailController.text,
-                                        //     password: _passwordController.text,
-                                        //     phoneNumber: state.phoneCode! + _phoneNumberController.text,
-                                        //   ),
-                                        // ),
-                                      );
-                                    },
-                                    // : null,
+                                    onPressed: state.isSignUpVerified
+                                        ? () {
+                                            bloc.add(
+                                              SignUp(
+                                                SignUpRequest(
+                                                  surname: _surnameController.text,
+                                                  name: _nameController.text,
+                                                  email: _emailController.text,
+                                                  password: _passwordController.text,
+                                                  phoneNumber: state.phoneCode! + _phoneNumberController.text,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        : null,
                                     child: Text(
                                       'Создать',
                                     ),
@@ -224,14 +215,5 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
         ),
       ),
     );
-  }
-}
-
-class VerificationView extends StatelessWidget {
-  const VerificationView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

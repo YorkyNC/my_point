@@ -19,6 +19,7 @@ class StorageServiceImpl extends ChangeNotifier implements StorageService {
   static const String _roleKey = 'ROLE';
   static const String _classKey = 'CLASS_ID';
   static const String _languageCode = 'LANGUAGE_CODE';
+  static const String _authStatusKey = 'AUTH_STATUS';
 
   // Device-related keys
   static const String _clientIdKey = 'CLIENT_ID';
@@ -167,6 +168,30 @@ class StorageServiceImpl extends ChangeNotifier implements StorageService {
 
   Future<String?> getLanguageCode() async {
     return await authBox.get(_languageCode);
+  }
+
+  // AuthStatus methods
+  Future<void> setAuthStatus(String? authStatus) async {
+    log.d('Auth status saved: $authStatus');
+    await authBox.put(_authStatusKey, authStatus);
+    notifyListeners();
+  }
+
+  String? getAuthStatus() {
+    try {
+      final authStatus = authBox.get(_authStatusKey);
+      log.d('Retrieved auth status: $authStatus');
+      return authStatus;
+    } catch (e) {
+      log.w('Error retrieving auth status: $e');
+      return null;
+    }
+  }
+
+  Future<void> deleteAuthStatus() async {
+    log.d('Deleting auth status from storage');
+    await authBox.delete(_authStatusKey);
+    notifyListeners();
   }
 
   // Clear methods
