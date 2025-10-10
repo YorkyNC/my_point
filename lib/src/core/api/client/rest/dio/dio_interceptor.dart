@@ -218,6 +218,9 @@ class DioInterceptor extends Interceptor {
     await st.deleteRefreshToken();
     log.d('Refresh token deleted');
 
+    await st.deletePvzId();
+    log.d('PVZ ID deleted');
+
     // Clear auth box
     await st.clear();
     log.d('Auth storage cleared');

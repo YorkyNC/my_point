@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -20,6 +22,7 @@ class StorageServiceImpl extends ChangeNotifier implements StorageService {
   static const String _classKey = 'CLASS_ID';
   static const String _languageCode = 'LANGUAGE_CODE';
   static const String _authStatusKey = 'AUTH_STATUS';
+  static const String _pvzIdKey = 'PVZ_ID';
 
   // Device-related keys
   static const String _clientIdKey = 'CLIENT_ID';
@@ -137,6 +140,49 @@ class StorageServiceImpl extends ChangeNotifier implements StorageService {
   @override
   String? getRole() {
     return authBox.get(_roleKey);
+  }
+
+  // PVZ ID methods
+  @override
+  Future<void> setPvzId(String? pvzId) async {
+    log.d('PVZ ID saved: $pvzId');
+    await authBox.put(_pvzIdKey, pvzId);
+    notifyListeners();
+  }
+
+  @override
+  String? getPvzId() {
+    return authBox.get(_pvzIdKey);
+  }
+
+  @override
+  Future<void> deletePvzId() async {
+    await authBox.delete(_pvzIdKey);
+    notifyListeners();
+  }
+
+  // Extract and save PVZ ID from JWT token
+  Future<void> extractAndSavePvzIdFromToken(String token) async {
+    try {
+      final parts = token.split('.');
+      if (parts.length == 3) {
+        final payload = parts[1];
+        final padded = payload.padRight(payload.length + (4 - payload.length % 4) % 4, '=');
+        final decoded = utf8.decode(base64Url.decode(padded));
+        final payloadJson = jsonDecode(decoded);
+        final pvzIdValue = payloadJson['pvzId'];
+
+        if (pvzIdValue != null) {
+          final pvzId = pvzIdValue.toString();
+          log.d('🔍 Extracted PVZ ID from token: $pvzId (type: ${pvzIdValue.runtimeType})');
+          await setPvzId(pvzId);
+        } else {
+          log.d('🔍 No PVZ ID found in token');
+        }
+      }
+    } catch (e) {
+      log.d('🔍 Error extracting PVZ ID from token: $e');
+    }
   }
 
   @override

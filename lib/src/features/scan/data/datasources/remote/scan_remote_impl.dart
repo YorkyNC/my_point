@@ -29,7 +29,7 @@ class ScanRemoteImpl implements IScanRemote {
       data: request,
       options: Options(
         headers: {
-          'accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),
@@ -52,7 +52,7 @@ class ScanRemoteImpl implements IScanRemote {
       data: request,
       options: Options(
         headers: {
-          'accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer ${StorageServiceImpl().getToken()}',
         },
       ),

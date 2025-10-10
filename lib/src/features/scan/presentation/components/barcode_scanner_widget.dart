@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:my_point/src/features/scan/domain/request/barcode_scan_request.dart';
 import 'package:my_point/src/features/scan/presentation/components/barcode_scan_window_overlay.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_loading_state_widget.dart';
+import 'package:my_point/src/features/scan/presentation/components/scanner_result_dialog_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/scanner_text_widget.dart';
 import 'package:my_point/src/features/scan/presentation/components/torch_toggle_widget.dart';
 import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart';
@@ -92,12 +91,18 @@ class BarcodeScannerWidgetState extends State<BarcodeScannerWidget> with Automat
   void _onDetect(BuildContext context, BarcodeCapture capture) {
     final qrBloc = context.read<ScannerBloc>();
 
-    if (!qrBloc.state.hasScanned && capture.barcodes.isNotEmpty) {
+    if (qrBloc.state.isScanning && !qrBloc.state.hasScanned && capture.barcodes.isNotEmpty) {
       final barcode = capture.barcodes.first;
       final String? code = barcode.rawValue;
-      log('📸 Barcode Scanner detected: format=${barcode.format}, code=$code');
       if (code != null) {
-        qrBloc.add(ScannerBarcodeDetected(BarcodeScanRequest(barcode: code, pvzId: '1'))); // mock for now
+        qrBloc.add(ScannerStopped());
+
+        ScannerResultDialogWidget.show(
+          context,
+          code: code,
+          isQRCode: false,
+          scannerBloc: qrBloc,
+        );
       }
     }
   }

@@ -6,7 +6,6 @@ import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_b
 
 import '../components/barcode_scanner_widget.dart';
 import '../components/qr_scanner_widget.dart';
-import '../components/scanner_result_dialog_widget.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -65,27 +64,6 @@ class _ScanPageState extends State<ScanPage> with SingleTickerProviderStateMixin
       value: _qrBloc,
       child: BlocListener<ScannerBloc, ScannerState>(
         listener: (context, state) {
-          if (state.qrCode != null && state.processedQRCode == null && !state.isLoading && state.isSuccess) {
-            ScannerResultDialogWidget.show(
-              context,
-              code: state.qrCode!,
-              isQRCode: true,
-            );
-            context.read<ScannerBloc>().add(ScannerReseted());
-            context.read<ScannerBloc>().add(ScannerStarted());
-          } else if (state.barcodeCode != null &&
-              state.processedQRCode == null &&
-              !state.isLoading &&
-              state.isSuccess) {
-            ScannerResultDialogWidget.show(
-              context,
-              code: state.barcodeCode!,
-              isQRCode: false,
-            );
-            context.read<ScannerBloc>().add(ScannerReseted());
-            context.read<ScannerBloc>().add(ScannerStarted());
-          } else {}
-
           if (state.processedQRCode != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               CustomSnackBar.show(

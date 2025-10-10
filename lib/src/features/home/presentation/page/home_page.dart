@@ -10,7 +10,8 @@ class HomePage extends StatelessWidget {
   Future<void> _handleSignOut(BuildContext context) async {
     try {
       log('Settings: Starting logout process');
-
+      await st.deleteAuthStatus();
+      await st.deletePvzId();
       await st.deleteToken();
       await st.deleteRefreshToken();
       await st.deleteRole();
@@ -26,6 +27,8 @@ class HomePage extends StatelessWidget {
     } catch (e) {
       log('Settings: Error during sign out: $e');
       try {
+        await st.deleteAuthStatus();
+        await st.deletePvzId();
         await st.deleteToken();
         await st.deleteRefreshToken();
         await st.deleteRole();

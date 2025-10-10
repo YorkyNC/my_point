@@ -1,27 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_point/src/app/imports.dart';
+import 'package:my_point/src/core/services/storage/storage_service_impl.dart';
+import 'package:my_point/src/features/scan/domain/request/barcode_scan_request.dart';
+import 'package:my_point/src/features/scan/domain/request/qr_scan_request.dart';
 import 'package:my_point/src/features/scan/presentation/page/bloc/bloc/scanner_bloc.dart';
 
 class ScannerResultDialogWidget extends StatelessWidget {
   final String code;
+  final String? encodedData;
   final bool isQRCode;
+  final ScannerBloc scannerBloc;
 
   const ScannerResultDialogWidget({
     super.key,
     required this.code,
+    this.encodedData,
     required this.isQRCode,
+    required this.scannerBloc,
   });
 
   static Future<void> show(
     BuildContext context, {
     required String code,
+    String? encodedData,
     required bool isQRCode,
+    required ScannerBloc scannerBloc,
   }) {
     return showDialog(
       context: context,
       builder: (dialogContext) => ScannerResultDialogWidget(
         code: code,
+        encodedData: encodedData,
         isQRCode: isQRCode,
+        scannerBloc: scannerBloc,
       ),
     );
   }
@@ -58,16 +68,31 @@ class ScannerResultDialogWidget extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
+            scannerBloc.add(ScannerStarted());
           },
           child: const Text('Закрыть'),
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-            // Process the code (implement your logic here)
-            context.read<ScannerBloc>().add(ScannerStopped());
+            context.pop();
+            if (isQRCode) {
+              final dataToSend = encodedData ?? code;
+              scannerBloc.add(ScannerQRCodeDetected(
+                QrScanRequest(
+                  encodedData: dataToSend,
+                  currentPvzId: StorageServiceImpl().getPvzId() ?? '1',
+                ),
+              ));
+            } else {
+              scannerBloc.add(ScannerBarcodeDetected(
+                BarcodeScanRequest(
+                  barcode: code,
+                  pvzId: StorageServiceImpl().getPvzId() ?? '1',
+                ),
+              ));
+            }
           },
-          child: const Text('Действие'),
+          child: const Text('Отправить запрос'),
         ),
       ],
     );

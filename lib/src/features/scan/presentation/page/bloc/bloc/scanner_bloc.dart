@@ -75,16 +75,9 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   }
 
   void _onScannerStopped(ScannerStopped event, Emitter<ScannerState> emit) {
-    if (state.qrCode != null) {
-      final processedMessage = state.qrCode!.length > 50
-          ? 'QR Code processed: ${state.qrCode!.substring(0, 50)}...'
-          : 'QR Code processed: ${state.qrCode}';
-
-      emit(state.copyWith(
-        processedQRCode: processedMessage,
-        isScanning: false,
-      ));
-    }
+    emit(state.copyWith(
+      isScanning: false,
+    ));
   }
 
   void _onScannerReset(ScannerReseted event, Emitter<ScannerState> emit) {

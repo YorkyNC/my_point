@@ -24,6 +24,11 @@ abstract class StorageService {
   Future<void> setClassId(String? classId);
   String? getClassId();
 
+  // PVZ ID management
+  Future<void> setPvzId(String? pvzId);
+  String? getPvzId();
+  Future<void> deletePvzId();
+
   // Language preferences
   // Future<void> setLanguageCode(String code);
   // String getLanguageCode();
