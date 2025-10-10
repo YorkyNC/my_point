@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           final authStatus = _parseAuthStatus(authStatusString);
 
           if (authStatus == AuthStatusType.pvz) {
-            context.go(RoutePaths.unregisteredUser);
+            context.go(RoutePaths.registerPVZ);
             return;
           } else if (authStatus == AuthStatusType.sms) {
             context.go(RoutePaths.agreement);

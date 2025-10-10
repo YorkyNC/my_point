@@ -1,4 +1,5 @@
 import 'package:my_point/src/app/imports.dart';
+import 'package:my_point/src/features/register/domain/request/register_pvz_request.dart';
 import 'package:my_point/src/features/register/presentation/components/register_picture_paragraph_widget.dart';
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart';
 
@@ -52,28 +53,26 @@ class SecondStepView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: state.isLoading || !state.isSecondStepValid
+                          onPressed: state.isLoading || !state.isSecondStepValid || !state.isFirstStepValid
                               ? null
                               : () {
-                                  bloc.add(ValidateSecondStep(
-                                    state.photoOfTheEntranceToTheRoom ?? [],
-                                    state.photoOfTheRoom ?? [],
-                                    state.photoOfThePlaceForShelving ?? [],
-                                  ));
-                                  bloc.add(Submit(
-                                    state.name ?? '',
-                                    state.totalArea ?? '',
-                                    state.city ?? '',
-                                    state.address ?? '',
-                                    state.entrance ?? '',
-                                    state.apartment ?? '',
-                                    state.floor ?? '',
-                                    state.intercom ?? '',
-                                    state.comment ?? '',
-                                    state.photoOfTheEntranceToTheRoom ?? [],
-                                    state.photoOfTheRoom ?? [],
-                                    state.photoOfThePlaceForShelving ?? [],
-                                  ));
+                                  bloc.add(
+                                    Submit(
+                                      RegisterPvzRequest(
+                                        name: state.name ?? '',
+                                        square: state.totalArea ?? '',
+                                        city: state.city ?? '',
+                                        address: state.address ?? '',
+                                        files: [
+                                          ...state.photoOfTheEntranceToTheRoom ?? [],
+                                          ...state.photoOfTheRoom ?? [],
+                                          ...state.photoOfThePlaceForShelving ?? [],
+                                        ],
+                                        latitude: 43.25152134030066,
+                                        longitude: 76.85152134030066,
+                                      ),
+                                    ),
+                                  );
                                 },
                           child: state.isLoading
                               ? const SizedBox(

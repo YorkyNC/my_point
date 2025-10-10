@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_point/src/features/register/domain/request/register_pvz_request.dart';
+import 'package:my_point/src/features/register/domain/usecases/register_pvz_use_case.dart';
 
 part 'register_pvz_bloc.freezed.dart';
 part 'register_pvz_event.dart';
@@ -8,9 +10,10 @@ part 'register_pvz_state.dart';
 
 @injectable
 class RegisterPvzBloc extends Bloc<RegisterPvzEvent, RegisterPvzState> {
-  RegisterPvzBloc() : super(RegisterPvzState()) {
+  RegisterPvzBloc(this._registerPvzUseCase) : super(RegisterPvzState()) {
     setUpHandlers();
   }
+  final RegisterPvzUseCase _registerPvzUseCase;
   void setUpHandlers() {
     on<RegisterPvzStarted>(_onRegisterPvzStarted);
     on<RegisterPvzNameChanged>(_onRegisterPvzNameChanged);
@@ -38,8 +41,13 @@ class RegisterPvzBloc extends Bloc<RegisterPvzEvent, RegisterPvzState> {
     emit(state.copyWith(isSecondStepValidate: true));
   }
 
-  void _onRegisterPvzSubmit(Submit event, Emitter emit) {
+  void _onRegisterPvzSubmit(Submit event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
+    final result = await _registerPvzUseCase.execute(event.request);
+    result.fold(
+      (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure.message)),
+      (success) => emit(state.copyWith(isLoading: false, successMessage: success.message ?? '')),
+    );
   }
 
   void _onRegisterPvzStarted(RegisterPvzStarted event, Emitter emit) {

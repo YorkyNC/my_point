@@ -22,6 +22,7 @@ abstract class RegisterPvzState with _$RegisterPvzState {
     List<String>? photoOfTheRoom,
     List<String>? photoOfThePlaceForShelving,
     String? errorMessage,
+    String? successMessage,
   }) = _RegisterPvzState;
 
   bool get isFirstStepValid {

@@ -724,8 +724,8 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
                 other.isVerifyOtpLoading == isVerifyOtpLoading) &&
             (identical(other.isVerifyOtpError, isVerifyOtpError) ||
                 other.isVerifyOtpError == isVerifyOtpError) &&
-            const DeepCollectionEquality()
-                .equals(other.authStatus, authStatus));
+            (identical(other.authStatus, authStatus) ||
+                other.authStatus == authStatus));
   }
 
   @override
@@ -764,7 +764,7 @@ class _$AuthorizationStateImpl extends _AuthorizationState {
         isVerifyOtpSuccess,
         isVerifyOtpLoading,
         isVerifyOtpError,
-        const DeepCollectionEquality().hash(authStatus)
+        authStatus
       ]);
 
   /// Create a copy of AuthorizationState

@@ -150,17 +150,17 @@ class FirstStepView extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: state.isFirstStepValid
                               ? () {
-                                  bloc.add(ValidateFirstStep(
-                                    nameController.text,
-                                    totalAreaController.text,
-                                    'г. Алматы',
-                                    '',
-                                    entranceController.text,
-                                    apartmentController.text,
-                                    floorController.text,
-                                    phoneController.text,
-                                    commentController.text,
-                                  ));
+                                  // bloc.add(ValidateFirstStep(
+                                  //   nameController.text,
+                                  //   totalAreaController.text,
+                                  //   'г. Алматы',
+                                  //   '',
+                                  //   entranceController.text,
+                                  //   apartmentController.text,
+                                  //   floorController.text,
+                                  //   phoneController.text,
+                                  //   commentController.text,
+                                  // ));
                                   onNext();
                                 }
                               : null,

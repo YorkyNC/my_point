@@ -54,7 +54,7 @@ class SuccessRegisterMessageWidget extends StatelessWidget {
                     onPressed: () async {
                       // context.pop(); // maybe delete this line
 
-                      isSignUpVerified ? context.push(RoutePaths.agreement) : context.push(RoutePaths.main);
+                      isSignUpVerified ? context.push(RoutePaths.agreement) : context.push(RoutePaths.home);
                     },
                     child: Text('Далее'),
                   ),

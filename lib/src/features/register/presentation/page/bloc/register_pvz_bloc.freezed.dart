@@ -36,6 +36,7 @@ mixin _$RegisterPvzState {
   List<String>? get photoOfThePlaceForShelving =>
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get successMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of RegisterPvzState
   /// with the given fields replaced by the non-null parameter values.
@@ -68,7 +69,8 @@ abstract class $RegisterPvzStateCopyWith<$Res> {
       List<String>? photoOfTheEntranceToTheRoom,
       List<String>? photoOfTheRoom,
       List<String>? photoOfThePlaceForShelving,
-      String? errorMessage});
+      String? errorMessage,
+      String? successMessage});
 }
 
 /// @nodoc
@@ -104,6 +106,7 @@ class _$RegisterPvzStateCopyWithImpl<$Res, $Val extends RegisterPvzState>
     Object? photoOfTheRoom = freezed,
     Object? photoOfThePlaceForShelving = freezed,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
   }) {
     return _then(_value.copyWith(
       isFirstStepValidate: null == isFirstStepValidate
@@ -178,6 +181,10 @@ class _$RegisterPvzStateCopyWithImpl<$Res, $Val extends RegisterPvzState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -208,7 +215,8 @@ abstract class _$$RegisterPvzStateImplCopyWith<$Res>
       List<String>? photoOfTheEntranceToTheRoom,
       List<String>? photoOfTheRoom,
       List<String>? photoOfThePlaceForShelving,
-      String? errorMessage});
+      String? errorMessage,
+      String? successMessage});
 }
 
 /// @nodoc
@@ -242,6 +250,7 @@ class __$$RegisterPvzStateImplCopyWithImpl<$Res>
     Object? photoOfTheRoom = freezed,
     Object? photoOfThePlaceForShelving = freezed,
     Object? errorMessage = freezed,
+    Object? successMessage = freezed,
   }) {
     return _then(_$RegisterPvzStateImpl(
       isFirstStepValidate: null == isFirstStepValidate
@@ -316,6 +325,10 @@ class __$$RegisterPvzStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      successMessage: freezed == successMessage
+          ? _value.successMessage
+          : successMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -341,7 +354,8 @@ class _$RegisterPvzStateImpl extends _RegisterPvzState {
       final List<String>? photoOfTheEntranceToTheRoom,
       final List<String>? photoOfTheRoom,
       final List<String>? photoOfThePlaceForShelving,
-      this.errorMessage})
+      this.errorMessage,
+      this.successMessage})
       : _photoOfTheEntranceToTheRoom = photoOfTheEntranceToTheRoom,
         _photoOfTheRoom = photoOfTheRoom,
         _photoOfThePlaceForShelving = photoOfThePlaceForShelving,
@@ -414,10 +428,12 @@ class _$RegisterPvzStateImpl extends _RegisterPvzState {
 
   @override
   final String? errorMessage;
+  @override
+  final String? successMessage;
 
   @override
   String toString() {
-    return 'RegisterPvzState(isFirstStepValidate: $isFirstStepValidate, isSecondStepValidate: $isSecondStepValidate, isLoading: $isLoading, isSuccess: $isSuccess, isError: $isError, name: $name, totalArea: $totalArea, city: $city, address: $address, entrance: $entrance, apartment: $apartment, floor: $floor, intercom: $intercom, comment: $comment, photoOfTheEntranceToTheRoom: $photoOfTheEntranceToTheRoom, photoOfTheRoom: $photoOfTheRoom, photoOfThePlaceForShelving: $photoOfThePlaceForShelving, errorMessage: $errorMessage)';
+    return 'RegisterPvzState(isFirstStepValidate: $isFirstStepValidate, isSecondStepValidate: $isSecondStepValidate, isLoading: $isLoading, isSuccess: $isSuccess, isError: $isError, name: $name, totalArea: $totalArea, city: $city, address: $address, entrance: $entrance, apartment: $apartment, floor: $floor, intercom: $intercom, comment: $comment, photoOfTheEntranceToTheRoom: $photoOfTheEntranceToTheRoom, photoOfTheRoom: $photoOfTheRoom, photoOfThePlaceForShelving: $photoOfThePlaceForShelving, errorMessage: $errorMessage, successMessage: $successMessage)';
   }
 
   @override
@@ -456,30 +472,34 @@ class _$RegisterPvzStateImpl extends _RegisterPvzState {
                 other._photoOfThePlaceForShelving,
                 _photoOfThePlaceForShelving) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.successMessage, successMessage) ||
+                other.successMessage == successMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isFirstStepValidate,
-      isSecondStepValidate,
-      isLoading,
-      isSuccess,
-      isError,
-      name,
-      totalArea,
-      city,
-      address,
-      entrance,
-      apartment,
-      floor,
-      intercom,
-      comment,
-      const DeepCollectionEquality().hash(_photoOfTheEntranceToTheRoom),
-      const DeepCollectionEquality().hash(_photoOfTheRoom),
-      const DeepCollectionEquality().hash(_photoOfThePlaceForShelving),
-      errorMessage);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isFirstStepValidate,
+        isSecondStepValidate,
+        isLoading,
+        isSuccess,
+        isError,
+        name,
+        totalArea,
+        city,
+        address,
+        entrance,
+        apartment,
+        floor,
+        intercom,
+        comment,
+        const DeepCollectionEquality().hash(_photoOfTheEntranceToTheRoom),
+        const DeepCollectionEquality().hash(_photoOfTheRoom),
+        const DeepCollectionEquality().hash(_photoOfThePlaceForShelving),
+        errorMessage,
+        successMessage
+      ]);
 
   /// Create a copy of RegisterPvzState
   /// with the given fields replaced by the non-null parameter values.
@@ -510,7 +530,8 @@ abstract class _RegisterPvzState extends RegisterPvzState {
       final List<String>? photoOfTheEntranceToTheRoom,
       final List<String>? photoOfTheRoom,
       final List<String>? photoOfThePlaceForShelving,
-      final String? errorMessage}) = _$RegisterPvzStateImpl;
+      final String? errorMessage,
+      final String? successMessage}) = _$RegisterPvzStateImpl;
   const _RegisterPvzState._() : super._();
 
   @override
@@ -549,6 +570,8 @@ abstract class _RegisterPvzState extends RegisterPvzState {
   List<String>? get photoOfThePlaceForShelving;
   @override
   String? get errorMessage;
+  @override
+  String? get successMessage;
 
   /// Create a copy of RegisterPvzState
   /// with the given fields replaced by the non-null parameter values.

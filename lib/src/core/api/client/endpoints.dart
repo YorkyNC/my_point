@@ -10,4 +10,5 @@ class EndPoints {
   static const requestOtpCode = "/contract/send-sms-code";
   static const verifyOtp = "/contract/sms/verify";
   static const agreement = "https://mypoint.kz/#/user-dashboard/sign-agreement";
+  static const registerPvz = "/pvz/save ";
 }

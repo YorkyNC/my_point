@@ -30,6 +30,16 @@ import 'package:my_point/src/features/login/domain/usecases/verify_otp_use_case.
     as _i395;
 import 'package:my_point/src/features/login/presentation/bloc/authorization_bloc.dart'
     as _i1033;
+import 'package:my_point/src/features/register/data/datasources/remote/i_register_remote.dart'
+    as _i773;
+import 'package:my_point/src/features/register/data/datasources/remote/register_remote_impl.dart'
+    as _i497;
+import 'package:my_point/src/features/register/data/repositories/i_register_repository.dart'
+    as _i343;
+import 'package:my_point/src/features/register/domain/repositories/register_repository_impl.dart'
+    as _i554;
+import 'package:my_point/src/features/register/domain/usecases/register_pvz_use_case.dart'
+    as _i313;
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart'
     as _i83;
 import 'package:my_point/src/features/scan/data/datasources/remote/i_scan_remote.dart'
@@ -58,7 +68,6 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i83.RegisterPvzBloc>(() => _i83.RegisterPvzBloc());
     await gh.singletonAsync<_i274.DioRestClient>(
       () {
         final i = _i274.DioRestClient();
@@ -79,6 +88,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i869.AuthorizationRemoteImpl(),
       instanceName: 'AuthorizationRemoteImpl',
     );
+    gh.lazySingleton<_i773.IRegisterRemote>(
+      () => _i497.RegisterRemoteImpl(),
+      instanceName: 'RegisterRemoteImpl',
+    );
     gh.lazySingleton<_i496.QrCodeScanUseCase>(() => _i496.QrCodeScanUseCase(
         gh<_i236.IScanRepository>(instanceName: 'ScanRepositoryImpl')));
     gh.lazySingleton<_i935.BarcodeScanUseCase>(() => _i935.BarcodeScanUseCase(
@@ -87,6 +100,15 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i935.BarcodeScanUseCase>(),
           gh<_i496.QrCodeScanUseCase>(),
         ));
+    gh.lazySingleton<_i343.IRegisterRepository>(
+      () => _i554.RegisterRepositoryImpl(
+          gh<_i773.IRegisterRemote>(instanceName: 'RegisterRemoteImpl')),
+      instanceName: 'RegisterRepositoryImpl',
+    );
+    gh.lazySingleton<_i313.RegisterPvzUseCase>(() => _i313.RegisterPvzUseCase(
+        gh<_i343.IRegisterRepository>(instanceName: 'RegisterRepositoryImpl')));
+    gh.factory<_i83.RegisterPvzBloc>(
+        () => _i83.RegisterPvzBloc(gh<_i313.RegisterPvzUseCase>()));
     gh.lazySingleton<_i207.IAuthRepository>(
       () => _i320.AuthorizationRepositoryImpl(gh<_i426.IAuthorizationRemote>(
           instanceName: 'AuthorizationRemoteImpl')),

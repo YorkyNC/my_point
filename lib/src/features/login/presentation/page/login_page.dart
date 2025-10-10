@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   _passwordController.clear();
                   log('authStatus: ${state.authStatus}');
                   if (state.authStatus == AuthStatusType.pvz) {
-                    context.push(RoutePaths.unregisteredUser);
+                    context.push(RoutePaths.registerPVZ);
                   } else if (state.authStatus == AuthStatusType.sms) {
                     context.push(RoutePaths.agreement);
                   } else {

@@ -90,29 +90,6 @@ class ValidateSecondStep extends RegisterPvzEvent {
 }
 
 class Submit extends RegisterPvzEvent {
-  final List<String> photoOfTheEntranceToTheRoom;
-  final List<String> photoOfTheRoom;
-  final List<String> photoOfThePlaceForShelving;
-  final String name;
-  final String totalArea;
-  final String city;
-  final String address;
-  final String entrance;
-  final String apartment;
-  final String floor;
-  final String intercom;
-  final String comment;
-  const Submit(
-      this.name,
-      this.totalArea,
-      this.city,
-      this.address,
-      this.entrance,
-      this.apartment,
-      this.floor,
-      this.intercom,
-      this.comment,
-      this.photoOfTheEntranceToTheRoom,
-      this.photoOfTheRoom,
-      this.photoOfThePlaceForShelving);
+  final RegisterPvzRequest request;
+  const Submit(this.request);
 }
