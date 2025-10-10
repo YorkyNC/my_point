@@ -26,12 +26,18 @@ abstract class RegisterPvzState with _$RegisterPvzState {
   }) = _RegisterPvzState;
 
   bool get isFirstStepValid {
-    return (name?.isNotEmpty ?? false) && (totalArea?.isNotEmpty ?? false);
+    return (name?.isNotEmpty ?? false) &&
+        (totalArea?.isNotEmpty ?? false) &&
+        (city?.isNotEmpty ?? false) &&
+        (address?.isNotEmpty ?? false);
   }
 
   bool get isSecondStepValid {
-    return (photoOfTheEntranceToTheRoom?.isNotEmpty ?? false) &&
-        (photoOfTheRoom?.isNotEmpty ?? false) &&
-        (photoOfThePlaceForShelving?.isNotEmpty ?? false);
+    return (photoOfTheEntranceToTheRoom?.length ?? 0) >= 4 &&
+        (photoOfTheEntranceToTheRoom?.length ?? 0) <= 10 &&
+        (photoOfTheRoom?.length ?? 0) >= 4 &&
+        (photoOfTheRoom?.length ?? 0) <= 10 &&
+        (photoOfThePlaceForShelving?.length ?? 0) >= 4 &&
+        (photoOfThePlaceForShelving?.length ?? 0) <= 10;
   }
 }

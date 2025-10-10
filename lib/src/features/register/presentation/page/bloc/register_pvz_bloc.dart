@@ -28,6 +28,12 @@ class RegisterPvzBloc extends Bloc<RegisterPvzEvent, RegisterPvzState> {
     on<RegisterPvzPhotoOfTheEntranceToTheRoomChanged>(_onRegisterPvzPhotoOfTheEntranceToTheRoomChanged);
     on<RegisterPvzPhotoOfTheRoomChanged>(_onRegisterPvzPhotoOfTheRoomChanged);
     on<RegisterPvzPhotoOfThePlaceForShelvingChanged>(_onRegisterPvzPhotoOfThePlaceForShelvingChanged);
+    on<AddPhotoToEntranceRoom>(_onAddPhotoToEntranceRoom);
+    on<AddPhotoToRoom>(_onAddPhotoToRoom);
+    on<AddPhotoToShelving>(_onAddPhotoToShelving);
+    on<RemovePhotoFromEntranceRoom>(_onRemovePhotoFromEntranceRoom);
+    on<RemovePhotoFromRoom>(_onRemovePhotoFromRoom);
+    on<RemovePhotoFromShelving>(_onRemovePhotoFromShelving);
     on<ValidateFirstStep>(_onRegisterPvzValidateFirstStep);
     on<ValidateSecondStep>(_onRegisterPvzValidateSecondStep);
     on<Submit>(_onRegisterPvzSubmit);
@@ -102,5 +108,53 @@ class RegisterPvzBloc extends Bloc<RegisterPvzEvent, RegisterPvzState> {
   void _onRegisterPvzPhotoOfThePlaceForShelvingChanged(
       RegisterPvzPhotoOfThePlaceForShelvingChanged event, Emitter emit) {
     emit(state.copyWith(photoOfThePlaceForShelving: event.photoOfThePlaceForShelving));
+  }
+
+  void _onAddPhotoToEntranceRoom(AddPhotoToEntranceRoom event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfTheEntranceToTheRoom ?? []);
+    if (currentPhotos.length < 5) {
+      currentPhotos.add(event.photoPath);
+      emit(state.copyWith(photoOfTheEntranceToTheRoom: currentPhotos));
+    }
+  }
+
+  void _onAddPhotoToRoom(AddPhotoToRoom event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfTheRoom ?? []);
+    if (currentPhotos.length < 5) {
+      currentPhotos.add(event.photoPath);
+      emit(state.copyWith(photoOfTheRoom: currentPhotos));
+    }
+  }
+
+  void _onAddPhotoToShelving(AddPhotoToShelving event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfThePlaceForShelving ?? []);
+    if (currentPhotos.length < 5) {
+      currentPhotos.add(event.photoPath);
+      emit(state.copyWith(photoOfThePlaceForShelving: currentPhotos));
+    }
+  }
+
+  void _onRemovePhotoFromEntranceRoom(RemovePhotoFromEntranceRoom event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfTheEntranceToTheRoom ?? []);
+    if (event.index >= 0 && event.index < currentPhotos.length) {
+      currentPhotos.removeAt(event.index);
+      emit(state.copyWith(photoOfTheEntranceToTheRoom: currentPhotos));
+    }
+  }
+
+  void _onRemovePhotoFromRoom(RemovePhotoFromRoom event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfTheRoom ?? []);
+    if (event.index >= 0 && event.index < currentPhotos.length) {
+      currentPhotos.removeAt(event.index);
+      emit(state.copyWith(photoOfTheRoom: currentPhotos));
+    }
+  }
+
+  void _onRemovePhotoFromShelving(RemovePhotoFromShelving event, Emitter emit) {
+    final currentPhotos = List<String>.from(state.photoOfThePlaceForShelving ?? []);
+    if (event.index >= 0 && event.index < currentPhotos.length) {
+      currentPhotos.removeAt(event.index);
+      emit(state.copyWith(photoOfThePlaceForShelving: currentPhotos));
+    }
   }
 }

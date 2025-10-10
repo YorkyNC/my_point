@@ -95,7 +95,13 @@ class _UnregisteredUserViewState extends State<UnregisteredUserView> with Ticker
             }
 
             if (state.success) {
-              return SuccessRegisterMessageWidget(logoAnimation: _logoAnimation, isSignUpVerified: true);
+              return SuccessRegisterMessageWidget(
+                logoAnimation: _logoAnimation,
+                isSignUpVerified: true,
+                onPressed: () => context.push(
+                  RoutePaths.agreement,
+                ),
+              );
             }
 
             if (state.error != null && state.error!.isNotEmpty) {

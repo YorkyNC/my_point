@@ -93,11 +93,20 @@ class DioRestClient {
       );
       return Right(response);
     } on DioException catch (e, s) {
+      log.d('❌ DioClient POST - DioException:');
+      log.d('URL: $url');
+      log.d('Type: ${e.type}');
+      log.d('Message: ${e.message}');
+      log.d('Response status: ${e.response?.statusCode}');
+      log.d('Response data: ${e.response?.data}');
+      log.d('Error: ${e.error}');
+
       if (e.response?.statusCode == 401) {
         return Left(AuthenticationException.invalidCredentials());
       }
       return Left(_handleDioException(e, s));
     } catch (e, s) {
+      log.d('❌ DioClient POST - Generic exception: $e');
       return Left(_handleError(e, s));
     }
   }

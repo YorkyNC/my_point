@@ -1,5 +1,6 @@
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
 import 'package:my_point/src/features/login/domain/request/request_otp_code.dart';
 import 'package:my_point/src/features/login/domain/request/verify_otp_request.dart';
@@ -87,7 +88,8 @@ class _OtpPageState extends State<OtpPage> with TickerProviderStateMixin {
                   : state.isVerifyOtpSuccess
                       ? SuccessRegisterMessageWidget(
                           logoAnimation: _logoAnimation,
-                          isSignUpVerified: false,
+                          isSignUpVerified: true,
+                          onPressed: () => context.push(RoutePaths.registerPVZ),
                         )
                       : SafeArea(
                           child: Padding(

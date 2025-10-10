@@ -1,4 +1,5 @@
 import 'package:my_point/src/app/imports.dart';
+import 'package:my_point/src/features/register/domain/enum/photo_section_type.dart';
 import 'package:my_point/src/features/register/domain/request/register_pvz_request.dart';
 import 'package:my_point/src/features/register/presentation/components/register_picture_paragraph_widget.dart';
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart';
@@ -29,6 +30,7 @@ class SecondStepView extends StatelessWidget {
                     onPhotosChanged: (photos) {
                       bloc.add(RegisterPvzPhotoOfTheEntranceToTheRoomChanged(photos));
                     },
+                    sectionType: PhotoSectionType.entranceToRoom,
                   ),
                   RegisterPictureParagraphWidget(
                     title: 'Общее фото помещения*',
@@ -38,6 +40,7 @@ class SecondStepView extends StatelessWidget {
                     onPhotosChanged: (photos) {
                       bloc.add(RegisterPvzPhotoOfTheRoomChanged(photos));
                     },
+                    sectionType: PhotoSectionType.room,
                   ),
                   RegisterPictureParagraphWidget(
                     isSecond: true,
@@ -47,6 +50,7 @@ class SecondStepView extends StatelessWidget {
                     onPhotosChanged: (photos) {
                       bloc.add(RegisterPvzPhotoOfThePlaceForShelvingChanged(photos));
                     },
+                    sectionType: PhotoSectionType.shelving,
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -63,6 +67,7 @@ class SecondStepView extends StatelessWidget {
                                         square: state.totalArea ?? '',
                                         city: state.city ?? '',
                                         address: state.address ?? '',
+                                        // files: [],
                                         files: [
                                           ...state.photoOfTheEntranceToTheRoom ?? [],
                                           ...state.photoOfTheRoom ?? [],

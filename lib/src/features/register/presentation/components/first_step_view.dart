@@ -59,6 +59,7 @@ class FirstStepView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   UnregisteredUserTextField(
+                    keyboardType: TextInputType.number,
                     hintText: 'Общая площадь',
                     controller: totalAreaController,
                     onChanged: (value) => bloc.add(RegisterPvzTotalAreaChanged(value)),
@@ -102,6 +103,7 @@ class FirstStepView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: UnregisteredUserTextField(
+                          keyboardType: TextInputType.number,
                           hintText: 'Подъезд',
                           controller: entranceController,
                           onChanged: (value) => bloc.add(RegisterPvzEntranceChanged(value)),
@@ -110,6 +112,7 @@ class FirstStepView extends StatelessWidget {
                       SizedBox(width: 16),
                       Expanded(
                         child: UnregisteredUserTextField(
+                          keyboardType: TextInputType.number,
                           hintText: '№ квартиры/офиса',
                           controller: apartmentController,
                           onChanged: (value) => bloc.add(RegisterPvzApartmentChanged(value)),
@@ -122,6 +125,7 @@ class FirstStepView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: UnregisteredUserTextField(
+                          keyboardType: TextInputType.number,
                           hintText: 'Этаж',
                           controller: floorController,
                           onChanged: (value) => bloc.add(RegisterPvzFloorChanged(value)),
@@ -130,6 +134,7 @@ class FirstStepView extends StatelessWidget {
                       SizedBox(width: 16),
                       Expanded(
                         child: UnregisteredUserTextField(
+                          keyboardType: TextInputType.number,
                           hintText: 'Домофон',
                           controller: phoneController,
                           onChanged: (value) => bloc.add(RegisterPvzIntercomChanged(value)),

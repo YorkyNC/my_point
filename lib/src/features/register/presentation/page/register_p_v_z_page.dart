@@ -1,6 +1,8 @@
 import 'package:my_point/src/app/imports.dart';
 import 'package:my_point/src/core/extensions/build_context_extension.dart';
+import 'package:my_point/src/core/router/router.dart';
 import 'package:my_point/src/core/services/injectable/injectable_service.dart';
+import 'package:my_point/src/features/login/presentation/components/custom_snack_bar.dart';
 import 'package:my_point/src/features/register/presentation/components/first_step_view.dart';
 import 'package:my_point/src/features/register/presentation/components/second_step_view.dart';
 import 'package:my_point/src/features/register/presentation/page/bloc/register_pvz_bloc.dart';
@@ -62,67 +64,102 @@ class _RegisterPVZPageState extends State<RegisterPVZPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<RegisterPvzBloc>(),
-      child: Scaffold(
-        backgroundColor: context.colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            onPressed: _previousPage,
-            icon: Icon(
-              context.icons.chevron_left,
-              color: context.colors.textprimary,
-            ),
-          ),
+      child: BlocListener<RegisterPvzBloc, RegisterPvzState>(
+        listener: (context, state) {
+          // Handle success
+          if (state.successMessage != null && state.successMessage!.isNotEmpty) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.show(
+                color: context.colors.success500,
+                title: 'ПВЗ успешно зарегистрирован',
+                seconds: 3,
+                context: context,
+              ),
+            );
+            context.go(RoutePaths.login);
+            // Navigate back or to success page
+            // Future.delayed(const Duration(seconds: 2), () {
+            //   if (context.mounted) {
+            //     context.pop();
+            //   }
+            // });
+          }
+
+          // Handle error
+          if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.show(
+                color: context.colors.error500,
+                title: state.errorMessage!,
+                seconds: 4,
+                context: context,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
           backgroundColor: context.colors.white,
-          title: Text('Шаг ${_currentPage + 1}'),
-          titleTextStyle: context.typography.mediumParagraph.copyWith(color: context.colors.black),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: Text(
-                'закрыть'.toUpperCase(),
-                style: context.typography.smallParagraphMedium2.copyWith(
-                  color: context.colors.accent2,
-                ),
+          appBar: AppBar(
+            elevation: 0,
+            leading: IconButton(
+              onPressed: _previousPage,
+              icon: Icon(
+                context.icons.chevron_left,
+                color: context.colors.textprimary,
               ),
             ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(4.0),
-            child: LinearProgressIndicator(
-              value: (_currentPage + 1) / _totalPages,
-              color: context.colors.mainAccent,
-              backgroundColor: context.colors.gray100,
-              minHeight: 2,
+            backgroundColor: context.colors.white,
+            title: Text('Шаг ${_currentPage + 1}'),
+            titleTextStyle: context.typography.mediumParagraph.copyWith(color: context.colors.black),
+            actions: [
+              TextButton(
+                onPressed: () => context.go(RoutePaths.login),
+                child: Text(
+                  'закрыть'.toUpperCase(),
+                  style: context.typography.smallParagraphMedium2.copyWith(
+                    color: context.colors.accent2,
+                  ),
+                ),
+              ),
+            ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(4.0),
+              child: LinearProgressIndicator(
+                value: (_currentPage + 1) / _totalPages,
+                color: context.colors.mainAccent,
+                backgroundColor: context.colors.gray100,
+                minHeight: 2,
+              ),
             ),
           ),
-        ),
-        body: BlocBuilder<RegisterPvzBloc, RegisterPvzState>(
-          builder: (context, state) {
-            final bloc = context.read<RegisterPvzBloc>();
-            return PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              children: [
-                FirstStepView(
-                  nameController: _nameController,
-                  totalAreaController: _totalAreaController,
-                  entranceController: _entranceController,
-                  apartmentController: _apartmentController,
-                  floorController: _floorController,
-                  phoneController: _phoneController,
-                  commentController: _commentController,
-                  onNext: _nextPage,
-                ),
-                SecondStepView(),
-              ],
-            );
-          },
+          body: BlocBuilder<RegisterPvzBloc, RegisterPvzState>(
+            builder: (context, state) {
+              return PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                children: [
+                  FirstStepView(
+                    nameController: _nameController,
+                    totalAreaController: _totalAreaController,
+                    entranceController: _entranceController,
+                    apartmentController: _apartmentController,
+                    floorController: _floorController,
+                    phoneController: _phoneController,
+                    commentController: _commentController,
+                    onNext: _nextPage,
+                  ),
+                  SecondStepView(),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

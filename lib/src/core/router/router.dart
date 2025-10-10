@@ -34,6 +34,7 @@ GoRouter routerProvider() {
     refreshListenable: st,
     initialLocation: hasSeenIntroduction ? RoutePaths.loading : RoutePaths.introduction,
     // initialLocation: RoutePaths.agreement,
+    // initialLocation: RoutePaths.registerPVZ,
     // initialLocation: RoutePaths.loading,
     // initialLocation: RoutePaths.introduction,
     // initialLocation: RoutePaths.main,

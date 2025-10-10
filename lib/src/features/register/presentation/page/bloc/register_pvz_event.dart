@@ -68,6 +68,36 @@ class RegisterPvzPhotoOfThePlaceForShelvingChanged extends RegisterPvzEvent {
   const RegisterPvzPhotoOfThePlaceForShelvingChanged(this.photoOfThePlaceForShelving);
 }
 
+class AddPhotoToEntranceRoom extends RegisterPvzEvent {
+  final String photoPath;
+  const AddPhotoToEntranceRoom(this.photoPath);
+}
+
+class AddPhotoToRoom extends RegisterPvzEvent {
+  final String photoPath;
+  const AddPhotoToRoom(this.photoPath);
+}
+
+class AddPhotoToShelving extends RegisterPvzEvent {
+  final String photoPath;
+  const AddPhotoToShelving(this.photoPath);
+}
+
+class RemovePhotoFromEntranceRoom extends RegisterPvzEvent {
+  final int index;
+  const RemovePhotoFromEntranceRoom(this.index);
+}
+
+class RemovePhotoFromRoom extends RegisterPvzEvent {
+  final int index;
+  const RemovePhotoFromRoom(this.index);
+}
+
+class RemovePhotoFromShelving extends RegisterPvzEvent {
+  final int index;
+  const RemovePhotoFromShelving(this.index);
+}
+
 class ValidateFirstStep extends RegisterPvzEvent {
   final String name;
   final String totalArea;

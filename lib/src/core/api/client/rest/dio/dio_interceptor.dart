@@ -45,26 +45,30 @@ class DioInterceptor extends Interceptor {
   Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     log.e('Error Status Code: ${err.response?.statusCode}');
     log.e('Error Response: ${err.response?.data}');
-    if (err.response?.statusCode != 401) {
-      return handler.next(err);
-    }
 
-    log.w('Received 401 error. Attempting to refresh token...');
-    final requestOptions = err.requestOptions;
+    // Token refresh temporarily disabled for testing
+    return handler.next(err);
 
-    try {
-      final token = await _refreshTokenAndGetNew(requestOptions);
-      if (token == null) {
-        await _handleRefreshFailure(handler, err);
-        return;
-      }
+    // if (err.response?.statusCode != 401) {
+    //   return handler.next(err);
+    // }
 
-      final response = await _retryRequest(requestOptions, token);
-      return handler.resolve(response);
-    } catch (e) {
-      log.e('Error during refresh and retry: $e');
-      await _handleRefreshFailure(handler, err);
-    }
+    // log.w('Received 401 error. Attempting to refresh token...');
+    // final requestOptions = err.requestOptions;
+
+    // try {
+    //   final token = await _refreshTokenAndGetNew(requestOptions);
+    //   if (token == null) {
+    //     await _handleRefreshFailure(handler, err);
+    //     return;
+    //   }
+
+    //   final response = await _retryRequest(requestOptions, token);
+    //   return handler.resolve(response);
+    // } catch (e) {
+    //   log.e('Error during refresh and retry: $e');
+    //   await _handleRefreshFailure(handler, err);
+    // }
   }
 
   Future<String?> _refreshTokenAndGetNew(RequestOptions requestOptions) async {

@@ -5,11 +5,13 @@ import 'package:my_point/src/core/router/router.dart';
 
 class SuccessRegisterMessageWidget extends StatelessWidget {
   const SuccessRegisterMessageWidget({
+    required this.onPressed,
     super.key,
     required Animation<double> logoAnimation,
     required this.isSignUpVerified,
   }) : _logoAnimation = logoAnimation;
   final bool isSignUpVerified;
+  final VoidCallback onPressed;
   final Animation<double> _logoAnimation;
 
   @override
@@ -51,11 +53,7 @@ class SuccessRegisterMessageWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () async {
-                      // context.pop(); // maybe delete this line
-
-                      isSignUpVerified ? context.push(RoutePaths.agreement) : context.push(RoutePaths.home);
-                    },
+                    onPressed: onPressed,
                     child: Text('Далее'),
                   ),
                 ),

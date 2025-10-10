@@ -81,21 +81,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i236.IScanRepository>(
       () => _i126.ScanRepositoryImpl(
-          gh<_i1039.IScanRemote>(instanceName: 'IScanRemote')),
+          gh<_i1039.IScanRemote>(instanceName: 'ScanRemoteImpl')),
       instanceName: 'ScanRepositoryImpl',
     );
     gh.lazySingleton<_i426.IAuthorizationRemote>(
       () => _i869.AuthorizationRemoteImpl(),
       instanceName: 'AuthorizationRemoteImpl',
     );
-    gh.lazySingleton<_i773.IRegisterRemote>(
-      () => _i497.RegisterRemoteImpl(),
-      instanceName: 'RegisterRemoteImpl',
-    );
     gh.lazySingleton<_i496.QrCodeScanUseCase>(() => _i496.QrCodeScanUseCase(
         gh<_i236.IScanRepository>(instanceName: 'ScanRepositoryImpl')));
     gh.lazySingleton<_i935.BarcodeScanUseCase>(() => _i935.BarcodeScanUseCase(
         gh<_i236.IScanRepository>(instanceName: 'ScanRepositoryImpl')));
+    gh.lazySingleton<_i773.IRegisterRemote>(
+      () => _i497.RegisterRemoteImpl(gh<_i274.DioRestClient>()),
+      instanceName: 'RegisterRemoteImpl',
+    );
     gh.factory<_i559.ScannerBloc>(() => _i559.ScannerBloc(
           gh<_i935.BarcodeScanUseCase>(),
           gh<_i496.QrCodeScanUseCase>(),
